@@ -9,7 +9,7 @@ def dashboard():
         'dashboard.html',
     )
 
-@app.route('/')
+@app.route('/allocations')
 def allocations():
     return render_template(
         'allocations.html',
