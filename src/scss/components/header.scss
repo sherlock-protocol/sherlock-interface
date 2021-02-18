@@ -1,0 +1,48 @@
+header {
+  background: $blue;
+  color: $white;
+  padding: 20px 100px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
+  .logo {
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    img {
+      height: 50px;
+    }
+
+    span {
+      margin-left: 20px;
+    }
+  }
+
+  a {
+    color: $white;
+    text-decoration: none;
+    font-size: 24px;
+    padding: 5px 20px;
+    background: tint($blue, 10%);
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 10px;
+
+    &.active {
+      background: $white;
+      color: $blue;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &:first-of-type {
+      margin-left: auto;
+    }
+  }
+}

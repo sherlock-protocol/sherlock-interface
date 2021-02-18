@@ -1,3 +1,7 @@
-body {
-  background: red;
-}
+@import "global/variables";
+@import "global/overrides";
+@import "global/mixins";
+@import "global/app";
+@import "components/header";
+@import "components/footer";
+@import "components/modal";

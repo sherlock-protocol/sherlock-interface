@@ -6,3 +6,4 @@ sass:
 sass-watch:
 	@echo Started watching /src/styles🤙
 	sass --watch src/scss/:static/css/
+	

@@ -1,0 +1,29 @@
+.modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-container {
+    width: 400px;
+    height: 400px;
+    background: $blue;
+    color: $white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    h1 {
+      margin-bottom: 0;
+    }
+    button {
+      margin-top: 100px;
+      background: $white;
+      color: $blue;
+      border:none;
+      padding: 10px 20px;
+      font-size: 22px;
+    }
+  }
+}
