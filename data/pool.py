@@ -1,12 +1,12 @@
 import settings
 
 def get_staking_pool_data():
-    return {'covered_funds': "15,069,244.62", 'apy': "11.39"}
+    return {'staked_funds': "15,069,244.62", 'apy': "11.39"}
 
-    coveredFunds = settings.POOL_CONTRACT_HTTP.functions.getTotalStakedFunds().call()
+    stakedFunds = settings.POOL_CONTRACT_HTTP.functions.getTotalStakedFunds().call()
     # todo calculate apy
     return {
-        "covered_funds": coveredFunds,
+        "staked_funds": stakedFunds,
         "apy": 12544430000000000000
     }
 
