@@ -12,6 +12,7 @@ def dashboard():
         desc='dashboard',
         tags=["dashboard"],
         currentPage="dashboard",
+        data=pool.get_staking_pool_data()
     )
 
 @app.route('/allocations')
@@ -22,6 +23,7 @@ def allocations():
         desc='allocations',
         tags=["allocations"],
         currentPage="allocations",
+        data=pool.get_covered_protocols()
     )
 
 
@@ -33,6 +35,7 @@ def landing():
         desc='landing',
         tags=["landing"],
         currentPage="landing",
+        data=pool.get_pool_strategies()
     )
 
 if __name__ == '__main__':
