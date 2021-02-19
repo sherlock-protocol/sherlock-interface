@@ -1,6 +1,7 @@
 import settings
 
 from flask import Flask, render_template
+from data import pool
 app = Flask(__name__, template_folder="templates")
 
 @app.route('/dashboard')
@@ -35,4 +36,6 @@ def landing():
     )
 
 if __name__ == '__main__':
+    #print(pool.get_covered_protocols())
+    #print(pool.get_pool_strategies())
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)
