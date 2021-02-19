@@ -25,7 +25,7 @@
       </div>
       <nav>
         {% if currentPage != "landing" %}
-        <a href="/dashboard" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
+        <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/allocations" class="{% if currentPage == "allocations" %}active{% endif %}">Allocations</a>
         {% endif %}
         <a href="#" class="cta{% if wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>

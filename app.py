@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
 
-@app.route('/dashboard')
+@app.route('/')
 def dashboard():
     return render_template(
         'dashboard.html',
@@ -28,18 +28,6 @@ def allocations():
         wallet=request.cookies.get('wallet')
     )
 
-
-@app.route('/')
-def landing():
-    return render_template(
-        'landing.html',
-        title='Landing',
-        desc='landing',
-        tags=["landing"],
-        currentPage="landing",
-        data=pool.get_pool_strategies(),
-        wallet=false
-    )
 
 if __name__ == '__main__':
     # print(pool.get_staking_pool_data())
