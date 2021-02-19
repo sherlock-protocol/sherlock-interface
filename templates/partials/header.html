@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Audits R Dead - {{ title }}</title>
-    <link rel="stylesheet" href="/static/css/common.css">
-    {% if currentPage == "landing" %}<link rel="stylesheet" href="/static/css/landing.css">{% endif %}
-    {% if currentPage == "dashboard" %}<link rel="stylesheet" href="/static/css/dashboard.css">{% endif %}
-    {% if currentPage == "allocations" %}<link rel="stylesheet" href="/static/css/allocations.css">{% endif %}
-  </head>
-  <body>
-    <header>
-      <div class="logo">
-        <img src="static/img/logo.svg" alt="">
-        <span>Audits R Dead.</span>
+
+<head>
+  <meta charset="utf-8">
+  <title>Audits R Dead - {{ title }}</title>
+  <link rel="stylesheet" href="/static/css/common.css">
+  {% if currentPage == "landing" %}
+  <link rel="stylesheet" href="/static/css/landing.css">{% endif %}
+  {% if currentPage == "dashboard" %}
+  <link rel="stylesheet" href="/static/css/dashboard.css">{% endif %}
+  {% if currentPage == "allocations" %}
+  <link rel="stylesheet" href="/static/css/allocations.css">{% endif %}
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="static/img/logo.svg" alt="">
+      <span>Audits R Dead.</span>
+    </div>
+    <div class="side">
+      <div class="meta">
+        <span id="walletName" {% if wallet %} class="hidden" {% endif %}>{{ wallet }}</span>  
       </div>
-      {% if currentPage != "landing" %}
+      <nav>
+        {% if currentPage != "landing" %}
         <a href="/dashboard" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/allocations" class="{% if currentPage == "allocations" %}active{% endif %}">Allocations</a>
-      {% endif %}
-    </header>
-    <div class="app">
-      
+        {% endif %}
+        <a href="#" class="cta{% if wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>
+      </nav>
+    </div>
+  </header>
+  <div class="app">
+    <script type="text/javascript">
+      console.log("{{wallet}}")
+    </script>

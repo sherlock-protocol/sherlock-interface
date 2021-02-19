@@ -1,0 +1,32 @@
+.notification {
+  position: absolute;
+  left: 100px;
+  right: 100px;
+  top: -300px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px $grey;
+  padding: 10px 20px;
+  display: flex;
+  transition: top 300ms ease-in;
+  overflow: hidden;
+  background: tint($grey, 80%);
+
+  &.in {
+    top: 20px;
+
+    .notification__timer {
+      right: 100%;
+    }
+  }
+
+  &__timer {
+    position: absolute;
+    left: 0;
+    height: 10px;
+    right: 0;
+    bottom: 0;
+    border-radius: 0 5px 5px 0;
+    background: $blue;
+    transition: right 5s linear;
+  }
+}

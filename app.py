@@ -1,7 +1,7 @@
 import settings
-
-from flask import Flask, render_template
 from data import pool
+from flask import Flask, render_template, request
+
 app = Flask(__name__, template_folder="templates")
 
 @app.route('/dashboard')
@@ -12,7 +12,8 @@ def dashboard():
         desc='dashboard',
         tags=["dashboard"],
         currentPage="dashboard",
-        data=pool.get_staking_pool_data()
+        data=pool.get_staking_pool_data(),
+        wallet=request.cookies.get('wallet')
     )
 
 @app.route('/allocations')
@@ -23,7 +24,8 @@ def allocations():
         desc='allocations',
         tags=["allocations"],
         currentPage="allocations",
-        data=pool.get_covered_protocols()
+        data=pool.get_covered_protocols(),
+        wallet=request.cookies.get('wallet')
     )
 
 
@@ -35,7 +37,8 @@ def landing():
         desc='landing',
         tags=["landing"],
         currentPage="landing",
-        data=pool.get_pool_strategies()
+        data=pool.get_pool_strategies(),
+        wallet=false
     )
 
 if __name__ == '__main__':

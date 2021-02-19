@@ -1,0 +1,38 @@
+.dashboard-row {
+  display: flex;
+}
+.dashboard-block {
+  flex-basis: calc(50% - 10px);
+  padding: 20px;
+  margin: 20px 10px;
+  box-sizing: border-box;
+  background: #FFF;
+}
+.dashboard-block h2 {
+  color: #006FE7;
+  margin-top: 0;
+}
+.dashboard-block:first-child {
+  margin-left: 0;
+}
+.dashboard-block:last-child {
+  margin-right: 0;
+}
+.dashboard-block hr {
+  margin: 20px 0;
+  border-color: tint(#8e918f, 80%);
+}
+.dashboard-block__key-value {
+  display: flex;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.dashboard-block__key-value .key {
+  flex: 1;
+}
+.dashboard-block__key-value .value {
+  color: #006FE7;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=dashboard.css.map */

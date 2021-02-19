@@ -1,0 +1,39 @@
+.button {
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: $blue;
+  color: $white;
+  cursor: pointer;
+  font-weight: 600;
+
+  &:hover {
+    background-color: tint($blue, 10%);
+  }
+
+  &.danger {
+    background-color: $red;
+
+    &:hover {
+      background-color: tint($red, 10%);
+    }
+  }
+
+  &.warning {
+    background-color: $yellow;
+    color: $black;
+
+    &:hover {
+      background-color: tint($yellow, 10%);
+    }
+  }
+
+  &.alt {
+    background-color: $light-grey;
+    color: $black;
+
+    &:hover {
+      background-color: shade($light-grey, 2%);
+    }
+  }
+}

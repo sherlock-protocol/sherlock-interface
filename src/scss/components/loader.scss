@@ -1,0 +1,67 @@
+.loader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255,255,255,.5);
+
+  .doge {
+    height: 100px;
+    position: absolute;
+    transform: translate3d(0, -160px, 0);
+    transform-origin: 70px 70px;
+    -webkit-animation: rotating 4s linear infinite;
+    -moz-animation: rotating 4s linear infinite;
+    -ms-animation: rotating 4s linear infinite;
+    -o-animation: rotating 4s linear infinite;
+    animation: rotating 4s linear infinite;
+  }
+
+  .moon {
+    position: absolute;
+    height: 200px;
+  }
+
+  p {
+    margin-top: 300px;
+    font-weight: bold;
+    color: $blue;
+    font-size: 22px;
+    z-index: 1;
+  }
+}
+/* Safari and Chrome */
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg),translate3d(0, -160px, 0);
+    -o-transform: rotate(0deg),translate3d(0, -160px, 0);
+    transform: rotate(0deg),translate3d(0, -160px, 0);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg),translate3d(0, -160px, 0);
+    -o-transform: rotate(360deg)translate3d(0, -160px, 0);
+    transform: rotate(360deg)translate3d(0, -160px, 0);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg)translate3d(0, -160px, 0);
+    -moz-transform: rotate(0deg)translate3d(0, -160px, 0);
+    -webkit-transform: rotate(0deg)translate3d(0, -160px, 0);
+    -o-transform: rotate(0deg)translate3d(0, -160px, 0);
+    transform: rotate(0deg)translate3d(0, -160px, 0);
+  }
+
+  to {
+    -ms-transform: rotate(360deg)translate3d(0, -160px, 0);
+    -moz-transform: rotate(360deg)translate3d(0, -160px, 0);
+    -webkit-transform: rotate(360deg)translate3d(0, -160px, 0);
+    -o-transform: rotate(360deg)translate3d(0, -160px, 0);
+    transform: rotate(360deg)translate3d(0, -160px, 0);
+  }
+}
