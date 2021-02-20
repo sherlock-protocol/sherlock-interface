@@ -274,6 +274,9 @@ fieldset .input {
   display: flex;
   flex: 1;
 }
+fieldset .input img.logo {
+  width: 30px;
+}
 fieldset .input.readonly label {
   top: 0;
   font-size: 12px;

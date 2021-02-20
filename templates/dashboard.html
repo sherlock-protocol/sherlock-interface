@@ -1,62 +1,62 @@
 {% include 'partials/header.html' %}
-  <div class="dashboard">
-    <div class="dashboard-row">
-      
-      <div class="dashboard-block">
-        <h2>Staking Pool</h2>
-        <div class="dashboard-block__key-value">
-          <span class="key">Current APY</span>
-          <span class="value">{{data.apy}}%</span>
-        </div>
-        <div class="dashboard-block__key-value">
-          <span class="key">Pool Size</span>
-          <span class="value">${{data.covered_funds}}</span>
-        </div>
-        <div class="dashboard-block__key-value">
-          <span class="key">Lockup</span>
-          <span class="value">3 days</span>
-        </div>
-        {% if wallet != "None" %}
-        <form id="stakeForm">
-            <fieldset>
-              <div class="input">
-                <input type="number" id="amount" name="amount" value="" required>
-                <label for="amount">Amount</label>
-              </div>
-              <div class="input readonly">
-                <!-- <select type="text" name="coin" value="" required>
+<div class="dashboard">
+  <div class="dashboard-row">
+
+    <div class="dashboard-block">
+      <h2>Staking Pool</h2>
+      <div class="dashboard-block__key-value">
+        <span class="key">Current APY</span>
+        <span class="value">{{data.apy}}%</span>
+      </div>
+      <div class="dashboard-block__key-value">
+        <span class="key">Pool Size</span>
+        <span class="value">${{data.staked_funds}}</span>
+      </div>
+      <div class="dashboard-block__key-value">
+        <span class="key">Lockup</span>
+        <span class="value">3 days</span>
+      </div>
+      {% if wallet != "None" %}
+      <form id="stakeForm">
+        <fieldset>
+          <div class="input">
+            <input type="number" id="amount" name="amount" value="" required>
+            <label for="amount">Amount</label>
+          </div>
+          <div class="input readonly">
+            <!-- <select type="text" name="coin" value="" required>
                   <option value="" selected></option>
                   <option value="dai">DAI</option>
                   <option value="dai2">LINK</option>
                   <option value="dai3">DOGE</option>
                 </select> -->
-                <input type="text" name="" value="DAI" readonly>
-                <img src="/static/svg/crypto/color/dai.svg" alt="">
-                <label for="coin">Coin</label>
-              </div>  
-            </fieldset>
-            <button id="setStake" class="button button-centered" type="button" name="button">stake</button>
-        </form>
-        {% endif %}
-      </div>
-      {% if wallet != "None" %}
-        <div class="dashboard-block">
-          <h2>Your Funds</h2>
-          <div class="dashboard-block__key-value">
-            <span class="key">Earnings Per Month</span>
-            <span class="value">$0.01</span>
+            <input type="text" name="" value="DAI" readonly>
+            <img class="icon" src="/static/svg/crypto/color/dai.svg" alt="">
+            <label for="coin">Coin</label>
           </div>
-          <div class="dashboard-block__key-value">
-            <span class="key">Funds Available to Claim</span>
-            <span class="value">$0.00</span>
-          </div>
-          <hr>
-          <div class="dashboard-block__key-value">
-            <span class="key">Total Funds</span>
-            <span class="value">$1.00</span>
-          </div>
-        </div>
+        </fieldset>
+        <button id="setStake" class="button button-centered" type="button" name="button">stake</button>
+      </form>
       {% endif %}
     </div>
+    {% if wallet != "None" %}
+    <div class="dashboard-block">
+      <h2>Your Funds</h2>
+      <div class="dashboard-block__key-value">
+        <span class="key">Earnings Per Month</span>
+        <span class="value">$0.01</span>
+      </div>
+      <div class="dashboard-block__key-value">
+        <span class="key">Funds Available to Claim</span>
+        <span class="value">$0.00</span>
+      </div>
+      <hr>
+      <div class="dashboard-block__key-value">
+        <span class="key">Total Funds</span>
+        <span class="value">$1.00</span>
+      </div>
+    </div>
+    {% endif %}
   </div>
+</div>
 {% include 'partials/footer.html' %}

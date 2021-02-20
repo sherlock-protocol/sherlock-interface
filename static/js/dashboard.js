@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const network = {
     name: "kovan",
     chainId: 0x2a,
-    ensAddress: 0x2a
+    // ensAddress: 0x2a
   };
   let setStakeEl = document.querySelector("#setStake");
   let provider = _ethers.getDefaultProvider(network, {
@@ -472,11 +472,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
   
   let contract = new _ethers.Contract(contractAddress, abi, provider);
   console.log(contract);
-  // contract.getFunds(app.getCookie("wallet")).then(response => {
-  //   console.log(response);
-  // }).catch(err => {
-  //   console.log(err);
-  // });
+  contract.getFunds(app.getCookie("wallet")).then(response => {
+    console.log(response);
+  }).catch(err => {
+    console.log(err);
+  });
   let setStake = () => {
     let form = document.querySelector('form#stakeForm');
     if(form) {
