@@ -8,7 +8,8 @@ def env():
     return {
         "network": settings.NETWORK,
         "chainid": settings.CHAINID,
-        "infura": settings.INFURA_TOKEN
+        "infura": settings.INFURA_TOKEN,
+        "pool_address": settings.POOL_ADDRESS
     }
 
 @app.route('/')
