@@ -7,6 +7,7 @@ SERVER_HOST = config('SERVER_HOST', default="localhost")
 SERVER_PORT = config('SERVER_PORT', default=5000)
 
 NETWORK = config('NETWORK')
+CHAINID = config('CHAINID')
 INFURA_TOKEN = config('INFURA_TOKEN')
 
 with open(os.path.join("data", "abi", "Insurance.json")) as json_data:

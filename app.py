@@ -4,6 +4,13 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
 
+def env():
+    return {
+        "network": settings.NETWORK,
+        "chainid": settings.CHAINID,
+        "infura": settings.INFURA_TOKEN
+    }
+
 @app.route('/')
 def dashboard():
     return render_template(
@@ -13,7 +20,8 @@ def dashboard():
         tags=["dashboard"],
         currentPage="dashboard",
         data=pool.get_staking_pool_data(),
-        wallet=request.cookies.get('wallet')
+        wallet=request.cookies.get('wallet'),
+        env=env()
     )
 
 @app.route('/allocations')
@@ -25,7 +33,8 @@ def allocations():
         tags=["allocations"],
         currentPage="allocations",
         data=pool.get_covered_protocols(),
-        wallet=request.cookies.get('wallet')
+        wallet=request.cookies.get('wallet'),
+        env=env()
     )
 
 
