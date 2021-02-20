@@ -1,11 +1,9 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-  const network = {
-    name: "kovan",
-    chainId: 0x2a,
-    // ensAddress: 0x2a
-  };
   let setStakeEl = document.querySelector("#setStake");
-  let provider = _ethers.getDefaultProvider(network, {
+  let provider = _ethers.getDefaultProvider({
+    name: window.settings.network.toLowerCase(),
+    chainId: parseInt(window.settings.chainid),
+  }, {
     infura: "21ea206b0394489fa99ade05cf9cb614",
   });
 
@@ -469,7 +467,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     "stateMutability": "nonpayable",
     "type": "function"
   }];
-  
+
   let contract = new _ethers.Contract(contractAddress, abi, provider);
   console.log(contract);
   contract.getFunds(app.getCookie("wallet")).then(response => {
@@ -479,16 +477,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
   });
   let setStake = () => {
     let form = document.querySelector('form#stakeForm');
-    if(form) {
-      if(app.validateForm(form)) {
+    if (form) {
+      if (app.validateForm(form)) {
         console.log('Form valid');
       } else {
         console.log('Form invalid');
       }
     }
   }
-  
+
   setStakeEl.addEventListener('click', setStake);
-  
+
 
 });

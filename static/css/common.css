@@ -274,7 +274,7 @@ fieldset .input {
   display: flex;
   flex: 1;
 }
-fieldset .input img.logo {
+fieldset .input img.icon {
   width: 30px;
 }
 fieldset .input.readonly label {
