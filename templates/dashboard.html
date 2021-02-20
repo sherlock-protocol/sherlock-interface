@@ -6,21 +6,38 @@
         <h2>Staking Pool</h2>
         <div class="dashboard-block__key-value">
           <span class="key">Current APY</span>
-          <span class="value">11.39%</span>
+          <span class="value">{{data.apy}}%</span>
         </div>
         <div class="dashboard-block__key-value">
           <span class="key">Pool Size</span>
-          <span class="value">$15,069,244.62</span>
+          <span class="value">${{data.covered_funds}}</span>
         </div>
         <div class="dashboard-block__key-value">
           <span class="key">Lockup</span>
           <span class="value">3 days</span>
         </div>
-        
-        <button class="button danger" type="button" name="button">Danger</button>
-        <button class="button warning" type="button" name="button">Warning</button>
-        <button class="button" type="button" name="button">Info</button>
-        <button class="button alt" type="button" name="button">Cancel</button>
+        {% if wallet != "None" %}
+        <form id="stakeForm">
+            <fieldset>
+              <div class="input">
+                <input type="number" id="amount" name="amount" value="" required>
+                <label for="amount">Amount</label>
+              </div>
+              <div class="input readonly">
+                <!-- <select type="text" name="coin" value="" required>
+                  <option value="" selected></option>
+                  <option value="dai">DAI</option>
+                  <option value="dai2">LINK</option>
+                  <option value="dai3">DOGE</option>
+                </select> -->
+                <input type="text" name="" value="DAI" readonly>
+                <img src="/static/svg/crypto/color/dai.svg" alt="">
+                <label for="coin">Coin</label>
+              </div>  
+            </fieldset>
+            <button id="setStake" class="button button-centered" type="button" name="button">stake</button>
+        </form>
+        {% endif %}
       </div>
       {% if wallet != "None" %}
         <div class="dashboard-block">
@@ -43,8 +60,3 @@
     </div>
   </div>
 {% include 'partials/footer.html' %}
-
-
-
-
-

@@ -60,3 +60,17 @@ window.app.getCookie = cname => {
   }
   return "";
 }
+
+window.app.validateForm = form => {
+  let inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+  let valid = true;
+
+  inputs.forEach(item => {
+    if(!item.value || item.value === "") {
+      if(valid)item.focus();
+      valid = false;
+    }
+  });
+  
+  return valid;
+}

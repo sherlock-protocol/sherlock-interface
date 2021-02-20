@@ -6,6 +6,11 @@
   color: $white;
   cursor: pointer;
   font-weight: 600;
+  
+  &-centered {
+    margin: 0px auto;
+    display: block;
+  }
 
   &:hover {
     background-color: tint($blue, 10%);

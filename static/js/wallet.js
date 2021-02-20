@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
   if (ethereum) {
-    var provider = new _ethers.providers.Web3Provider(ethereum);
+    var provider = new _ethers.providers.Web3Provider(web3.currentProvider);
   } else {
     app.notify("Error", "MetaMask is not installed");
   }

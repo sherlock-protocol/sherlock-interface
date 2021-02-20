@@ -231,6 +231,10 @@ footer {
   cursor: pointer;
   font-weight: 600;
 }
+.button-centered {
+  margin: 0px auto;
+  display: block;
+}
 .button:hover {
   background-color: #1a7de9;
 }
@@ -253,6 +257,60 @@ footer {
 }
 .button.alt:hover {
   background-color: #e3e4e4;
+}
+
+fieldset {
+  display: flex;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+}
+fieldset .input {
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 20px;
+  border-bottom: 1px solid #e8e9e9;
+  margin-right: 20px;
+  display: flex;
+  flex: 1;
+}
+fieldset .input.readonly label {
+  top: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #006FE7;
+}
+fieldset .input:last-child {
+  margin-right: 0;
+}
+fieldset .input label {
+  position: absolute;
+  left: 0;
+  font-size: 18px;
+  top: 20px;
+  padding: 10px 0;
+  transition: top 300ms ease-out, font-size 300ms ease-out, font-weight 300ms ease-out, color 300ms ease-out;
+}
+fieldset .input input,
+fieldset .input select {
+  font-size: 18px;
+  border-radius: 0;
+  border: none;
+  height: 44px;
+  box-sizing: border-box;
+  width: 100%;
+}
+fieldset .input input:focus,
+fieldset .input select:focus {
+  outline: none;
+}
+fieldset .input input:focus + label, fieldset .input input:valid + label,
+fieldset .input select:focus + label,
+fieldset .input select:valid + label {
+  top: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #006FE7;
 }
 
 /*# sourceMappingURL=common.css.map */

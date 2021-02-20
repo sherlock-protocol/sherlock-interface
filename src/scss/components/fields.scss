@@ -1,0 +1,60 @@
+fieldset {
+  display: flex;
+  border: none;
+  box-sizing: border-box;
+  width: 100%;
+
+  .input {
+    position: relative;
+    box-sizing: border-box;
+    padding-top: 20px;
+    border-bottom: 1px solid $light-grey;
+    margin-right: 20px;
+    display: flex;
+    flex: 1;
+
+    &.readonly {
+      label {
+        top: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: $blue;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    label {
+      position: absolute;
+      left: 0;
+      font-size: 18px;
+      top: 20px;
+      padding: 10px 0;
+      transition: top 300ms ease-out, font-size 300ms ease-out, font-weight 300ms ease-out, color 300ms ease-out;
+    }
+
+    input,
+    select {
+      font-size: 18px;
+      border-radius: 0;
+      border: none;
+      height: 44px;
+      box-sizing: border-box;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus + label,
+      &:valid + label {
+        top: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: $blue;
+      }
+    }
+  }
+}
