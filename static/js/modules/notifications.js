@@ -1,39 +1,53 @@
-window.app.notify = (title, msg, type, action) => {
-  let template = document.createElement('div');
-  template.classList.add('notification');
-  template.classList.add(type);
-  template.innerHTML = app.parse `
-    <div class="notification__meta">
-      <h4>${title}</h4>
-      <p>${msg}</p>
-    </div>
-    <div class="notification__meta">
-      
-    </div>
-    <button class="button alt">Close</button>
-    <div class="notification__timer">
-      
-    </div>
-  `;
+class NotificationCenter {
+  constructor() {
+    this.notifications = [];
+    this.el = document.querySelector('.notification-center')
+    window.app.notify = this.notify;
+  }
 
-  document.body.appendChild(template);
+  notify = (title, msg, type) => {
+    let template = document.createElement('div');
+    template.classList.add('notification');
+    template.classList.add(type);
+    template.innerHTML = app.parse `
+        <div class="notification__meta">
+          <h4>${title}</h4>
+          <p>${msg}</p>
+        </div>
+        <div class="notification__meta">
+  
+        </div>
+        <button class="button alt">Close</button>
+        <div class="notification__timer">
+  
+        </div>
+      `;
 
-  template.querySelector('button').addEventListener('click', () => {
-    template.classList.remove('in');
+    this.el.appendChild(template);
+
+    template.querySelector('button').addEventListener('click', () => {
+      this.delete(template);
+    });
+
     setTimeout(() => {
-      template.remove(template);
-    }, 1000);
-  })
+      template.classList.add('in');
+    }, 10);
 
-  setTimeout(() => {
-    template.classList.add('in');
-  }, 10);
+    setTimeout(() => {
+      this.delete(template);
+    }, 5000);
+  }
+  delete = template => {
 
-  setTimeout(() => {
     template.querySelector('.notification__timer').classList.add('hidden');
     template.classList.remove('in');
+    template.classList.add('out');
     setTimeout(() => {
       template.remove(template);
-    }, 1000);
-  }, 5000);
-};
+    }, 300);
+  }
+
+
+}
+
+window.notificationCenter = new NotificationCenter;

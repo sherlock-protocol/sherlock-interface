@@ -236,18 +236,28 @@ footer {
   cursor: pointer;
 }
 
-.notification {
+.notification-center {
   position: absolute;
-  left: 100px;
-  right: 100px;
-  top: -300px;
+  left: 60%;
+  right: 20px;
+  bottom: 20px;
+}
+
+.notification {
   border-radius: 5px;
   box-shadow: 2px 2px 5px #8e918f;
   padding: 20px;
   display: flex;
-  transition: top 300ms ease-in;
+  transition: opacity 300ms ease-in, margin-top 300ms ease-in;
   overflow: hidden;
   background: #FFF;
+  margin-bottom: 10px;
+  position: relative;
+  opacity: 0;
+  margin-top: -100px;
+}
+.notification button {
+  align-self: flex-end;
 }
 .notification__meta {
   flex: 1;
@@ -275,8 +285,16 @@ footer {
 .notification.danger .notification__timer {
   background: #e74c3c;
 }
+.notification.out {
+  margin-top: -100px;
+}
+.notification.out .notification__timer {
+  display: none;
+}
 .notification.in {
-  top: 20px;
+  opacity: 1;
+  margin-top: 0;
+  transition: opacity 300ms ease-in, margin-top 300ms ease-in;
 }
 .notification.in .notification__timer {
   right: 100%;
