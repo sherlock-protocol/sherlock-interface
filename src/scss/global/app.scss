@@ -1,5 +1,25 @@
 .app {
-  padding: 0 100px;
+  padding: 0 500px;
   flex: 1;
   background: tint($grey, 90%);
+}
+@media only screen and (max-width: 2000px) {
+  .app {
+    padding: 0 500px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  .app {
+    padding: 0 300px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .app {
+    padding: 0 100px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .app {
+    padding: 0 50px;
+  }
 }

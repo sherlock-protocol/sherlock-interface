@@ -1,7 +1,7 @@
 header {
   background: $blue;
   color: $white;
-  padding: 20px 100px 0;
+  padding: 20px 500px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -84,5 +84,29 @@ header {
     span {
       margin-left: 20px;
     }
+  }
+}
+@media only screen and (max-width: 2000px) {
+  header {
+    padding-left: 500px;
+    padding-right: 500px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  header {
+    padding-left: 300px;
+    padding-right: 300px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  header {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  header {
+    padding-left: 50px;
+    padding-right: 50px;
   }
 }

@@ -12,15 +12,35 @@ body {
 }
 
 .app {
-  padding: 0 100px;
+  padding: 0 500px;
   flex: 1;
   background: #f4f4f4;
 }
 
+@media only screen and (max-width: 2000px) {
+  .app {
+    padding: 0 500px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  .app {
+    padding: 0 300px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .app {
+    padding: 0 100px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .app {
+    padding: 0 50px;
+  }
+}
 header {
   background: #006FE7;
   color: #FFF;
-  padding: 20px 100px 0;
+  padding: 20px 500px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -90,6 +110,30 @@ header .logo span {
   margin-left: 20px;
 }
 
+@media only screen and (max-width: 2000px) {
+  header {
+    padding-left: 500px;
+    padding-right: 500px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  header {
+    padding-left: 300px;
+    padding-right: 300px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  header {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  header {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
 footer {
   color: #FFF;
   background: #006FE7;
@@ -282,6 +326,9 @@ fieldset .input.readonly label {
   font-size: 12px;
   font-weight: 600;
   color: #006FE7;
+}
+fieldset .input-big {
+  flex: 2;
 }
 fieldset .input:last-child {
   margin-right: 0;
