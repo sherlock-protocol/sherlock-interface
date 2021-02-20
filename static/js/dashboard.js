@@ -15,18 +15,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   // }).catch(err => {
   //   console.log(err);
   // });
-  // let setStake = () => {
-  //   let form = document.querySelector('form#stakeForm');
-  //   if (form) {
-  //     if (app.validateForm(form)) {
-  //       console.log('Form valid');
-  //     } else {
-  //       console.log('Form invalid');
-  //     }
-  //   }
-  // }
   // 
-  // setStakeEl.addEventListener('click', setStake);
   let fetchContract = () => {
     let abi = fetch('/static/json/abi/pool.json')
       .then(response => response.json())
@@ -35,5 +24,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
         window.contract = contract;
       });
   }
+
+  let setStake = () => {
+    let form = document.querySelector('form#stakeForm');
+    if (form) {
+      if (app.validateForm(form)) {
+        console.log('Form valid');
+      } else {
+        app.notify("Warning", "Please fill in the form correctly", "warning");
+      }
+    }
+  }
+
   fetchContract();
+  setStakeEl.addEventListener('click', setStake);
 });

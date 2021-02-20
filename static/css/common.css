@@ -243,11 +243,37 @@ footer {
   top: -300px;
   border-radius: 5px;
   box-shadow: 2px 2px 5px #8e918f;
-  padding: 10px 20px;
+  padding: 20px;
   display: flex;
   transition: top 300ms ease-in;
   overflow: hidden;
-  background: #e8e9e9;
+  background: #FFF;
+}
+.notification__meta {
+  flex: 1;
+}
+.notification h4 {
+  margin: 0;
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #006FE7;
+}
+.notification p {
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.notification.warning h4 {
+  color: #f1c40f;
+}
+.notification.warning .notification__timer {
+  background: #f1c40f;
+}
+.notification.danger h4 {
+  color: #e74c3c;
+}
+.notification.danger .notification__timer {
+  background: #e74c3c;
 }
 .notification.in {
   top: 20px;
@@ -274,6 +300,7 @@ footer {
   color: #FFF;
   cursor: pointer;
   font-weight: 600;
+  outline: none;
 }
 .button-centered {
   margin: 0px auto;

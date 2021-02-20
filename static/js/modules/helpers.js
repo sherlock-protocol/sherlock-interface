@@ -18,10 +18,8 @@ window.app.domify = (str) => {
 }
 
 window.app.parse = (tmpl, ...vs) => {
-  console.log(tmpl);
   let result = '';
   for (let i = 0; i < vs.length; i++) {
-    console.log(tmpl[i]);
     if (vs[i] instanceof SafeString)
       result += tmpl[i] + vs[i].toString();
     else

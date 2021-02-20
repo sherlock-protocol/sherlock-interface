@@ -8,6 +8,9 @@
   box-sizing: border-box;
   background: #FFF;
 }
+.dashboard-block fieldset {
+  margin-bottom: 40px;
+}
 .dashboard-block h2 {
   color: #006FE7;
   margin-top: 0;

@@ -11,6 +11,10 @@
     margin: 20px 10px;
     box-sizing: border-box;
     background: $white;
+    
+    fieldset {
+      margin-bottom: 40px;
+    }
 
     h2 {
       color: $blue;
