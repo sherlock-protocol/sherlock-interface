@@ -11,6 +11,8 @@
     margin: 20px 10px;
     box-sizing: border-box;
     background: $white;
+    display: flex;
+    flex-direction: column;
     
     fieldset {
       margin-bottom: 40px;

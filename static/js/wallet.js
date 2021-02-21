@@ -7,6 +7,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let walletButtonEl = document.querySelector('a#walletConnect');
   let walletNameEl = document.querySelector('#walletName');
+  let fundsBlock = document.querySelector('#fundsBlock');
+  let stakeForm = document.querySelector('#stakeForm');
 
   let connectWallet = e => {
     e.preventDefault();
@@ -30,20 +32,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
       walletButtonEl.classList.add('hidden');
       walletNameEl.innerText = wallet;
       walletNameEl.classList.remove('hidden');
+      if (stakeForm && stakeForm.classList.contains('hidden')) {
+        stakeForm.classList.remove('hidden');
+      }
+      if (fundsBlock && fundsBlock.classList.contains('hidden')) {
+        fundsBlock.classList.remove('hidden');
+        window.helpers.contract.fetchFunds();
+      }
     } else {
       app.notify("Error", "No active accounts found.")
     }
   }
-
 
   let disableWallet = () => {
     window.app.setCookie('wallet', "None", 60);
     walletButtonEl.classList.remove('hidden');
     walletNameEl.innerText = "";
     walletNameEl.classList.add('hidden');
+    if (stakeForm)
+      stakeForm.classList.add('hidden');
+    if (fundsBlock)
+      fundsBlock.classList.add('hidden');
   }
-
-
 
   ethereum.on('accountsChanged', function(accounts) {
     if (accounts && !accounts.length) {

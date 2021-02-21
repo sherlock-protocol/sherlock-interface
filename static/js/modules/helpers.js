@@ -59,6 +59,11 @@ window.app.getCookie = cname => {
   return "";
 }
 
+window.app.currency = value => {
+  if(value === "0.0") return "0.00"
+  return value.substring(0, value.length - 16);
+}
+
 window.app.validateForm = form => {
   let inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
   let valid = true;

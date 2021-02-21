@@ -11,4 +11,8 @@ body {
   display: none !important;
 }
 
+.flex {
+  flex: 1;
+}
+
 /*# sourceMappingURL=overrides.css.map */

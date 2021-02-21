@@ -1,1 +1,2 @@
 window.app = {};
+window.helpers = {};

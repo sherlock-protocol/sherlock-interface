@@ -16,8 +16,8 @@
         <span class="key">Lockup</span>
         <span class="value">3 days</span>
       </div>
-      {% if wallet != "None" %}
-      <form id="stakeForm">
+      
+      <form id="stakeForm" {% if wallet == "None" %} hidden {% endif %}>
         <fieldset>
           <div class="input input-big">
             <input type="number" id="amount" name="amount" value="" required>
@@ -35,28 +35,29 @@
             <label for="coin">Coin</label>
           </div>
         </fieldset>
-        <button id="setStake" class="button button-centered" type="button" name="button">stake</button>
+        <div class="flex"></div>
+        <button id="deposit" class="button button-centered" type="button" name="button">Deposit</button>
       </form>
-      {% endif %}
     </div>
-    {% if wallet != "None" %}
-    <div class="dashboard-block">
+    
+    <div id="fundsBlock" class="dashboard-block {% if wallet == "None" %}hidden{% endif %}">
       <h2>Your Funds</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Earnings Per Month</span>
-        <span class="value">$0.01</span>
+        <span id="fundsMonthly" class="value">$0.00</span>
       </div>
       <div class="dashboard-block__key-value">
         <span class="key">Funds Available to Claim</span>
-        <span class="value">$0.00</span>
+        <span id="fundsAvailable" class="value">$0.00</span>
       </div>
       <hr>
       <div class="dashboard-block__key-value">
         <span class="key">Total Funds</span>
-        <span class="value">$1.00</span>
+        <span id="fundsTotal" class="value">$0.00</span>
       </div>
+      <div class="flex"></div>
+      <button id="withdraw" class="button button-centered" type="button" name="button">Withdraw</button>
     </div>
-    {% endif %}
   </div>
 </div>
 {% include 'partials/footer.html' %}

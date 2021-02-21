@@ -11,6 +11,10 @@ body {
   display: none !important;
 }
 
+.flex {
+  flex: 1;
+}
+
 .app {
   padding: 0 500px;
   flex: 1;
@@ -261,6 +265,7 @@ footer {
 }
 .notification__meta {
   flex: 1;
+  margin-right: 20px;
 }
 .notification h4 {
   margin: 0;
