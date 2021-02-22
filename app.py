@@ -33,7 +33,12 @@ def allocations():
         desc='allocations',
         tags=["allocations"],
         currentPage="allocations",
-        data=pool.get_covered_protocols(),
+        data={
+            "covered_protocols": pool.get_covered_protocols(),
+            "pool_strategies": pool.get_pool_strategies(),
+            "total_covered_protocols": 12,
+            "total_pool_strategies": 1.1e+25
+        },
         wallet=request.cookies.get('wallet'),
         env=env()
     )
