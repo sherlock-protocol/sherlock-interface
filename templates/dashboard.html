@@ -1,8 +1,8 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
-  <div class="dashboard-row">
+  <div class=" blocks__row">
 
-    <div class="dashboard-block">
+    <div class="dashboard-block blocks__row-block">
       <h2>Staking Pool</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Current APY</span>
@@ -40,7 +40,7 @@
       </form>
     </div>
     
-    <div id="fundsBlock" class="dashboard-block {% if wallet == "None" %}hidden{% endif %}">
+    <div id="fundsBlock" class="dashboard-block  blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
       <h2>Your Funds</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Earnings Per Month</span>

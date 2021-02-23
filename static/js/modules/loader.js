@@ -1,6 +1,8 @@
-window.app.addLoader = (el, msg) => {
+window.app.addLoader = (el, msg, size) => {
+  console.log(msg);
   let template = document.createElement('div');
   template.classList.add('loader');
+  template.classList.add('loader-' + size);
   template.innerHTML = `
     <img class="moon" src="/static/img/moon.svg"/>
     <img class="doge" src="/static/img/doge.svg"/>

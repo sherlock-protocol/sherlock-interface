@@ -1,10 +1,4 @@
-.dashboard-row {
-  display: flex;
-}
 .dashboard-block {
-  flex-basis: calc(50% - 10px);
-  padding: 20px;
-  margin: 20px 10px;
   box-sizing: border-box;
   background: #FFF;
   display: flex;
@@ -12,16 +6,6 @@
 }
 .dashboard-block fieldset {
   margin-bottom: 40px;
-}
-.dashboard-block h2 {
-  color: #006FE7;
-  margin-top: 0;
-}
-.dashboard-block:first-child {
-  margin-left: 0;
-}
-.dashboard-block:last-child {
-  margin-right: 0;
 }
 .dashboard-block hr {
   margin: 20px 0;

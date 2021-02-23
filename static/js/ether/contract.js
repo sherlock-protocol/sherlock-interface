@@ -23,8 +23,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
           window.contractWithSigner = contract.connect(signer);
 
           window.contract = contract;
-          if (app.getCookie("wallet") !== 'None') {
-            app.addLoader(document.querySelector("#fundsBlock"), "Loading funds...");
+          if (app.getCookie("wallet") !== 'None' && document.querySelector("#fundsBlock")) {
+            app.addLoader(document.querySelector("#fundsBlock"), "Loading funds...", "small");
             window.helpers.contract.fetchFunds(window.helpers.contract.processFundsBlock);
             window.helpers.contract.stakesWithdraw(window.helpers.contract.processFundsBlock);
           }
@@ -33,21 +33,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fetchFunds: (cb) => {
       window.contract.getFunds(app.getCookie('wallet'))
         .then(response => {
-          let funds = _ethers.utils.formatUnits(response, 18);
-          document.querySelector('#fundsTotal').innerHTML = app.parse `$${app.currency(funds)}`
+          document.querySelector('#fundsTotal').innerHTML = app.parse `$${app.currency(response)}`
           status.funds = true;
           cb();
         })
         .catch(err => {
           console.log(err);
-        })
+        });
     },
     stakesWithdraw: (cb) => {
       window.contract.stakesWithdraw(app.getCookie('wallet'))
         .then(response => {
           status.withdraw = true;
-          let funds = _ethers.utils.formatUnits(response.stake, 18);
-          document.querySelector('#fundsAvailable').innerHTML = app.parse `$${app.currency(funds)}`
+          // let funds = _ethers.utils.formatUnits(response.stake, 18);
+          document.querySelector('#fundsAvailable').innerHTML = app.parse `$${app.currency(response.stake)}`
           cb();
         })
         .catch(err => {

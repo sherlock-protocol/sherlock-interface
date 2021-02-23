@@ -7,15 +7,18 @@
     </div>
     <script type="text/javascript">
       window.settings = {{ env|tojson }};
+      window.data = {{ data|tojson }};
     </script>
     <script src="/static/json/abi/pool.json" type="application/json" charset="utf-8"></script>
     <script src="/static/js/ext/ethers.min.js" type="module" charset="utf-8"></script>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
     <script src="/static/js/modules/manager.js" type="module" charset="utf-8"></script>
     <script src="/static/js/modules/loader.js" type="module" charset="utf-8"></script>
     <script src="/static/js/modules/notifications.js" type="module" charset="utf-8"></script>
     <script src="/static/js/modules/helpers.js" type="module" charset="utf-8"></script>
     <script src="/static/js/ether/contract.js" type="module" charset="utf-8"></script>
     <script src="/static/js/wallet.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/{{ title }}.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/{{ currentPage }}.js" type="module" charset="utf-8"></script>
   </body>
 </html>

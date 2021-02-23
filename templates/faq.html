@@ -1,0 +1,10 @@
+{% include 'partials/header.html' %}
+  <article class="faq">
+    {% for item in data.faq %}
+    <div class="faq-item" collapsed="true">
+        <h4>{{ item.q }}</h4>
+        <p>{{ item.a }}</p>
+    </div>
+    {% endfor %}
+  </article>
+{% include 'partials/footer.html' %}

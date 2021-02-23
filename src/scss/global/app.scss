@@ -3,6 +3,7 @@
   flex: 1;
   background: tint($grey, 90%);
 }
+
 @media only screen and (max-width: 2000px) {
   .app {
     padding: 0 500px;
@@ -10,7 +11,12 @@
 }
 @media only screen and (max-width: 1800px) {
   .app {
-    padding: 0 300px;
+    padding: 0 200px;
+  }
+}
+@media only screen and (max-width: 1500px) {
+  .app {
+    padding: 0 150px;
   }
 }
 @media only screen and (max-width: 1200px) {

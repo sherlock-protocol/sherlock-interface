@@ -1,0 +1,42 @@
+.faq-item {
+  margin-bottom: 10px;
+}
+.faq-item[collapsed=false] p {
+  max-height: 300px;
+}
+.faq-item[collapsed=false] h4:before {
+  transform: rotate(90deg);
+}
+.faq-item:hover h4:before {
+  transform: rotate(90deg);
+}
+.faq-item h4 {
+  color: #006FE7;
+  margin-bottom: 5px;
+  position: relative;
+  font-size: 22px;
+  cursor: pointer;
+}
+.faq-item h4:before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 5px;
+  width: 0;
+  height: 0;
+  display: inline-block;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 8px 0 8px 8px;
+  border-color: transparent #006FE7 transparent;
+  transition: transform 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.faq-item p {
+  margin-top: 0;
+  transition: max-height 600ms ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=faq.css.map */

@@ -1,0 +1,63 @@
+@import "global/variables";
+$caret-size: 8px;
+
+.faq {
+  &-item {
+    margin-bottom: 10px;
+
+    &[collapsed="true"] {
+      p {}
+    }
+
+    &[collapsed="false"] {
+      p {
+        max-height: 300px;
+      }
+
+      h4 {
+        &:before {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    &:hover {
+      h4 {
+        &:before {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    h4 {
+      color: $blue;
+      margin-bottom: 5px;
+      position: relative;
+      font-size: 22px;
+      cursor: pointer;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 5px;
+        width: 0;
+        height: 0;
+        display: inline-block;
+        vertical-align: middle;
+        border-style: solid;
+        border-width: $caret-size 0 $caret-size $caret-size;
+        border-color: transparent $blue transparent;
+        transition: transform 300ms ease-in-out;
+        transform: rotate(0deg);
+      }
+    }
+
+    p {
+      margin-top: 0;
+      transition: max-height 600ms ease-in-out;
+      max-height: 0;
+      overflow: hidden;
+    }
+  }
+}

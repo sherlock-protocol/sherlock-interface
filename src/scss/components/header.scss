@@ -82,7 +82,7 @@ header {
     }
 
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
   }
 }
@@ -94,8 +94,14 @@ header {
 }
 @media only screen and (max-width: 1800px) {
   header {
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+}
+@media only screen and (max-width: 1500px) {
+  header {
+    padding-left: 150px;
+    padding-right: 150px;
   }
 }
 @media only screen and (max-width: 1200px) {

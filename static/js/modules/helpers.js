@@ -60,8 +60,35 @@ window.app.getCookie = cname => {
 }
 
 window.app.currency = value => {
+  value = _ethers.utils.formatUnits (value, 18);
+  console.log(value);
+  
   if(value === "0.0") return "0.00"
-  return value.substring(0, value.length - 16);
+  console.log("Dont show");
+
+  let split = value.split('.');
+  if(split[1].length !== 18) {
+    for (var i = 0; 18 - split[1].length; i++) {
+      split[1] += '0';
+    }
+  }
+  value = split[0] + '.' + split[1];
+  return window.app.abbreviateNumber(value.substring(0, value.length - 16));
+}
+
+window.app.abbreviateNumber = value => {
+  let newValue = value;
+  const suffixes = ["", "K", "M", "B","T"];
+  let suffixNum = 0;
+  while (newValue >= 1000) {
+    newValue /= 1000;
+    suffixNum++;
+  }
+
+  newValue = newValue.toPrecision(3);
+
+  newValue += suffixes[suffixNum];
+  return newValue;
 }
 
 window.app.validateForm = form => {

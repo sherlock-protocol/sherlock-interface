@@ -33,6 +33,23 @@
     font-size: 22px;
     z-index: 1;
   }
+
+  &-small {
+    .doge {
+      height: 50px;
+      transform: scale(.5);
+      transform-origin: 35px -35px;
+      margin-top: 120px;
+    }
+
+    .moon {
+      height: 100px;
+    }
+
+    p {
+      margin-top: 170px;
+    }
+  }
 }
 /* Safari and Chrome */
 @-webkit-keyframes rotating {
