@@ -4,14 +4,10 @@ $caret-size: 8px;
 .faq {
   &-item {
     margin-bottom: 10px;
-
-    &[collapsed="true"] {
-      p {}
-    }
-
+    
     &[collapsed="false"] {
-      p {
-        max-height: 300px;
+      .content {
+        max-height: 1000px;
       }
 
       h4 {
@@ -39,7 +35,7 @@ $caret-size: 8px;
       &:before {
         content: '';
         position: absolute;
-        left: -15px;
+        left: -20px;
         top: 5px;
         width: 0;
         height: 0;
@@ -48,14 +44,14 @@ $caret-size: 8px;
         border-style: solid;
         border-width: $caret-size 0 $caret-size $caret-size;
         border-color: transparent $blue transparent;
-        transition: transform 300ms ease-in-out;
+        transition: transform 100ms ease-in-out;
         transform: rotate(0deg);
       }
     }
 
-    p {
+    .content {
       margin-top: 0;
-      transition: max-height 600ms ease-in-out;
+      transition: max-height 300ms ease-in-out;
       max-height: 0;
       overflow: hidden;
     }
