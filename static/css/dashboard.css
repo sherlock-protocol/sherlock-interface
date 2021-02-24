@@ -1,3 +1,41 @@
+.transaction-list {
+  list-style: none;
+  padding-left: 0;
+}
+.transaction-list li {
+  background: #FFF;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding-left: 40px;
+  position: relative;
+  display: flex;
+}
+.transaction-list li p {
+  margin: 0;
+  flex: 1;
+}
+.transaction-list li:before {
+  content: "";
+  background: #8e918f;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  border-radius: 50%;
+  left: 10px;
+  top: 9px;
+}
+.transaction-list li[status=success]:before {
+  background: #006FE7;
+}
+.transaction-list li[status=failed]:before {
+  background: #e74c3c;
+}
+.transaction-list li span {
+  width: auto;
+  text-align: right;
+}
+
 .dashboard-block {
   box-sizing: border-box;
   background: #FFF;

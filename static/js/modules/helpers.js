@@ -61,10 +61,8 @@ window.app.getCookie = cname => {
 
 window.app.currency = value => {
   value = _ethers.utils.formatUnits (value, 18);
-  console.log(value);
   
   if(value === "0.0") return "0.00"
-  console.log("Dont show");
 
   let split = value.split('.');
   if(split[1].length !== 18) {
@@ -77,14 +75,14 @@ window.app.currency = value => {
 }
 
 window.app.abbreviateNumber = value => {
-  let newValue = value;
+  let newValue = parseInt(value);
   const suffixes = ["", "K", "M", "B","T"];
   let suffixNum = 0;
   while (newValue >= 1000) {
     newValue /= 1000;
     suffixNum++;
   }
-
+  console.log(newValue);
   newValue = newValue.toPrecision(3);
 
   newValue += suffixes[suffixNum];

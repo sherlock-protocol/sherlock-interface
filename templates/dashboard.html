@@ -1,7 +1,6 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
   <div class=" blocks__row">
-
     <div class="dashboard-block blocks__row-block">
       <h2>Staking Pool</h2>
       <div class="dashboard-block__key-value">
@@ -59,5 +58,21 @@
       <button id="withdraw" class="button button-centered" type="button" name="button">Withdraw</button>
     </div>
   </div>
+  
+  <h2>Transaction List<sup> (Current Session)</sup></h2>
+  <ul class="transaction-list">
+    <li status="pending">
+      <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
+      <span>12 Seconds Ago</span>
+    </li>
+    <li status="failed">
+      <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
+      <span>14 Minutes Ago</span>
+    </li>
+    <li status="success">
+      <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
+      <span>1 Week Ago</span>
+    </li>
+  </ul>
 </div>
 {% include 'partials/footer.html' %}

@@ -1,18 +1,17 @@
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
+/* Error: Undefined variable.
+ *    ,
+ * 19 |   color: $blue;
+ *    |          ^^^^^
+ *    '
+ *   src/scss/global/overrides.scss 19:10  root stylesheet */
 
-.hidden {
-  display: none !important;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined variable.\a    \2577 \a 19 \2502    color: $blue;\a    \2502           ^^^^^\a    \2575 \a   src/scss/global/overrides.scss 19:10  root stylesheet";
 }
-
-.flex {
-  flex: 1;
-}
-
-/*# sourceMappingURL=overrides.css.map */

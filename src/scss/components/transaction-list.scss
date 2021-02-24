@@ -1,0 +1,47 @@
+.transaction-list {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    background: $white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    padding-left: 40px;
+    position: relative;
+    display: flex;
+
+    p {
+      margin: 0;
+      flex: 1;
+    }
+
+    &:before {
+      content: '';
+      background: $grey;
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      border-radius: 50%;
+      left: 10px;
+      top: 9px;
+    }
+
+    &[status="success"] {
+      &:before {
+        background: $blue;
+      }
+    }
+
+    &[status="failed"] {
+      &:before {
+        background: $red;
+      }
+    }
+
+    span {
+      width: auto;
+      text-align: right;
+    }
+  }
+}

@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     fetchFunds: (cb) => {
       window.contract.getFunds(app.getCookie('wallet'))
         .then(response => {
-          document.querySelector('#fundsTotal').innerHTML = app.parse `$${app.currency(response)}`
+          document.querySelector('#fundsTotal').innerHTML = app.parse`$${app.currency(response)}`
           status.funds = true;
           cb();
         })
@@ -45,8 +45,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       window.contract.stakesWithdraw(app.getCookie('wallet'))
         .then(response => {
           status.withdraw = true;
-          // let funds = _ethers.utils.formatUnits(response.stake, 18);
-          document.querySelector('#fundsAvailable').innerHTML = app.parse `$${app.currency(response.stake)}`
+          document.querySelector('#fundsAvailable').innerHTML = app.parse`$${app.currency(response.stake)}`
           cb();
         })
         .catch(err => {

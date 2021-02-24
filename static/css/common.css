@@ -15,6 +15,13 @@ body {
   flex: 1;
 }
 
+h2 {
+  color: #006FE7;
+}
+h2 sup {
+  font-size: 14px;
+}
+
 .app {
   padding: 0 500px;
   flex: 1;

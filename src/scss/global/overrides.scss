@@ -14,3 +14,10 @@ body {
 .flex {
   flex:1;
 }
+
+h2 {
+  color: $blue;
+  sup {
+    font-size: 14px;
+  }
+}

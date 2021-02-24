@@ -67,7 +67,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       if (context.type === 'label') {
         let label = processed.labels[context.index]
         var group = new Chartist.Svg('g');
-        console.log(context);
         if (!context.group._node.parentElement.querySelector('#total')) {
           group.append(
             new Chartist.Svg('text', {
@@ -85,7 +84,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             })
             .text('Total')
           );
-          console.log(processed.total);
           group.append(
             new Chartist.Svg('text', {
               width: '30px',
