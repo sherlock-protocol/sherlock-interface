@@ -9,7 +9,9 @@ def env():
         "network": settings.NETWORK,
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
-        "pool_address": settings.POOL_ADDRESS
+        "pool_address": settings.POOL_ADDRESS,
+        "stake_token": "0x2610c11ab6f7dca1d8915f328c6995e0c16f5d94",
+        "dai": "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd"
     }
 
 @app.route('/')
