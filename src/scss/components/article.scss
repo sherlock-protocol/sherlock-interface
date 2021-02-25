@@ -1,3 +1,7 @@
 article {
-  padding-right: 600px;
+  max-width: 470px;
+  a {
+    color: $blue;
+    font-weight: bold;
+  }
 }

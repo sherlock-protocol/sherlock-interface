@@ -61,8 +61,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
   })
   provider.listAccounts().then(accounts => {
-    if (accounts && accounts.length)
+    if (accounts && accounts.length) {
       enableWallet(accounts)
+    } else {
+      if (window.app.getCookie('wallet') !== "None") {
+        window.app.setCookie('wallet', 'None', 60);
+        location.href = "";
+      }
+    }
   });
-  walletButtonEl.addEventListener('click', connectWallet)
+  if(walletButtonEl)
+    walletButtonEl.addEventListener('click', connectWallet)
 });

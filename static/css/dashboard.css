@@ -47,7 +47,8 @@
 }
 .dashboard-block hr {
   margin: 20px 0;
-  border-color: tint(#8e918f, 80%);
+  border-color: #e8e9e9;
+  border-top: none;
 }
 .dashboard-block__key-value {
   display: flex;

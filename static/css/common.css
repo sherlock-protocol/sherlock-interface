@@ -1118,7 +1118,11 @@ footer {
 }
 
 article {
-  padding-right: 600px;
+  max-width: 470px;
+}
+article a {
+  color: #006FE7;
+  font-weight: bold;
 }
 
 fieldset {

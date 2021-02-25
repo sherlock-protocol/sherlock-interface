@@ -28,14 +28,14 @@ class NotificationCenter {
 
     setTimeout(() => {
       template.classList.add('in');
-    }, 10);
+    }, 1000);
 
     setTimeout(() => {
       this.delete(template);
     }, 5000);
   }
+  
   delete = template => {
-
     template.querySelector('.notification__timer').classList.add('hidden');
     template.classList.remove('in');
     template.classList.add('out');

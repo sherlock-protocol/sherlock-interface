@@ -1,3 +1,5 @@
+import Chartist from "/static/js/ext/chartist.min.js";
+
 window.addEventListener('DOMContentLoaded', (event) => {
   let imageMap = {
     Maker: "mkr",
