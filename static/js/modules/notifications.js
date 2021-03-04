@@ -8,7 +8,9 @@ class NotificationCenter {
   notify = (title, msg, type) => {
     let template = document.createElement('div');
     template.classList.add('notification');
-    template.classList.add(type);
+    if (type) {
+      template.classList.add(type);
+    }
     template.innerHTML = app.parse `
         <div class="notification__meta">
           <h4>${title}</h4>
@@ -28,13 +30,13 @@ class NotificationCenter {
 
     setTimeout(() => {
       template.classList.add('in');
-    }, 1000);
+    }, 1);
 
     setTimeout(() => {
       this.delete(template);
     }, 5000);
   }
-  
+
   delete = template => {
     template.querySelector('.notification__timer').classList.add('hidden');
     template.classList.remove('in');

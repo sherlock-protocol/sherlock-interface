@@ -11,7 +11,12 @@ def env():
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.POOL_ADDRESS,
         "stake_token": "0x2610c11ab6f7dca1d8915f328c6995e0c16f5d94",
-        "dai": "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd"
+        "tokens": {
+            "dai": "0xff795577d9ac8bd7d90ee22b6c1703490b6512fd",
+            "usdc": "0xff6303c7eed5f38eb54d485df87b2dc18b80e10b",
+            "aave": "0x2e7a1993b0407c361fe9360ef5b5685d2b738b82",
+            "weth": "0x8740af1775c6c1ca4ceba9bbd035369c6d83a1a7"
+        }
     }
 
 @app.route('/')

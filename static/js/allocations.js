@@ -93,14 +93,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
               x: '50%',
               y: '50%',
               'font-weight': '600',
-              'font-size': '36px',
+              'font-size': '28px',
               'text-anchor': 'middle',
               'alignment-baseline': 'middle',
               'fill': '#006FE7',
               'id': 'total',
               'style': 'transform:translate(0px, 5px);'
             })
-            .text(app.currency(processed.total))
+            .text(app.currency(processed.total, true))
           );
         }
         if (label.image)

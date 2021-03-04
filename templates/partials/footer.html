@@ -1,24 +1,26 @@
+      <div class="notification-center">
+      </div>
     </div>
     <footer>
-      ©2021 Audits R Dead. All rights reserved
+      ©2021 Sherlock. All rights reserved
     </footer>
-    <div class="notification-center">
-      
-    </div>
     <script type="text/javascript">
       window.settings = {{ env|tojson }};
       window.data = {{ data|tojson }};
     </script>
     <script src="/static/json/abi/pool.json" type="application/json" charset="utf-8"></script>
     <script src="/static/js/ext/ethers.min.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/ext/chartist.min.js" type="text/text/javascript"></script>
-
-    <script src="/static/js/modules/manager.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/loader.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/notifications.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/ext/chartist.min.js" type="module"></script>
+    <script src="/static/js/ext/moment.js" type="module"></script>
     <script src="/static/js/modules/helpers.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/ether/contract.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/loader.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/transactions.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/notifications.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Insurance.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Stake.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/erc20.js" type="module" charset="utf-8"></script>
     <script src="/static/js/wallet.js" type="module" charset="utf-8"></script>
+    <script src="/static/js/background.js" type="module" charset="utf-8"></script>
     <script src="/static/js/{{ currentPage }}.js" type="module" charset="utf-8"></script>
   </body>
 </html>

@@ -1,3 +1,7 @@
+import moment from '../ext/moment.js';
+
+window.app = {};
+
 window.app.escape = (str = "") => {
   let r = /[&<>"'\/]/g;
   return '' + str.replace(r, m => {
@@ -8,7 +12,7 @@ window.app.escape = (str = "") => {
       '"': "&quot;",
       "'": "&#x27;",
       "/": "&#x2F;"
-    }[m];
+    } [m];
   });
 }
 
@@ -40,14 +44,14 @@ export class SafeString {
 window.app.setCookie = (cname, cvalue, exdays) => {
   var d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  var expires = "expires="+d.toUTCString();
+  var expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 window.app.getCookie = cname => {
   var name = cname + "=";
   var ca = document.cookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
+  for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
@@ -59,33 +63,46 @@ window.app.getCookie = cname => {
   return "";
 }
 
-window.app.currency = value => {
-  value = _ethers.utils.formatUnits (value, 18);
-  
-  if(value === "0.0") return "0.00"
+window.app.currency = (value, abbreviate) => {
+  value = _ethers.utils.formatUnits(value, 18);
+  if (value === "0.0") return "$0.00"
 
   let split = value.split('.');
-  if(split[1].length !== 18) {
+  if (split[1].length !== 18) {
     for (var i = 0; 18 - split[1].length; i++) {
       split[1] += '0';
     }
   }
-  value = split[0] + '.' + split[1];
-  return window.app.abbreviateNumber(value.substring(0, value.length - 16));
+  
+  if (abbreviate) {
+    value = split[0] + '.' + split[1];
+    return '$' + window.app.abbreviateNumber(value.substring(0, value.length - 16));
+  } else {
+    value = parseInt(split[0]).toLocaleString() + '.' + split[1];
+    return '$' + value.substring(0, value.length - 16);
+  }
 }
 
 window.app.abbreviateNumber = value => {
   let newValue = parseInt(value);
-  const suffixes = ["", "K", "M", "B","T"];
+  const suffixes = ["", "K", "M", "B", "T"];
   let suffixNum = 0;
   while (newValue >= 1000) {
     newValue /= 1000;
     suffixNum++;
   }
-  console.log(newValue);
+
   newValue = newValue.toPrecision(3);
 
   newValue += suffixes[suffixNum];
+
+  let split = newValue.split('.');
+  if (split[1].length !== 2) {
+    for (var i = 0; 2 - split[1].length; i++) {
+      split[1] += '0';
+    }
+  }
+  newValue = split[0] + '.' + split[1];
   return newValue;
 }
 
@@ -94,11 +111,45 @@ window.app.validateForm = form => {
   let valid = true;
 
   inputs.forEach(item => {
-    if(!item.value || item.value === "") {
-      if(valid)item.focus();
+    if (!item.value || item.value === "") {
+      if (valid) item.focus();
       valid = false;
     }
   });
-  
+
   return valid;
+}
+
+window.app.formatDate = date => {
+  return new moment(date).format('DD-MM-YYYY HH:MM')
+}
+window.app.formatHash = hash => {
+  hash = hash.substring(0, 6) + '...' + hash.substring(hash.length - 4, hash.length);
+  return hash;
+}
+
+window.app.timeSince = date => {
+  var seconds = Math.floor((new Date() - date) / 1000);
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
 }

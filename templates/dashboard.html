@@ -1,78 +1,98 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
-  <div class=" blocks__row">
+  <div class="blocks__row">
     <div class="dashboard-block blocks__row-block">
       <h2>Staking Pool</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Current APY</span>
-        <span class="value">{{data.apy}}%</span>
+        <span id="apy" class="value">{{data.apy}}%</span>
       </div>
       <div class="dashboard-block__key-value">
         <span class="key">Pool Size</span>
-        <span class="value">${{data.staked_funds}}</span>
+        <span id="poolSize" class="value">${{data.staked_funds}}</span>
       </div>
       <div class="dashboard-block__key-value">
         <span class="key">Lockup</span>
-        <span class="value">3 days</span>
+        <span id="lockup" class="value">{{ data.lockup }} days</span>
       </div>
-      
-      <form id="stakeForm" {% if wallet == "None" %} hidden {% endif %}>
-        <fieldset>
-          <div class="input input-big">
-            <input type="number" id="amount" name="amount" value="" required>
-            <label for="amount">Amount</label>
-          </div>
-          <div class="input readonly">
-            <!-- <select type="text" name="coin" value="" required>
-                  <option value="" selected></option>
-                  <option value="dai">DAI</option>
-                  <option value="dai2">LINK</option>
-                  <option value="dai3">DOGE</option>
-                </select> -->
-            <input type="text" name="" value="DAI" readonly>
-            <img class="icon" src="/static/svg/crypto/color/dai.svg" alt="">
-            <label for="coin">Coin</label>
-          </div>
-        </fieldset>
-        <div class="flex"></div>
-        <button id="deposit" class="button button-centered" type="button" name="button">Deposit</button>
-      </form>
     </div>
     
-    <div id="fundsBlock" class="dashboard-block  blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
+    <div id="fundsBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
       <h2>Your Funds</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Earnings Per Month</span>
-        <span id="fundsMonthly" class="value">$0.00</span>
+        <span id="monthlyFunds" class="value">$0.00</span>
       </div>
       <div class="dashboard-block__key-value">
         <span class="key">Funds Available to Claim</span>
-        <span id="fundsAvailable" class="value">$0.00</span>
+        <span id="availableFunds" class="value">$0.00</span>
       </div>
       <hr>
       <div class="dashboard-block__key-value">
         <span class="key">Total Funds</span>
-        <span id="fundsTotal" class="value">$0.00</span>
+        <span id="totalFunds" class="value">$0.00</span>
       </div>
-      <div class="flex"></div>
-      <button id="withdraw" class="button button-centered" type="button" name="button">Withdraw</button>
     </div>
   </div>
-  <div class="{% if wallet == "None" %} hidden {% endif %}">
+  <div class="blocks__row">
+    <div id="depositBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
+      <h2>Deposit Funds</h2>
+      <form>
+        <fieldset>
+          <div class="input readonly">
+            <img class="icon" src="/static/svg/crypto/color/generic.svg" alt="">
+            <select class="" name="depositCurrency">
+              <option value="" selected>Select</option>
+              <option value="dai" data-image="dai">DAI</option>
+              <option value="usdc" data-image="usdc">USDC</option>
+              <option value="aave" data-image="aave">Aave</option>
+              <option value="weth" data-image="weth">WETH</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset id="depositAmountBlock" class="hidden">          
+          <div class="input input-big">
+            <input type="number" id="amount" name="amount" value="" required>
+            <label for="amount">Amount</label>
+          </div>
+          <button id="deposit" class="button button-centered" type="button" name="button">Deposit</button>
+        </fieldset>
+        <fieldset id="allowanceDepositBlock" class="hidden">
+          <button id="approveDeposit" class="button button-centered" type="button" name="button">Approve</button>
+        </fieldset>
+      </form>
+    </div>
+    <div id="withdrawBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
+      <h2>Withdraw Funds</h2>
+      <form>
+        <fieldset>
+          <div class="input readonly">
+            <img class="icon" src="/static/svg/crypto/color/generic.svg" alt="">
+            <select class="" name="withdrawCurrency">
+              <option value="" selected>Select</option>
+              <option value="dai">DAI</option>
+              <option value="usdc">USDC</option>
+              <option value="aave">Aave</option>
+              <option value="weth">WETH</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset id="withdrawAmountBlock" class="hidden">
+          <div class="input input-big">
+            <input type="number" id="amount" name="amount" value="" required>
+            <label for="amount">Amount</label>
+          </div>
+        </fieldset>
+        <div class="flex"></div>
+        <button id="withdraw" class="button button-centered" type="button" name="button">Withdraw</button>
+      </form>
+      
+      <button id="approveStake" class="button button-centered hidden" type="button" name="button">Approve Stake</button>
+    </div>
+  </div>
+  <div id="transactionBlock" class="hidden">
     <h2>Transaction List<sup> (Current Session)</sup></h2>
     <ul class="transaction-list">
-      <li status="pending">
-        <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
-        <span>12 Seconds Ago</span>
-      </li>
-      <li status="failed">
-        <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
-        <span>14 Minutes Ago</span>
-      </li>
-      <li status="success">
-        <p>0x546d94b26202b55f3dfa542bc69888c94f23ed759b631925993f0a660b080c2d</p>
-        <span>1 Week Ago</span>
-      </li>
     </ul>
   </div>
 </div>

@@ -1,5 +1,10 @@
 .blocks__row {
   display: flex;
+  &:first-child {
+    .blocks__row-block {
+      margin-bottom: 0;
+    }
+  }
 
   &-block {
     flex-basis: calc(50% - 10px);

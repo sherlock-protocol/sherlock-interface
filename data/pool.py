@@ -12,7 +12,7 @@ def get_staking_pool_data():
         "staked_funds": '{:,.2f}'.format(Web3.fromWei(stakedFunds, 'ether')),
         "staked_funds_big": stakedFunds,
         "yield": "500000000000000000",
-        "apy": "11.39",
+        "apy": 11.39,
         "lockup": 3
     }
 

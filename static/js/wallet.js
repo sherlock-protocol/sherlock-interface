@@ -9,6 +9,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   let walletNameEl = document.querySelector('#walletName');
   let fundsBlock = document.querySelector('#fundsBlock');
   let stakeForm = document.querySelector('#stakeForm');
+  let approveDaiEl = document.querySelector('#approveDai');
+  let transactionBlock = document.querySelector('#transactionBlock');
+  let depositBlock = document.querySelector('#depositBlock');
+  let withdrawBlock = document.querySelector('#withdrawBlock');
 
   let connectWallet = e => {
     e.preventDefault();
@@ -21,23 +25,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }).catch(err => {
       app.removeLoader(document.body);
       app.notify("Error", err.message);
-    })
+    });
   }
 
   let enableWallet = accounts => {
     if (accounts && accounts.length) {
       let wallet = accounts[0];
-
       window.app.setCookie('wallet', wallet, 60);
+
       walletButtonEl.classList.add('hidden');
-      walletNameEl.innerText = wallet;
+      walletNameEl.innerText = window.app.formatHash(wallet);
       walletNameEl.classList.remove('hidden');
-      if (stakeForm && stakeForm.classList.contains('hidden')) {
-        stakeForm.classList.remove('hidden');
-      }
-      if (fundsBlock && fundsBlock.classList.contains('hidden')) {
-        fundsBlock.classList.remove('hidden');
-        window.helpers.contract.fetchFunds();
+      if (depositBlock)
+        depositBlock.classList.remove('hidden');
+      if (withdrawBlock)
+        withdrawBlock.classList.remove('hidden');
+      if (window.dashboard) {
+        window.dashboard.contractsLoaded();
       }
     } else {
       app.notify("Error", "No active accounts found.")
@@ -53,13 +57,22 @@ window.addEventListener('DOMContentLoaded', (event) => {
       stakeForm.classList.add('hidden');
     if (fundsBlock)
       fundsBlock.classList.add('hidden');
+    if (approveDaiEl)
+      approveDaiEl.classList.add('hidden');
+    if (transactionBlock)
+      transactionBlock.classList.add('hidden');
+    if (depositBlock)
+      depositBlock.classList.add('hidden');
+    if (withdrawBlock)
+      withdrawBlock.classList.add('hidden');
   }
 
   ethereum.on('accountsChanged', function(accounts) {
     if (accounts && !accounts.length) {
       disableWallet();
     }
-  })
+  });
+
   provider.listAccounts().then(accounts => {
     if (accounts && accounts.length) {
       enableWallet(accounts)
@@ -70,6 +83,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       }
     }
   });
-  if(walletButtonEl)
+  if (walletButtonEl)
     walletButtonEl.addEventListener('click', connectWallet)
 });
