@@ -117,21 +117,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
     renderTotalFunds: (value, elID) => {
       let staked = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
       document.querySelector('#fundsBlock').classList.remove('hidden');
-      
+
       if (elID === 'monthlyFunds') {
         document.querySelector(`#${elID}`).innerHTML = window.app.currency(value, false);
-      } else {        
+      } else {
         let total = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
         let amount = value;
-        let percentage = amount.div(total);
-        console.log(percentage);
+        console.log("total", total.toString())
+        console.log("amount", amount.toString())
         // console.log(userYield);
+        let userYield  = amount.mul(data.yield).div(total)
+        console.log("total", data.yield.toString());
+        console.log("user", userYield.toString());
         setInterval(() => {
-          // amount = 
+          amount = amount.add(userYield)
+          // amount =
           // amount = amount.add(amount.mul(percentage+''));
           // console.log(amount);
-          // totalFundsEl.innerHTML = app.currency(amount + userYield);
-        }, 1000);
+          totalFundsEl.innerHTML = app.currency(amount);
+        }, 50);
       }
     },
     handleDepositTypeSelect: (e) => {
