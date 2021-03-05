@@ -10,7 +10,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let poolSizeEl = document.querySelector('#poolSize');
   let totalFundsEl = document.querySelector('#totalFunds');
-
+  let monthlyFundsEl = document.querySelector('#monthlyFunds');
+  
+  let fundsLoop = null;
+  let poolLoop = null;
   let activeDepositCoin = null;
   let activeWithdrawCoin = null;
 
@@ -19,6 +22,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let withdrawAmountBlock = document.querySelector('#depositAmountBlock');
   let withdrawAllowanceBlock = document.querySelector('#allowanceDepositBlock');
+  
 
   window.dashboard = {
     loadContracts: () => {
@@ -123,18 +127,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
       } else {
         let total = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
         let amount = value;
-        console.log("total", total.toString())
-        console.log("amount", amount.toString())
-        // console.log(userYield);
         let userYield  = amount.mul(data.yield).div(total)
-        console.log("total", data.yield.toString());
-        console.log("user", userYield.toString());
-        setInterval(() => {
+        
+        if(fundsLoop) {
+          clearInterval(fundsLoop);
+        }
+        
+        fundsLoop = setInterval(() => {
           amount = amount.add(userYield)
-          // amount =
-          // amount = amount.add(amount.mul(percentage+''));
-          // console.log(amount);
+          
           totalFundsEl.innerHTML = app.currency(amount);
+          monthlyFundsEl.innerHTML = app.currency(amount.div(100).mul(Math.round(data.apy)).div(12));
         }, 50);
       }
     },
@@ -240,7 +243,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     },
     numbGoUp: () => {
       let staked = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
-      setInterval(() => {
+      if(poolLoop) {
+        clearInterval(poolLoop)
+      }
+      poolLoop = setInterval(() => {
         staked = staked.add(_ethers.BigNumber.from(data.yield));
         poolSizeEl.innerHTML = app.currency(staked);
       }, 50);

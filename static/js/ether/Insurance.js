@@ -28,8 +28,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       window.signedInsurance.getFunds(app.getCookie('wallet'))
         .then(response => {
           cb(response, "totalFunds");
-          let monthly = response.div(100).mul(Math.round(data.apy)).div(12);
-          cb(monthly, "monthlyFunds");
         })
         .catch(err => {
           console.log(err);
