@@ -49,3 +49,12 @@ def get_pool_strategies():
     data = []
     return data
 
+def get_tokens():
+    data = {}
+    tokens = settings.POOL_CONTRACT_HTTP.functions.getWhitelistedTokens().call()
+    for address in tokens:
+        ERC20 = settings.INFURA_HTTP.eth.contract(address=address, abi=settings.ERC20_ABI)
+        symbol = ERC20.functions.symbol().call()
+        data[symbol] = address
+
+    return data
