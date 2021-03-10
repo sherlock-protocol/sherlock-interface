@@ -14,6 +14,9 @@ INFURA_TOKEN = config('INFURA_TOKEN')
 
 with open(os.path.join(CONTRACTS, "artifacts", "contracts", "interfaces", "ISolution.sol", "ISolution.json")) as json_data:
     POOL_ABI = json.load(json_data)["abi"]
+    with open(os.path.join("static", "json", "abi", "Insurance.json"), "w+") as static:
+        static.write(json.dumps(POOL_ABI))
+
 
 with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "token", "ERC20", "ERC20.sol", "ERC20.json")) as json_data:
     ERC20_ABI = json.load(json_data)["abi"]
