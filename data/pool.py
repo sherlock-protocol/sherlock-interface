@@ -56,7 +56,11 @@ def get_tokens():
     for address in tokens:
         ERC20 = settings.INFURA_HTTP.eth.contract(address=address, abi=settings.ERC20_ABI)
         symbol = ERC20.functions.symbol().call()
-        data[symbol] = address
+        decimals = ERC20.functions.decimals().call()
+        data[symbol] = {
+            "address": address,
+            "decimals": decimals
+        }
 
     return data
 

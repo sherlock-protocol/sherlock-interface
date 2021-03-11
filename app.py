@@ -64,4 +64,5 @@ if __name__ == '__main__':
     # print(pool.get_staking_pool_data())
     # print(pool.get_covered_protocols())
     # print(pool.get_pool_strategies())
+    # print(pool.get_tokens())
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)
