@@ -40,9 +40,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         depositBlock.classList.remove('hidden');
       if (withdrawBlock)
         withdrawBlock.classList.remove('hidden');
-      if (window.dashboard) {
-        window.dashboard.contractsLoaded();
-      }
+      // if (window.dashboard) {
+      //   window.dashboard.contractsLoaded();
+
     } else {
       app.notify("Error", "No active accounts found.")
     }

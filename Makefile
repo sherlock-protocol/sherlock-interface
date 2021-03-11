@@ -1,8 +1,8 @@
 sass:
-	@echo Rendering /src/styles to /static/css please hold on🤙
+	@echo Rendering styles /src/styles to /static/css🤙
 	sass src/scss/:static/css/
-	@echo Rendered all sass GG
+	@echo Rendered all css
 
 sass-watch:
-	@echo Started watching /src/styles🤙
+	@echo Started watching styles
 	sass --watch src/scss/:static/css/

@@ -26,7 +26,7 @@ $caret-size: 8px;
     }
 
     h4 {
-      color: $blue;
+      color: $primary;
       margin-bottom: 5px;
       position: relative;
       font-size: 22px;
@@ -43,7 +43,7 @@ $caret-size: 8px;
         vertical-align: middle;
         border-style: solid;
         border-width: $caret-size 0 $caret-size $caret-size;
-        border-color: transparent $blue transparent;
+        border-color: transparent $primary transparent;
         transition: transform 100ms ease-in-out;
         transform: rotate(0deg);
       }

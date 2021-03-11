@@ -17,7 +17,7 @@
     a {
       margin: 0;
       flex: 1;
-      color: $blue;
+      color: $primary;
       font-family: monospace;
     }
 
@@ -43,7 +43,7 @@
 
     &[status="pending"] {
       &:before {
-        background: $blue;
+        background: $primary;
         opacity: 1;
         transition: opacity 500ms ease-in-out;
         animation: blink 1s step-start 0s infinite;
@@ -53,7 +53,7 @@
 
     &[status="success"] {
       &:before {
-        background: $blue;
+        background: $primary;
       }
     }
 

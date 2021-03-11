@@ -1,9 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-  let provider = _ethers.getDefaultProvider({
-    name: window.settings.network.toLowerCase(),
-    chainId: parseInt(window.settings.chainid),
-  });
-
+  let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase());
+  
   window.insuranceHelpers = {
     fetchContract: (cb) => {
       let abi = fetch('/static/json/abi/Insurance.json')
@@ -13,7 +10,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
           let signer = new _ethers.providers.Web3Provider(window.ethereum).getSigner()
           window.signedInsurance = insurance.connect(signer);
           cb();
-        });
+        })
     },
     processFundsBlock: () => {
       if (status.funds && status.withdraw) {
@@ -25,19 +22,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
       }
     },
     fetchTotalFunds: (cb) => {
-      window.signedInsurance.getFunds(app.getCookie('wallet'))
+      window.signedInsurance.getStakerTVL(app.getCookie('wallet'))
         .then(response => {
           cb(response, "totalFunds");
         })
-        .catch(err => {
-          console.log(err);
-          notificationCenter.notify("We're deeply sorry.", "Failed to fetch withdrawels, please get in touch if the problem persits!");
-        });
+        .catch(err => window.app.catchAll);
     },
     fetchAvailableFunds: (cb) => {
-      window.signedInsurance.stakesWithdraw(app.getCookie('wallet'))
-        .then(response => {
-          cb(response.stake, "availableFunds");
+      window.signedInsurance.getWithrawalInitialIndex(app.getCookie('wallet'))
+        .then(index => {
+          window.signedInsurance.getWithdrawalSize(app.getCookie('wallet'))
+          .then(amount => {
+            console.log('Start:' + index);
+            console.log('Amount:' + amount);
+            let withdrawals = [];
+            for (var i = parseInt(index); i < amount; i++) {
+              let id = i;
+              window.signedInsurance.getWithdrawal(app.getCookie('wallet'), i)
+              .then(resp => {
+                withdrawals.push({
+                  id: id,
+                  withdrawal: resp
+                });
+                if(withdrawals.length == amount) {
+                  cb(withdrawals);
+                }
+              });  
+            }
+            
+          });
+          // cb(response.stake, "availableFunds");
         })
         .catch(err => {
           console.log(err);

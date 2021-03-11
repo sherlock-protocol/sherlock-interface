@@ -23,7 +23,7 @@
     </div>
     <div class="side">
       <div class="meta">
-        <span id="walletName" {% if wallet == "None" %} class="hidden" {% endif %}>{{ wallet }}</span>  
+        <span id="walletName" {% if wallet == "None" %} class="hidden" {% endif %}></span>  
       </div>
       <nav>
         {% if currentPage != "landing" %}
@@ -36,6 +36,3 @@
     </div>
   </header>
   <div class="app">
-    <div class="background">
-      {% include 'partials/background.html' %}
-    </div>

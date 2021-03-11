@@ -16,12 +16,16 @@
         <span id="lockup" class="value">{{ data.lockup }} days</span>
       </div>
     </div>
-    
+
     <div id="fundsBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
       <h2>Your Funds</h2>
       <div class="dashboard-block__key-value">
         <span class="key">Earnings Per Month</span>
         <span id="monthlyFunds" class="value">$0.00</span>
+      </div>
+      <div class="dashboard-block__key-value">
+        <span class="key">Funds Unlocking</span>
+        <span id="availableFunds" class="value">$0.00</span>
       </div>
       <div class="dashboard-block__key-value">
         <span class="key">Funds Available to Claim</span>
@@ -43,19 +47,30 @@
             <img class="icon" src="/static/svg/crypto/color/generic.svg" alt="">
             <select class="" name="depositCurrency">
               <option value="" selected>Select</option>
-              <option value="dai" data-image="dai">DAI</option>
-              <option value="usdc" data-image="usdc">USDC</option>
-              <option value="aave" data-image="aave">Aave</option>
-              <option value="weth" data-image="weth">WETH</option>
+              {% for token in env.tokens %}
+                <option value="{{ token }}">{{ token }}</option>
+              {% endfor %}
             </select>
           </div>
         </fieldset>
-        <fieldset id="depositAmountBlock" class="hidden">          
+        <fieldset id="depositAmountBlock" class="hidden">
           <div class="input input-big">
-            <input type="number" id="amount" name="amount" value="" required>
+            <input type="number" name="amount" value="" required>
             <label for="amount">Amount</label>
           </div>
           <button id="deposit" class="button button-centered" type="button" name="button">Deposit</button>
+        </fieldset>
+        <fieldset id="depositCalculated">
+          <div class="dashboard-block__key-value">
+            <span class="key">Calculated</span>
+            <span id="calculatedStake" class="value">$0.00</span>
+          </div>
+          <div class="dashboard-block__key-value">
+            <span class="key">Minimal</span>
+            <span id="minimalStake" class="value">$0.00</span>
+          </div>
+          <button id="depositVerify" class="button button-centered" type="button" name="button">Verify</button>
+          
         </fieldset>
         <fieldset id="allowanceDepositBlock" class="hidden">
           <button id="approveDeposit" class="button button-centered" type="button" name="button">Approve</button>
@@ -63,33 +78,74 @@
       </form>
     </div>
     <div id="withdrawBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
-      <h2>Withdraw Funds</h2>
+      <h2>Unlock Funds</h2>
       <form>
-        <fieldset>
-          <div class="input readonly">
-            <img class="icon" src="/static/svg/crypto/color/generic.svg" alt="">
-            <select class="" name="withdrawCurrency">
-              <option value="" selected>Select</option>
-              <option value="dai">DAI</option>
-              <option value="usdc">USDC</option>
-              <option value="aave">Aave</option>
-              <option value="weth">WETH</option>
-            </select>
-          </div>
-        </fieldset>
-        <fieldset id="withdrawAmountBlock" class="hidden">
+        <fieldset id="withdrawAmountBlock" class="">
           <div class="input input-big">
-            <input type="number" id="amount" name="amount" value="" required>
+            <input type="number" name="amount" value="" required>
             <label for="amount">Amount</label>
           </div>
         </fieldset>
         <div class="flex"></div>
-        <button id="withdraw" class="button button-centered" type="button" name="button">Withdraw</button>
+        <button id="withdraw" class="button button-centered" type="button" name="button">Start Unlock</button>
       </form>
-      
+
       <button id="approveStake" class="button button-centered hidden" type="button" name="button">Approve Stake</button>
     </div>
   </div>
+  <div id="pendingBlock" class="blocks__row hidden">
+    <div class="dashboard-block blocks__row-block-full">
+      <h2>Pending Funds</h2>
+      <table id="pendingFundsTable">
+        <thead>
+          <tr>
+            <th data-column="estimatedValue" data-class="fat">Estimated Value</th>
+            <th data-column="tokens">Tokens</th>
+            <th data-column="countdown">Countdown</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div id="unlockBlock" class="blocks__row">
+    <div class="dashboard-block blocks__row-block-full">
+      <h2>Claimable Funds</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Estimated Value</th>
+            <th>Tokens</th>
+            <th>Claimable Till</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fat">$12.33</td>
+            <td>12</td>
+            <td>12-12-1234 12:12</td>
+            <td><button type="button" name="button">Claim</button></td>
+          </tr>
+          <tr>
+            <td class="fat">$12.33</td>
+            <td>12</td>
+            <td>12-12-1234 12:12</td>
+            <td><button type="button" name="button">Claim</button></td>
+          </tr>
+          <tr>
+            <td class="fat">$12.33</td>
+            <td>12</td>
+            <td>12-12-1234 12:12</td>
+            <td><button type="button" name="button">Claim</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div id="transactionBlock" class="hidden">
     <h2>Transaction List<sup> (Current Session)</sup></h2>
     <ul class="transaction-list">

@@ -32,7 +32,7 @@ window.app.parse = (tmpl, ...vs) => {
   return new SafeString(result + tmpl[vs.length]);
 }
 
-export class SafeString {
+export default class SafeString {
   constructor(s) {
     this.s = s;
   }
@@ -123,9 +123,14 @@ window.app.validateForm = form => {
 window.app.formatDate = date => {
   return new moment(date).format('DD-MM-YYYY HH:MM')
 }
+
 window.app.formatHash = hash => {
   hash = hash.substring(0, 6) + '...' + hash.substring(hash.length - 4, hash.length);
   return hash;
+}
+
+window.app.catchAll = err => {
+  notificationCenter.notify("We're deeply sorry.", err.message, 'danger');
 }
 
 window.app.timeSince = date => {

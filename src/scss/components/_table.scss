@@ -1,0 +1,55 @@
+table {
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+
+  & * {
+    font-size: 16px;
+  }
+
+  thead {
+    background: $primary;
+
+    th {
+      padding: 5px 10px;
+      text-align: left;
+      color: $white;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 5px 10px;
+        
+        &.fat {
+          font-weight: bold;
+          color: $primary;
+        }
+
+        button {
+          background: $primary;
+          color: $white;
+          border: none;
+          padding: 5px 10px;
+          font-weight: bold;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+        }
+      }
+
+      &:nth-child(odd) {
+        background: tint($primary, 90%);
+      }
+
+      &:nth-child(even) {
+        background: tint($primary, 94%);
+      }
+
+      &:hover {
+        background: tint($primary, 80%);
+      }
+    }
+  }
+}

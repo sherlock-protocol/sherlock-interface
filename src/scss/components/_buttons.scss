@@ -2,7 +2,7 @@
   border: none;
   padding: 10px 20px;
   font-size: 18px;
-  background-color: $blue;
+  background-color: $primary;
   color: $white;
   cursor: pointer;
   font-weight: 600;
@@ -14,7 +14,7 @@
   }
 
   &:hover {
-    background-color: tint($blue, 10%);
+    background-color: tint($primary, 10%);
   }
 
   &.danger {

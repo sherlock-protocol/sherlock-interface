@@ -3,10 +3,6 @@
 
 .dashboard {
   &-block {
-    box-sizing: border-box;
-    background: $white;
-    display: flex;
-    flex-direction: column;
 
     fieldset {
       margin-bottom: 20px;
@@ -28,8 +24,8 @@
       }
 
       .value {
-        color: $blue;
-        font-weight: 500;
+        color: $primary;
+        font-weight: bold;
       }
     }
   }

@@ -1,5 +1,5 @@
 header {
-  background: $blue;
+  background: $primary;
   color: $white;
   padding: 20px 500px 0;
   box-sizing: border-box;
@@ -31,7 +31,7 @@ header {
         text-decoration: none;
         font-size: 24px;
         padding: 5px 20px;
-        background: tint($blue, 10%);
+        background: tint($primary, 10%);
         box-sizing: border-box;
         display: inline-block;
         margin-left: 10px;
@@ -57,10 +57,10 @@ header {
 
         &.active {
           background: tint($grey, 90%);
-          color: $blue;
+          color: $primary;
 
           &:after {
-            background: tint($blue, 50%);
+            background: tint($primary, 50%);
           }
         }
 
