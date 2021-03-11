@@ -63,6 +63,13 @@ window.app.getCookie = cname => {
   return "";
 }
 
+window.app.token = (value) => {
+  value = (value + ' Tokens').replace('.', ',');
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // return value;
+}
+
 window.app.currency = (value, abbreviate) => {
   value = _ethers.utils.formatUnits(value, 18);
   if (value === "0.0") return "$0.00"
