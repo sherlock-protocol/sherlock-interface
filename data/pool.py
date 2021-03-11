@@ -13,7 +13,8 @@ def get_staking_pool_data():
         "staked_funds_big": stakedFunds,
         "yield": "500000000000000000",
         "apy": 11.39,
-        "lockup": 3
+        "lockup": 3,
+        "withdrawInfo": get_withdraw_info()
     }
 
 def get_covered_protocols():
@@ -58,3 +59,6 @@ def get_tokens():
         data[symbol] = address
 
     return data
+
+def get_withdraw_info():
+    return settings.POOL_CONTRACT_HTTP.functions.getWithdrawInformation().call()
