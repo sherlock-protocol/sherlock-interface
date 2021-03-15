@@ -69,8 +69,10 @@
             <span class="key">Minimal Amount</span>
             <span id="minimalStake" class="value">$0.00</span>
           </div>
-          <button id="depositConfirm" class="button button-centered" type="button" name="button">Confirm</button>
-          
+          <div class="justify-box">
+            <button id="depositCancel" class="button secondary button-centered" type="button" name="button">Cancel</button>
+            <button id="depositConfirm" class="button button-centered" type="button" name="button">Confirm</button>
+          </div>
         </fieldset>
         <fieldset id="allowanceDepositBlock" class="hidden">
           <button id="approveDeposit" class="button button-centered" type="button" name="button">Approve</button>
@@ -80,14 +82,16 @@
     <div id="withdrawBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
       <h2>Unlock Funds</h2>
       <form>
-        <fieldset id="withdrawAmountBlock" class="">
+        <fieldset id="allowanceWithdrawBlock" class="hidden">
+          <button id="approveWithdraw" class="button button-centered" type="button" name="button">Approve</button>
+        </fieldset>
+        <fieldset id="withdrawAmountBlock" class="hidden">
           <div class="input input-big">
             <input type="number" name="amount" value="" required>
             <label for="amount">Amount</label>
           </div>
+          <button id="withdraw" class="button button-centered" type="button" name="button">Start Unlock</button>
         </fieldset>
-        <div class="flex"></div>
-        <button id="withdraw" class="button button-centered" type="button" name="button">Start Unlock</button>
       </form>
 
       <button id="approveStake" class="button button-centered hidden" type="button" name="button">Approve Stake</button>
@@ -110,37 +114,19 @@
     </div>
   </div>
   
-  <div id="unlockBlock" class="blocks__row">
+  <div id="claimBlock" class="blocks__row hidden">
     <div class="dashboard-block blocks__row-block-full">
       <h2>Claimable Funds</h2>
-      <table>
+      <table id="claimableFundsTable">
         <thead>
           <tr>
-            <th>Estimated Value</th>
-            <th>Tokens</th>
-            <th>Claimable Till</th>
-            <th>Actions</th>
+            <th data-column="estimatedValue">Estimated Value</th>
+            <th data-column="tokens">Tokens</th>
+            <th data-column="countdown">Claimable Till</th>
+            <th data-column="action">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="fat">$12.33</td>
-            <td>12</td>
-            <td>12-12-1234 12:12</td>
-            <td><button type="button" name="button">Claim</button></td>
-          </tr>
-          <tr>
-            <td class="fat">$12.33</td>
-            <td>12</td>
-            <td>12-12-1234 12:12</td>
-            <td><button type="button" name="button">Claim</button></td>
-          </tr>
-          <tr>
-            <td class="fat">$12.33</td>
-            <td>12</td>
-            <td>12-12-1234 12:12</td>
-            <td><button type="button" name="button">Claim</button></td>
-          </tr>
         </tbody>
       </table>
     </div>

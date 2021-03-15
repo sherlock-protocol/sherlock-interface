@@ -73,9 +73,6 @@
     opacity: 1;
   }
 }
-.dashboard-block fieldset {
-  margin-bottom: 20px;
-}
 .dashboard-block hr {
   margin: 20px 0;
   border-color: #e8e9e9;

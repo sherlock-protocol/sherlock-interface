@@ -1,18 +1,23 @@
 form {
   border: 1px solid $light-grey;
-
-  button.button {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
+  // 
+  // button.button {
+  //   margin-top: 20px;
+  //   margin-bottom: 20px;
+  // 
+  //   &:last-child {
+  //     margin-bottom: 0;
+  //   }
+  // }
   fieldset {
     border: none;
     box-sizing: border-box;
     width: 100%;
-
-    &:not(.hidden):last-child {
-      margin-bottom: 0;
+    padding: 10px;
+    margin: 0;
+    
+    .justify-box {
+      padding: 10px;
     }
 
     .input {
@@ -24,6 +29,14 @@ form {
       display: flex;
       flex: 1;
       background: none;
+
+      &:first-of-type {
+        margin-top: 20px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 20px;
+      }
 
       img.icon {
         width: 30px;

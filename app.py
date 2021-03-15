@@ -10,7 +10,7 @@ def env():
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.POOL_ADDRESS,
-        "stake_token": "0x2610c11ab6f7dca1d8915f328c6995e0c16f5d94",
+        "stake_token": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
         "tokens": pool.get_tokens()
     }
 

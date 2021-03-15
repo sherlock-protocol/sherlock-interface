@@ -1,5 +1,6 @@
 import Table from "./class/Table.js"
 import erc20 from "./ether/erc20.js"
+import SafeString from "./modules/helpers.js";
 
 window.addEventListener('DOMContentLoaded', (event) => {
   let depositEl = document.querySelector("#deposit");
@@ -8,29 +9,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
   let selectDepositEl = document.querySelector('[name="depositCurrency"]');
   let selectWithdrawEl = document.querySelector('[name="withdrawCurrency"]');
   let approveDepositEl = document.querySelector('#approveDeposit');
-  let depositCalculatedEl =  document.querySelector('#depositCalculated');
+  let approveWithdrawEl = document.querySelector('#approveWithdraw');
+  let depositCalculatedEl = document.querySelector('#depositCalculated');
 
+  let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
   let poolSizeEl = document.querySelector('#poolSize');
   let totalFundsEl = document.querySelector('#totalFunds');
   let monthlyFundsEl = document.querySelector('#monthlyFunds');
 
   let pendingFundsTable = null;
+  let claimableFundsTable = null;
 
+  let tokenErc = null;
 
   let fundsLoop = null;
   let poolLoop = null;
   let activeDepositCoin = null;
   let activeWithdrawCoin = null;
-  
+
   let stakeAmount = null;
   let stakeAmountMinimal = null;
 
   let depositAmountBlock = document.querySelector('#depositAmountBlock');
   let depositAllowanceBlock = document.querySelector('#allowanceDepositBlock');
   let depositConfirmEl = document.querySelector('#depositConfirm');
-
-  let withdrawAmountBlock = document.querySelector('#depositAmountBlock');
-  let withdrawAllowanceBlock = document.querySelector('#allowanceDepositBlock');
+  let depositCancelEl = document.querySelector('#depositCancel');
+  let withdrawAmountBlock = document.querySelector('#withdrawAmountBlock');
+  let withdrawAllowanceBlock = document.querySelector('#allowanceWithdrawBlock');
 
 
   window.dashboard = {
@@ -41,8 +46,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
       if (window.signedInsurance) {
         if (window.app.getCookie('wallet') !== "None") {
           window.dashboard.processStake();
+          tokenErc = new erc20(window.settings.stake_token, window.dashboard.enableWithdraw);
         }
       }
+    },
+    processStake: (success) => {
+      window.insuranceHelpers.fetchTotalFunds(window.dashboard.renderTotalFunds);
+      window.insuranceHelpers.fetchAvailableFunds(window.dashboard.renderFunds);
     },
     processStakeAllowance: (response) => {
       if (_ethers.utils.formatEther(response) === "0.0") {
@@ -75,65 +85,98 @@ window.addEventListener('DOMContentLoaded', (event) => {
       let form = document.querySelector('#depositBlock form');
       if (app.validateForm(form)) {
         let amount = form.querySelector('[name="amount"]').value.toString();
-        amount = _ethers.utils.parseEther(amount);
-        let type = settings.tokens[selectDepositEl.value];
-        
-        window.signedInsurance.stakeFundsCalc(type.address, amount)
-        .then(resp => {
-          let calculatedStakeEL = document.querySelector('#calculatedStake');
-          let minimalStakeEl =  document.querySelector('#minimalStake');
-          let calculatedStake  = parseInt(_ethers.utils.formatEther(resp, type.decimals)).toFixed(3);
-          let minimalCalculatedStake = (parseInt(calculatedStake) / 100 * 97).toFixed(3);
+        let token = settings.tokens[selectDepositEl.value];
+        amount = _ethers.utils.parseUnits(amount, token.decimals);
 
-          stakeAmount = calculatedStake;
-          stakeAmountMinimal = minimalCalculatedStake;
-          
-          calculatedStakeEL.innerHTML = window.app.token(calculatedStake);
-          minimalStakeEl.innerHTML = window.app.token(minimalCalculatedStake);
-          
-          depositAmountBlock.classList.add('hidden');
-          depositCalculatedEl.classList.remove('hidden');
-        });
+        window.signedInsurance.stakeFundsCalc(token.address, amount)
+          .then(response => {
+            let calculatedStakeEL = document.querySelector('#calculatedStake');
+            let minimalStakeEl = document.querySelector('#minimalStake');
+            let calculatedStake = parseInt(_ethers.utils.formatEther(response)).toFixed(3);
+            let minimalCalculatedStake = (parseInt(calculatedStake) / 100 * 97).toFixed(3);
+
+            stakeAmount = response;
+            stakeAmountMinimal = response.mul(3).div(100);
+
+            calculatedStakeEL.innerHTML = window.app.token(calculatedStake);
+            minimalStakeEl.innerHTML = window.app.token(minimalCalculatedStake);
+
+            depositAmountBlock.classList.add('hidden');
+            depositCalculatedEl.classList.remove('hidden');
+          });
       }
     },
     confirmStake: () => {
-      let token = settings.tokens[selectDepositEl.value].address;
-      let amount = _ethers.BigNumber.from(stakeAmount.split('.')[0]);
-      let minOut = _ethers.BigNumber.from(stakeAmountMinimal.split('.')[0]);
-      window.signedInsurance.stakeFunds(token, amount, minOut, app.getCookie('wallet'))
-      .then(pending => {
-        console.log(pending);
-        pending.wait(response => {
-          console.log(response);
+      let token = settings.tokens[selectDepositEl.value];
+      app.addLoader(document.querySelector('#depositBlock'), null, "small");
+
+      window.signedInsurance.stakeFunds(token.address, stakeAmount, stakeAmountMinimal, app.getCookie('wallet'))
+        .then(pending => {
+          app.removeLoader(document.querySelector('#depositBlock'), null, "small");
+          window.dashboard.depositCancel();
+
+          window.transactionCenter.merge({
+            title: 'Stake',
+            description: pending.hash,
+            status: 'pending',
+            timestamp: new Date(),
+          });
+          setTimeout(() => {
+            window.insuranceHelpers.fetchTotalFunds(window.dashboard.renderTotalFunds);
+
+          }, 1000)
+          pending.wait(response => {
+              window.insuranceHelpers.fetchTotalFunds(window.dashboard.renderTotalFunds);
+
+              window.transactionCenter.merge({
+                title: 'Stake',
+                description: response.transactionHash,
+                status: 'success',
+                timestamp: new Date(),
+              });
+            })
+            .catch(err => {
+
+              window.transactionCenter.merge({
+                title: 'Stake',
+                description: err.hash,
+                status: 'failed',
+                timestamp: new Date(),
+              });
+            })
         })
         .catch(err => {
-          console.log(err);
+          app.removeLoader(document.querySelector('#depositBlock'), null, "small");
+          app.catchAll(err);
         })
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      
-      
-          // IERC20 _token,
-          // uint256 _amount,
-          // uint256 _minOut,
-          // address _receiver
-    },
-    processStake: (success) => {
-      window.insuranceHelpers.fetchTotalFunds(window.dashboard.renderTotalFunds);
-      window.insuranceHelpers.fetchAvailableFunds(window.dashboard.renderFunds);
     },
     renderFunds: (withdrawals) => {
-      console.log('withdraw', withdrawals);
-      withdrawals.forEach((item, i) => {
-        document.querySelector('#pendingBlock').classList.remove('hidden');
-        pendingFundsTable.addRow({
-          'countdown': item.withdrawal.blockInitiated,
-          'estimatedValue': '"><img src="x">',
-          'tokens': item.withdrawal.stake,
-        }, item.id);
-      });
+      if (withdrawals && withdrawals.length) {
+        provider.getBlockNumber().then(function(blockNumber) {
+          console.log('blockNumber', blockNumber);
+          withdrawals.forEach((item, i) => {
+            let availFrom = parseInt(item.withdrawal.blockInitiated) + data.withdrawInfo[0];
+            let availTill = parseInt(item.withdrawal.blockInitiated) + data.withdrawInfo[0] + data.withdrawInfo[1];
+            if (blockNumber < availFrom) {
+              document.querySelector('#pendingBlock').classList.remove('hidden');
+              pendingFundsTable.addRow({
+                'countdown': availFrom,
+                'estimatedValue': '"><img src="x">',
+                'tokens': item.withdrawal.stake,
+              }, item.id);
+            } else {
+              document.querySelector('#claimBlock').classList.remove('hidden');
+              claimableFundsTable.addRow({
+                'countdown': availTill,
+                'estimatedValue': '"><img src="x">',
+                'tokens': item.withdrawal.stake,
+                'action': new SafeString('<button type="button" name="button">Claim</button>')
+              }, item.id);
+            }
+          });
+        });
+      }
+
     },
     renderTotalFunds: (value, elID) => {
       let staked = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
@@ -179,19 +222,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
       erc20.contract.allowance(window.app.getCookie('wallet'), window.settings.pool_address)
         .then(response => {
           if (response._hex === "0x00") {
-            window.dashboard.renderAllowanceBlock();
+            window.dashboard.renderDepositAllowanceBlock();
           } else {
-            window.dashboard.renderAmountBlock();
+            window.dashboard.renderDepositAmountBlock();
           }
         })
         .catch(err => {
           console.log(err);
         });
     },
-    renderAllowanceBlock: () => {
+    renderDepositAllowanceBlock: () => {
       depositAllowanceBlock.classList.remove('hidden');
     },
-    renderAmountBlock: () => {
+    renderDepositAmountBlock: () => {
       depositAmountBlock.classList.remove('hidden');
     },
     approveDeposit: () => {
@@ -232,34 +275,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
           app.catchAll(err);
         });
     },
-    handleWithdrawTypeSelect: (e) => {
-      let value = selectWithdrawEl.value;
-      if (value) {
-        selectWithdrawEl.parentNode.querySelector('img').setAttribute('src', `static/svg/crypto/color/${value}.svg`);
-        let erc = new erc20(window.settings.stake_token, window.dashboard.handleWithdrawCheckAllowance);
-      } else {
-        selectWithdrawEl.parentNode.querySelector('img').setAttribute('src', `static/svg/crypto/color/generic.svg`);
-        depositAmountBlock.classList.add('hidden');
-        depositAllowanceBlock.classList.add('hidden');
-      }
-    },
-    handleWithdrawCheckAllowance: (erc20) => {
-      depositAmountBlock.classList.add('hidden');
-      depositAllowanceBlock.classList.add('hidden');
-      activeWithdrawCoin = erc20;
-
-      erc20.contract.allowance(window.app.getCookie('wallet'), settings.pool_address)
-        .then(response => {
-          if (response._hex === "0x00") {
-            window.dashboard.renderAllowanceBlock();
-          } else {
-            window.dashboard.renderAmountBlock();
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     numbGoUp: () => {
       let staked = _ethers.BigNumber.from(BigInt(data.staked_funds_big));
       if (poolLoop) {
@@ -269,6 +284,70 @@ window.addEventListener('DOMContentLoaded', (event) => {
         staked = staked.add(_ethers.BigNumber.from(data.yield));
         poolSizeEl.innerHTML = app.currency(staked);
       }, 50);
+    },
+    depositCancel: () => {
+      depositAmountBlock.classList.remove('hidden');
+      depositCalculatedEl.classList.add('hidden');
+    },
+    enableWithdraw: (erc) => {
+      erc.contract.allowance(window.app.getCookie('wallet'), settings.pool_address)
+        .then(response => {
+          if (response._hex === "0x00") {
+            window.dashboard.renderWithdrawAllowanceBlock();
+          } else {
+            window.dashboard.renderWithdrawAmountBlock();
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    approveWithdraw: () => {
+      console.log(tokenErc);
+      tokenErc.contract.approve(settings.pool_address, _ethers.constants.MaxUint256)
+        .then(pending => {
+          window.transactionCenter.merge({
+            title: 'Approve Unlocking',
+            description: pending.hash,
+            status: 'pending',
+            timestamp: new Date(),
+          });
+          pending.wait(response => {
+              withdrawAllowanceBlock.classList.add('hidden');
+              withdrawAmountBlock.classList.remove('hidden');
+
+              window.transactionCenter.merge({
+                title: 'Approve Unlocking',
+                description: pending.hash,
+                status: 'success',
+                timestamp: new Date(),
+              });
+            })
+            .catch(err => {
+              window.transactionCenter.merge({
+                title: 'Approve Unlocking',
+                description: pending.hash,
+                status: 'failed',
+                timestamp: new Date(),
+              });
+            })
+        })
+    },
+    renderWithdrawAllowanceBlock: () => {
+      withdrawAllowanceBlock.classList.remove('hidden');
+
+    },
+    renderWithdrawAmountBlock: () => {
+      withdrawAmountBlock.classList.remove('hidden');
+
+    },
+    withdrawStake: () => {
+      window.signedInsurance.getStakeValue().then(resp => {
+        console.log(resp);
+        resp.wait(response => {
+          console.log(response)
+        })
+      })
     }
   };
 
@@ -277,10 +356,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   if (depositEl)
     depositEl.addEventListener('click', window.dashboard.calculateStake);
-    
-  if(depositConfirmEl)
+
+  if (depositConfirmEl)
     depositConfirmEl.addEventListener('click', window.dashboard.confirmStake);
-        
+
+  if (depositCancelEl)
+    depositCancelEl.addEventListener('click', window.dashboard.depositCancel);
+
   if (withdrawEl)
     withdrawEl.addEventListener('click', window.dashboard.withdrawStake);
 
@@ -290,14 +372,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
   if (selectDepositEl)
     selectDepositEl.addEventListener('change', window.dashboard.handleDepositTypeSelect);
 
-  if (selectWithdrawEl)
-    selectWithdrawEl.addEventListener('change', window.dashboard.handleWithdrawTypeSelect);
+  if (approveWithdrawEl)
+    approveWithdrawEl.addEventListener('click', window.dashboard.approveWithdraw);
+
   if (poolSizeEl)
     window.dashboard.numbGoUp();
+
 
   window.dashboard.loadContracts();
 
   if (document.querySelector('#pendingFundsTable'))
     pendingFundsTable = new Table(document.querySelector('#pendingFundsTable'));
+  if (document.querySelector('#claimableFundsTable'))
+    claimableFundsTable = new Table(document.querySelector('#claimableFundsTable'));
 
 });

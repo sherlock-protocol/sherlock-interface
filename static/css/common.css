@@ -27,6 +27,11 @@ h2 sup {
   font-size: 14px;
 }
 
+.justify-box {
+  display: flex;
+  justify-content: space-between;
+}
+
 .app {
   padding: 0 500px;
   padding-bottom: 20px !important;
@@ -1116,6 +1121,9 @@ footer {
 .button:hover {
   background-color: #9957b5;
 }
+.button.secondary {
+  background: #8e918f;
+}
 .button.danger {
   background-color: #e74c3c;
 }
@@ -1148,17 +1156,15 @@ article a {
 form {
   border: 1px solid #e8e9e9;
 }
-form button.button {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
 form fieldset {
   border: none;
   box-sizing: border-box;
   width: 100%;
+  padding: 10px;
+  margin: 0;
 }
-form fieldset:not(.hidden):last-child {
-  margin-bottom: 0;
+form fieldset .justify-box {
+  padding: 10px;
 }
 form fieldset .input {
   position: relative;
@@ -1169,6 +1175,12 @@ form fieldset .input {
   display: flex;
   flex: 1;
   background: none;
+}
+form fieldset .input:first-of-type {
+  margin-top: 20px;
+}
+form fieldset .input:last-of-type {
+  margin-bottom: 20px;
 }
 form fieldset .input img.icon {
   width: 30px;
