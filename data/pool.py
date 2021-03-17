@@ -2,20 +2,38 @@ import settings
 from web3 import Web3
 
 def get_staking_pool_data():
-    # return {'staked_funds': "15,069,244.62", 'apy': "11.39", "lockup": "3"}
-    # todo lockup
 
-    stakedFunds = settings.POOL_CONTRACT_HTTP.functions.getTVL().call()
-    # todo calculate apy
-    # todo lockup
-    return {
-        "staked_funds": '{:,.2f}'.format(Web3.fromWei(stakedFunds, 'ether')),
-        "staked_funds_big": stakedFunds,
-        "yield": "500000000000000000",
-        "apy": 11.39,
-        "lockup": 3,
-        "withdrawInfo": get_withdraw_info()
-    }
+    data = []
+
+    filter = settings.POOL_CONTRACT_HTTP.events.TokenAdded.createFilter(fromBlock="0x0")
+    for ev in filter.get_all_entries():
+        token = ev.args._token
+        stake = ev.args._stake
+
+        TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
+        STAKE = settings.INFURA_HTTP.eth.contract(address=stake, abi=settings.ERC20_ABI)
+
+        data.append({
+            "token": {
+                "address": token,
+                "name": TOKEN.functions.name().call(),
+                "symbol": TOKEN.functions.symbol().call(),
+                "decimals": TOKEN.functions.decimals().call(),
+            },
+            "stake":{
+                "address": stake,
+                "name": STAKE.functions.name().call(),
+                "symbol": STAKE.functions.symbol().call(),
+                "decimals": STAKE.functions.decimals().call(),
+            },
+            "pool": {
+                "size": settings.POOL_CONTRACT_HTTP.functions.getStakersTVL(token).call(),
+                "apy": str(settings.POOL_CONTRACT_HTTP.functions.getTotalPremiumPerBlock(token).call())
+            },
+            "claimperiod": settings.POOL_CONTRACT_HTTP.functions.getClaimPeriod().call(),
+            "timperiod": settings.POOL_CONTRACT_HTTP.functions.getTimeLock().call()
+        })
+    return data
 
 def get_covered_protocols():
     return [
@@ -50,19 +68,3 @@ def get_pool_strategies():
     data = []
     return data
 
-def get_tokens():
-    data = {}
-    tokens = settings.POOL_CONTRACT_HTTP.functions.getWhitelistedTokens().call()
-    for address in tokens:
-        ERC20 = settings.INFURA_HTTP.eth.contract(address=address, abi=settings.ERC20_ABI)
-        symbol = ERC20.functions.symbol().call()
-        decimals = ERC20.functions.decimals().call()
-        data[symbol] = {
-            "address": address,
-            "decimals": decimals
-        }
-
-    return data
-
-def get_withdraw_info():
-    return settings.POOL_CONTRACT_HTTP.functions.getWithdrawInformation().call()

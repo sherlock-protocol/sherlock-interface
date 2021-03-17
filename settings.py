@@ -33,7 +33,7 @@ else:
 if NETWORK == 'KOVAN':
     raise ValueError("Kovan not supported")
 elif NETWORK == 'LOCALHOST':
-    POOL_ADDRESS = "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"
+    POOL_ADDRESS = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
 
 POOL_CONTRACT_HTTP = INFURA_HTTP.eth.contract(address=POOL_ADDRESS, abi=POOL_ABI)
 

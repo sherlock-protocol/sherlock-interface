@@ -10,8 +10,8 @@ def env():
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.POOL_ADDRESS,
-        "stake_token": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-        "tokens": pool.get_tokens()
+        "tokens": pool.get_tokens(),
+        "wallet": request.cookies.get('wallet')
     }
 
 @app.route('/')
@@ -22,9 +22,10 @@ def dashboard():
         desc='dashboard',
         tags=["dashboard"],
         currentPage="dashboard",
-        data=pool.get_staking_pool_data(),
-        wallet=request.cookies.get('wallet'),
-        env=env()
+        env=env(),
+        data= {
+            "tokens": pool.get_staking_pool_data()
+        }
     )
 
 @app.route('/allocations')
@@ -35,14 +36,8 @@ def allocations():
         desc='allocations',
         tags=["allocations"],
         currentPage="allocations",
-        data={
-            "covered_protocols": pool.get_covered_protocols(),
-            "pool_strategies": pool.get_pool_strategies(),
-            "total_covered_protocols": 12,
-            "total_pool_strategies": 1.1e+25
-        },
-        wallet=request.cookies.get('wallet'),
-        env=env()
+        env=env(),
+        data={ }
     )
 
 
@@ -54,9 +49,8 @@ def faq():
         desc='faq',
         tags=["faq"],
         currentPage="faq",
-        data={},
-        wallet=request.cookies.get('wallet'),
-        env=env()
+        env=env(),
+        data={}
     )
 
 
