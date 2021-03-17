@@ -2,7 +2,7 @@ import settings
 from web3 import Web3
 
 def get_staking_pool_data():
-
+    total = 0
     data = []
 
     filter = settings.POOL_CONTRACT_HTTP.events.TokenAdded.createFilter(fromBlock="0x0")
@@ -13,6 +13,8 @@ def get_staking_pool_data():
         TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
         STAKE = settings.INFURA_HTTP.eth.contract(address=stake, abi=settings.ERC20_ABI)
 
+        tvl = settings.POOL_CONTRACT_HTTP.functions.getStakersTVL(token).call()
+        total += tvl
         data.append({
             "token": {
                 "address": token,
@@ -27,13 +29,11 @@ def get_staking_pool_data():
                 "decimals": STAKE.functions.decimals().call(),
             },
             "pool": {
-                "size": settings.POOL_CONTRACT_HTTP.functions.getStakersTVL(token).call(),
+                "size": str(tvl),
                 "apy": str(settings.POOL_CONTRACT_HTTP.functions.getTotalPremiumPerBlock(token).call())
             },
-            "claimperiod": settings.POOL_CONTRACT_HTTP.functions.getClaimPeriod().call(),
-            "timperiod": settings.POOL_CONTRACT_HTTP.functions.getTimeLock().call()
         })
-    return data
+    return data, total
 
 def get_covered_protocols():
     return [
