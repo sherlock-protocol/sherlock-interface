@@ -15,7 +15,6 @@ def env():
 
 @app.route('/')
 def dashboard():
-    token, tvl = pool.get_staking_pool_data()
     return render_template(
         'dashboard.html',
         title='Dashboard',
@@ -24,8 +23,7 @@ def dashboard():
         currentPage="dashboard",
         env=env(),
         data= {
-            "tokens": token,
-            "tvl": tvl,
+            "pool": pool.get_staking_pool_data(),
             "claimperiod": settings.POOL_CONTRACT_HTTP.functions.getClaimPeriod().call(),
             "timperiod": settings.POOL_CONTRACT_HTTP.functions.getTimeLock().call()
         }

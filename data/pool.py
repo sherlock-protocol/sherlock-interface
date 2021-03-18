@@ -4,9 +4,17 @@ from web3 import Web3
 blocks_per_day = 6484
 blocks_per_year = blocks_per_day * 365
 
+usd_price = {
+    '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707': 1.00,
+    '0x0165878A594ca255338adfa4d48449f69242Eb8F': 1.01,
+    '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853': 400.00,
+    '0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6': 1500.00
+}
+
 def get_staking_pool_data():
     total = 0
-    data = []
+    total_numba = 0
+    tokens = []
 
     filter = settings.POOL_CONTRACT_HTTP.events.TokenAdded.createFilter(fromBlock="0x0")
     for ev in filter.get_all_entries():
@@ -14,25 +22,31 @@ def get_staking_pool_data():
         stake = ev.args._stake
 
         TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
+        token_decimals = TOKEN.functions.decimals().call()
+        divider = float("1" + "0" * token_decimals)
         STAKE = settings.INFURA_HTTP.eth.contract(address=stake, abi=settings.ERC20_ABI)
 
         tvl = settings.POOL_CONTRACT_HTTP.functions.getStakersTVL(token).call()
-        total += tvl
+        tvl_usd = tvl / divider * usd_price[token]
+        total += tvl_usd
 
         premium_per_block = settings.POOL_CONTRACT_HTTP.functions.getTotalPremiumPerBlock(token).call()
         premium_per_50ms = int(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
+        premium_per_50ms_usd = premium_per_50ms / divider * usd_price[token]
+        total_numba += premium_per_50ms_usd
+
         premium_per_year = premium_per_block * blocks_per_year
         if tvl == 0:
             apy = str(99999999.99)
         else:
             apy = "%.2f" % round(float(premium_per_year) / tvl, 2)
 
-        data.append({
+        tokens.append({
             "token": {
                 "address": token,
                 "name": TOKEN.functions.name().call(),
                 "symbol": TOKEN.functions.symbol().call(),
-                "decimals": TOKEN.functions.decimals().call(),
+                "decimals": token_decimals,
             },
             "stake":{
                 "address": stake,
@@ -41,13 +55,28 @@ def get_staking_pool_data():
                 "decimals": STAKE.functions.decimals().call(),
             },
             "pool": {
+                "size": tvl,
+                "size_str": str(tvl),
+                "size_format": "%.2f" % round(tvl / divider, 2),
                 "numba": premium_per_50ms,
                 "numba_str": str(premium_per_50ms),
-                "size": str(tvl),
+                "usd_size": tvl_usd,
+                "usd_size_str": "%.2f" % round(tvl_usd, 2),
+                "usd_numba": premium_per_50ms_usd,
+                "usd_numba_str": str(premium_per_50ms_usd),
+                #"usd_numba_format": "%.2f" % round(premium_per_50ms_usd, 2),
                 "apy": apy
             },
         })
-    return data, total
+    return {
+        "tokens": tokens,
+        "total": total,
+        "usd_total_str": str(total),
+        "usd_total_format": "%.2f" % round(total, 2),
+        "usd_total_numba": total_numba,
+        "usd_total_numba_str": str(total_numba),
+       # "usd_total_numba_format":  "%.2f" % round(total_numba, 2),
+    }
 
 def get_covered_protocols():
     return [
