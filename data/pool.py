@@ -23,7 +23,7 @@ def get_staking_pool_data():
         premium_per_50ms = int(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
         premium_per_year = premium_per_block * blocks_per_year
         if tvl == 0:
-            apy = 9999999.99
+            apy = str(99999999.99)
         else:
             apy = "%.2f" % round(float(premium_per_year) / tvl, 2)
 
