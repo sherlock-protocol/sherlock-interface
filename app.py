@@ -54,10 +54,10 @@ def withdraw(address):
         if address == entry["token"]["address"]:
             return render_template(
                 'withdraw.html',
-                title='Deposit',
-                desc='deposit',
-                tags=["deposit"],
-                currentPage="deposit",
+                title='Withdraw',
+                desc='withdraw',
+                tags=["withdraw"],
+                currentPage="withdraw",
                 env=env(),
                 data={"token":entry["token"]}
             )
