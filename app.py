@@ -1,4 +1,6 @@
 import settings
+from web3 import Web3
+
 from data import pool
 from flask import Flask, render_template, request
 
@@ -28,6 +30,38 @@ def dashboard():
             "timperiod": settings.POOL_CONTRACT_HTTP.functions.getTimeLock().call()
         }
     )
+
+@app.route('/deposit/<address>')
+def deposit(address):
+    address = Web3.toChecksumAddress(address)
+    for entry in pool.get_staking_pool_data()["tokens"]:
+        if address == entry["token"]["address"]:
+            return render_template(
+                'deposit.html',
+                title='Deposit',
+                desc='deposit',
+                tags=["deposit"],
+                currentPage="deposit",
+                env=env(),
+                data={"token":entry["token"]}
+            )
+    return "Not supported", 404
+
+@app.route('/withdraw/<address>')
+def withdraw(address):
+    address = Web3.toChecksumAddress(address)
+    for entry in pool.get_staking_pool_data()["tokens"]:
+        if address == entry["token"]["address"]:
+            return render_template(
+                'withdraw.html',
+                title='Deposit',
+                desc='deposit',
+                tags=["deposit"],
+                currentPage="deposit",
+                env=env(),
+                data={"token":entry["token"]}
+            )
+    return "Not supported", 404
 
 @app.route('/allocations')
 def allocations():
