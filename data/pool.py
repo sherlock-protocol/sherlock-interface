@@ -1,6 +1,9 @@
 import settings
 from web3 import Web3
 
+blocks_per_day = 6484
+blocks_per_year = blocks_per_day * 365
+
 def get_staking_pool_data():
     total = 0
     data = []
@@ -15,6 +18,15 @@ def get_staking_pool_data():
 
         tvl = settings.POOL_CONTRACT_HTTP.functions.getStakersTVL(token).call()
         total += tvl
+
+        premium_per_block = settings.POOL_CONTRACT_HTTP.functions.getTotalPremiumPerBlock(token).call()
+        premium_per_50ms = int(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
+        premium_per_year = premium_per_block * blocks_per_year
+        if tvl == 0:
+            apy = 9999999.99
+        else:
+            apy = "%.2f" % round(float(premium_per_year) / tvl, 2)
+
         data.append({
             "token": {
                 "address": token,
@@ -29,8 +41,10 @@ def get_staking_pool_data():
                 "decimals": STAKE.functions.decimals().call(),
             },
             "pool": {
+                "numba": premium_per_50ms,
+                "numba_str": str(premium_per_50ms),
                 "size": str(tvl),
-                "apy": str(settings.POOL_CONTRACT_HTTP.functions.getTotalPremiumPerBlock(token).call())
+                "apy": apy
             },
         })
     return data, total
