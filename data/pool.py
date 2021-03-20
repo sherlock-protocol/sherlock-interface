@@ -75,6 +75,7 @@ def get_staking_pool_data():
         "usd_total_format": "%.2f" % round(total, 2),
         "usd_total_numba": total_numba,
         "usd_total_numba_str": str(total_numba),
+        "usd_values": usd_price
        # "usd_total_numba_format":  "%.2f" % round(total_numba, 2),
     }
 
