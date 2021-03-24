@@ -8,28 +8,22 @@
   &-container {
     width: 400px;
     height: 400px;
-    background: tint($primary, 10%);
-    color: $white;
+    background: $white;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     display: flex;
     flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 6px solid $black;
 
     h1 {
       margin-bottom: 0;
+      text-align: center;
     }
 
-    button {
-      margin-top: 100px;
-      background: $white;
-      color: $primary;
-      border: none;
-      padding: 10px 20px;
-      font-size: 22px;
-      &:hover {
-        background: tint($grey, 80%);
-        cursor: pointer;
-      }
+    p {
+      text-align: center;
     }
   }
 }

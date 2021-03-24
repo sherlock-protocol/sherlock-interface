@@ -1,32 +1,12 @@
 @import "global/variables";
-@import "components/transaction-list";
 
-.dashboard {
-  &-block {
-
-    fieldset {
-      // margin-bottom: 20px;
-    }
-
-    hr {
-      margin: 20px 0;
-      border-color: $light-grey;
-      border-top: none;
-    }
-
-    &__key-value {
-      display: flex;
-      font-size: 18px;
-      margin-bottom: 10px;
-
-      .key {
-        flex: 1;
-      }
-
-      .value {
-        color: $primary;
-        font-weight: bold;
-      }
-    }
-  }
+#poolsize h2 {
+  text-align: center;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  // color: transparent;
+  text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px mix(black,red,50);
+  font-weight: 400;
+  animation: shift 4s ease-in-out infinite alternate;
 }

@@ -1,0 +1,22 @@
+.container {
+  background: $white;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  
+  &.centered {
+    text-align: center;
+  }
+
+  &.purp {
+    background: $primary;
+    color: $white;
+
+    h2 {
+      color: $white;
+    }
+  }
+
+  &:first-child {
+    margin-top: 20px;
+  }
+}

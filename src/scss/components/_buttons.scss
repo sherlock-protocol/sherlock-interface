@@ -1,22 +1,29 @@
-.button {
+.button,
+button {
   border: none;
-  padding: 10px 20px;
+  padding: 5px 20px;
   font-size: 18px;
   background-color: $primary;
   color: $white;
   cursor: pointer;
   font-weight: 600;
   outline: none;
-  
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
   &-centered {
-    margin: 0px auto;
+    margin: 0 auto;
     display: block;
   }
 
   &:hover {
     background-color: tint($primary, 10%);
   }
-  
+
   &.secondary {
     background: $grey;
   }

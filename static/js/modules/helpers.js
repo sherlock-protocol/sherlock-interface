@@ -66,8 +66,6 @@ window.app.getCookie = cname => {
 window.app.token = (value) => {
   value = (value + ' Tokens').replace('.', ',');
   return value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-  // return value;
 }
 
 window.app.currency = (value, abbreviate) => {
@@ -80,7 +78,7 @@ window.app.currency = (value, abbreviate) => {
       split[1] += '0';
     }
   }
-  
+
   if (abbreviate) {
     value = split[0] + '.' + split[1];
     return '$' + window.app.abbreviateNumber(value.substring(0, value.length - 16));
@@ -90,7 +88,24 @@ window.app.currency = (value, abbreviate) => {
   }
 }
 
+window.app.bigNumberToUSD = (bigNumber, decimals) => {
+  let value = _ethers.utils.formatUnits(bigNumber, decimals);
+  
+  var formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+  
+  return formatter.format(value);
+}
+
+window.app.numberToUSD = (value) => {
+  value = Math.floor(value);
+  return '$' + window.app.abbreviateNumber(value);
+}
+
 window.app.abbreviateNumber = value => {
+  if (!value) return value;
   let newValue = parseInt(value);
   const suffixes = ["", "K", "M", "B", "T"];
   let suffixNum = 0;
@@ -102,14 +117,14 @@ window.app.abbreviateNumber = value => {
   newValue = newValue.toPrecision(3);
 
   newValue += suffixes[suffixNum];
-
-  let split = newValue.split('.');
-  if (split[1].length !== 2) {
-    for (var i = 0; 2 - split[1].length; i++) {
-      split[1] += '0';
-    }
-  }
-  newValue = split[0] + '.' + split[1];
+  // let split = newValue.split('.');
+  // console.log(split);
+  // if (split[1].length !== 2) {
+  //   for (var i = 0; 2 - split[1].length; i++) {
+  //     split[1] += '0';
+  //   }
+  // }
+  // newValue = split[0] + '.' + split[1];
   return newValue;
 }
 

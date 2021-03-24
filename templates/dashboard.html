@@ -1,141 +1,27 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
-  <div class="blocks__row">
-    <div class="dashboard-block blocks__row-block">
-      <h2>Staking Pool</h2>
-      <div class="dashboard-block__key-value">
-        <span class="key">Current APY</span>
-        <span id="apy" class="value">{{data.apy}}%</span>
-      </div>
-      <div class="dashboard-block__key-value">
-        <span class="key">Pool Size</span>
-        <span id="poolSize" class="value">${{data.staked_funds}}</span>
-      </div>
-      <div class="dashboard-block__key-value">
-        <span class="key">Lockup</span>
-        <span id="lockup" class="value">{{ data.lockup }} days</span>
-      </div>
-    </div>
+  <div id="poolsize" class="container purp hbox centered">
+      <h4>Total pool size:</h4>
+      <h2>$0.00</h2>
+  </div>
+  <div class="container">
+    <h2>Tokens</h2>
+    <table id="tokenTable">
+      <thead>
+        <tr>
+          <th data-column="icon" data-column-type="image" data-column-class="icon" width="100"></th>
+          <th data-column="protocol" data-column-class="fat">Protocol</th>
+          <th data-column="poolsize" data-column-type="numba">Poolsize</th>
+          <th data-column="apy" data-column-class="fat">APY</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
+    <h2>Withdrawals</h2>
 
-    <div id="fundsBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
-      <h2>Your Funds</h2>
-      <div class="dashboard-block__key-value">
-        <span class="key">Earnings Per Month</span>
-        <span id="monthlyFunds" class="value">$0.00</span>
-      </div>
-      <div class="dashboard-block__key-value">
-        <span class="key">Funds Unlocking</span>
-        <span id="availableFunds" class="value">$0.00</span>
-      </div>
-      <div class="dashboard-block__key-value">
-        <span class="key">Funds Available to Claim</span>
-        <span id="availableFunds" class="value">$0.00</span>
-      </div>
-      <hr>
-      <div class="dashboard-block__key-value">
-        <span class="key">Total Funds</span>
-        <span id="totalFunds" class="value">$0.00</span>
-      </div>
-    </div>
-  </div>
-  <div class="blocks__row">
-    <div id="depositBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
-      <h2>Deposit Funds</h2>
-      <form>
-        <fieldset>
-          <div class="input readonly">
-            <img class="icon" src="/static/svg/crypto/color/generic.svg" alt="">
-            <select class="" name="depositCurrency">
-              <option value="" selected>Select</option>
-              {% for token in env.tokens %}
-                <option value="{{ token }}">{{ token }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </fieldset>
-        <fieldset id="depositAmountBlock" class="hidden">
-          <div class="input input-big">
-            <input type="number" name="amount" value="" required>
-            <label for="amount">Amount</label>
-          </div>
-          <button id="deposit" class="button button-centered" type="button" name="button">Deposit</button>
-        </fieldset>
-        <fieldset id="depositCalculated" class="hidden">
-          <div class="dashboard-block__key-value">
-            <span class="key">Calculated Amount</span>
-            <span id="calculatedStake" class="value">$0.00</span>
-          </div>
-          <div class="dashboard-block__key-value">
-            <span class="key">Minimal Amount</span>
-            <span id="minimalStake" class="value">$0.00</span>
-          </div>
-          <div class="justify-box">
-            <button id="depositCancel" class="button secondary button-centered" type="button" name="button">Cancel</button>
-            <button id="depositConfirm" class="button button-centered" type="button" name="button">Confirm</button>
-          </div>
-        </fieldset>
-        <fieldset id="allowanceDepositBlock" class="hidden">
-          <button id="approveDeposit" class="button button-centered" type="button" name="button">Approve</button>
-        </fieldset>
-      </form>
-    </div>
-    <div id="withdrawBlock" class="dashboard-block blocks__row-block {% if wallet == "None" %}hidden{% endif %}">
-      <h2>Unlock Funds</h2>
-      <form>
-        <fieldset id="allowanceWithdrawBlock" class="hidden">
-          <button id="approveWithdraw" class="button button-centered" type="button" name="button">Approve</button>
-        </fieldset>
-        <fieldset id="withdrawAmountBlock" class="hidden">
-          <div class="input input-big">
-            <input type="number" name="amount" value="" required>
-            <label for="amount">Amount</label>
-          </div>
-          <button id="withdraw" class="button button-centered" type="button" name="button">Start Unlock</button>
-        </fieldset>
-      </form>
-
-      <button id="approveStake" class="button button-centered hidden" type="button" name="button">Approve Stake</button>
-    </div>
-  </div>
-  <div id="pendingBlock" class="blocks__row hidden">
-    <div class="dashboard-block blocks__row-block-full">
-      <h2>Pending Funds</h2>
-      <table id="pendingFundsTable">
-        <thead>
-          <tr>
-            <th data-column="estimatedValue" data-class="fat">Estimated Value</th>
-            <th data-column="tokens">Tokens</th>
-            <th data-column="countdown">Countdown</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-  <div id="claimBlock" class="blocks__row hidden">
-    <div class="dashboard-block blocks__row-block-full">
-      <h2>Claimable Funds</h2>
-      <table id="claimableFundsTable">
-        <thead>
-          <tr>
-            <th data-column="estimatedValue">Estimated Value</th>
-            <th data-column="tokens">Tokens</th>
-            <th data-column="countdown">Claimable Till</th>
-            <th data-column="action">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div id="transactionBlock" class="hidden">
-    <h2>Transaction List<sup> (Current Session)</sup></h2>
-    <ul class="transaction-list">
-    </ul>
   </div>
 </div>
 {% include 'partials/footer.html' %}
