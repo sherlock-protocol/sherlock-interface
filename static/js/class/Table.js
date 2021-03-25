@@ -77,9 +77,11 @@ export default class Table {
                   if (!balanceInt) {
                     cell.innerHTML = '$0.00';
                   } else {
+                    let tokenPrice = _ethers.BigNumber.from(cellData.token_price *100000);
                     let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
                     let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
-                    let userYield = userSize.mul(poolYield).div(poolSize);
+                    let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+                    userSize = userSize.mul(tokenPrice);
                     header.intervals[position] = setInterval(() => {
                       userSize = userSize.add(userYield);
                       cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);

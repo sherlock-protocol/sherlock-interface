@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
     el: document.querySelector('#tokenTable'),
     imagePrefix: "/static/svg/crypto/color/"
   });
-  
+
   let main = (insurance) => {
     if (app.getCookie('wallet') == 'None') {
       window.data.pool.tokens.forEach((item, i) => {
@@ -78,6 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
           userStake: {
             stake: item.stake,
             token: item.token,
+            token_price: data.pool.usd_values[item.token.address],
             pool: item.pool,
             insurance: insurance,
             class: 'userstake',

@@ -90,12 +90,12 @@ window.app.currency = (value, abbreviate) => {
 
 window.app.bigNumberToUSD = (bigNumber, decimals) => {
   let value = _ethers.utils.formatUnits(bigNumber, decimals);
-  
+  value = value/100000
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
-  
+
   return formatter.format(value);
 }
 
