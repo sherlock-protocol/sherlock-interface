@@ -43,7 +43,10 @@ def deposit(address):
                 tags=["deposit"],
                 currentPage="deposit",
                 env=env(),
-                data={"token":entry["token"]}
+                data={
+                    "token":entry["token"],
+                    "stake":entry["stake"]
+                }
             )
     return "Not supported", 404
 
@@ -59,7 +62,10 @@ def withdraw(address):
                 tags=["withdraw"],
                 currentPage="withdraw",
                 env=env(),
-                data={"token":entry["token"]}
+                data={
+                    "token":entry["token"],
+                    "stake":entry["stake"]
+                }
             )
     return "Not supported", 404
 
