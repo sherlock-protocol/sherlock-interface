@@ -100,6 +100,7 @@ window.app.bigNumberToUSD = (bigNumber, decimals) => {
 }
 
 window.app.numberToUSD = (value) => {
+  value = value/100000
   value = Math.floor(value);
   return '$' + window.app.abbreviateNumber(value);
 }
