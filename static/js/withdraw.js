@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let approveClick = () => {
     app.addLoader(document.querySelector('#approve'));
-    console.log(tokenErc);
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
         console.log('pending', pending);
@@ -28,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   app.addLoader(document.body, "Checking approval");
-  let token = new Erc20(data.token.address, erc => {
+  let token = new Erc20(data.stake.address, erc => {
     tokenErc = erc;
 
     erc.allowance(app.getCookie('wallet'), settings.pool_address)
@@ -45,31 +44,32 @@ window.addEventListener('DOMContentLoaded', () => {
   let maxDeposit = () => {
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
-        let value = _ethers.utils.formatUnits(balance, data.token.decimals);
+        let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
         document.querySelector('#deposit input').value = value;
       });
   }
 
-  let deposit = () => {
+  let withdraw = () => {
     app.addLoader(document.querySelector('#deposit'));
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
-        let value = document.querySelector('#deposit input').value;
-        let deposit = _ethers.utils.parseUnits(value, data.token.decimals);
-        if(deposit.lte(balance)) {
-          new Insurance(contract => {
-            contract.stake(deposit, app.getCookie('wallet'), data.token.address)
-            .then(pending => {
-              app.removeLoader(document.querySelector('#deposit'));
-              location.href = '/';
-              pending.wait().then(response => {
-                console.log(response);
-              });
-            }).catch(err => {
-              app.catchAll(err);
-              app.removeLoader(document.querySelector('#deposit'));
-            });
-          })
+        console.log(balance);
+        let value = document.querySelector('#withdraw input').value;
+        let withdraw = _ethers.utils.parseUnits(value, data.token.decimals);
+        if(withdraw.lte(balance)) {
+    //       new Insurance(contract => {
+    //         contract.stake(deposit, app.getCookie('wallet'), data.token.address)
+    //         .then(pending => {
+    //           app.removeLoader(document.querySelector('#deposit'));
+    //           location.href = '/';
+    //           pending.wait().then(response => {
+    //             console.log(response);
+    //           });
+    //         }).catch(err => {
+    //           app.catchAll(err);
+    //           app.removeLoader(document.querySelector('#deposit'));
+    //         });
+    //       })
         } else {
           app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
         }
@@ -81,5 +81,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //Deposit actions
   document.querySelector('#deposit #maxButton').addEventListener('click', maxDeposit);
-  document.querySelector('#deposit #depositButton').addEventListener('click', deposit);
+  document.querySelector('#deposit #withdrawButton').addEventListener('click', withdraw);
 });

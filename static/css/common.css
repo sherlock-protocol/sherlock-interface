@@ -1147,10 +1147,11 @@ button {
   outline: none;
   text-decoration: none;
 }
-.button:disabled,
+.button.disabled, .button:disabled,
+button.disabled,
 button:disabled {
   opacity: 0.6;
-  cursor: not-allowed;
+  pointer-events: none;
 }
 .button-centered,
 button-centered {

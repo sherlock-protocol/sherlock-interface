@@ -4,16 +4,12 @@ import Insurance from "./ether/Insurance.js"
 import SafeString from "./modules/helpers.js";
 
 window.addEventListener('DOMContentLoaded', () => {
-  let tokenTable = new Table({
-    el: document.querySelector('#tokenTable'),
-    imagePrefix: "/static/svg/crypto/color/"
-  });
-
   let totalPoolInterval = null;
   let totalAmount = parseFloat(data.pool.usd_total_format, 2);
+
   let totalPool = () => {
     let total = document.querySelector('#poolsize h2');
-    
+
     var formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -25,6 +21,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   }
 
+
+  let tokenTable = new Table({
+    el: document.querySelector('#tokenTable'),
+    imagePrefix: "/static/svg/crypto/color/"
+  });
+  
   let main = (insurance) => {
     if (app.getCookie('wallet') == 'None') {
       window.data.pool.tokens.forEach((item, i) => {
@@ -63,23 +65,31 @@ window.addEventListener('DOMContentLoaded', () => {
             yield: item.pool.usd_numba
           },
           apy: item.pool.apy + '%',
+          withdraw: {
+            label: 'Withdraw',
+            disabled: true,
+            href: '/withdraw/' + item.token.address,
+          },
+          deposit: {
+            label: 'Deposit',
+            disabled: false,
+            href: '/deposit/' + item.token.address,
+          },
           userStake: {
             stake: item.stake,
             token: item.token,
             pool: item.pool,
-            insurance: insurance
-          },
-          withdraw: {
-            label: 'Withdraw',
-            disabled: true,
-            href: '/withdraw/' + item.stake.address,
-            class: 'button'
-          },
-          deposit: {
-            label: 'Deposit',
-            disabled: true,
-            href: '/deposit/' + item.token.address,
-            class: 'button'
+            insurance: insurance,
+            class: 'userstake',
+            cb: row => {
+              let withdraw = row.querySelector('.withdraw');
+              let value = row.querySelector('.userstake');
+              console.log(value.innerHTML);
+              if(value.innerHTML !== "$0.00") {
+                withdraw.classList.remove('disabled');
+              }
+              console.log('row', row.querySelector('.withdraw'));
+            }
           },
         });
       });

@@ -1,9 +1,21 @@
 {% include 'partials/header.html' %}
 <div class="modal">
-  <div class="modal-container">
-    
+  <div id="approve" class="modal-container hidden">
+    <h1>Approve {{ data.token.name}}</h1>
+    <p>You need to approve our Insurance contract in order to withdraw {{ data.stake.symbol }}.</p>
+    <br>
+    <button type="button" name="button" id="approveButton">Approve</button>
+  </div>
+  <div id="deposit" class="modal-container hidden">
     <h1>Withdraw {{ data.token.name}}</h1>
-    <p></p>
+    <p>You need to approve our Insurance contract before you're able to make deposits.</p>
+    <div class="input amount">
+      <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg">
+      <input type="number" name="" valuoijfades9dsFo9u8fg8dfsuijosaduhie="">
+      <button type="button" name="button" id="maxButton">MAX</button>
+    </div>
+    <br>
+    <button type="button" name="button" id="withdrawButton">Deposit</button>
   </div>
 </div>
 {% include 'partials/footer.html' %}

@@ -32,6 +32,8 @@ export default class Table {
   addRow(data, id, position) {
     let sorted = [];
     let template = document.createElement("TR");
+    let cbs = [];
+
     if (!position) {
       position = this.tbody.children.length;
     }
@@ -56,10 +58,13 @@ export default class Table {
           } else if (header.type === "link") {
             let a = document.createElement("a");
             a.innerHTML = app.parse `${cellData.label}`;
-            a.disabled = cellData.disabled;
             a.setAttribute('href', cellData.href);
+            a.classList.add(cellData.label.toLowerCase());
             a.classList.add('button');
             cell.appendChild(a);
+            if (cellData.disabled) {
+              a.classList.add('disabled');
+            }
           } else if (header.type === "stake") {
             let img = document.createElement("img");
             img.setAttribute("src", "static/img/mini-loader.svg");
@@ -80,6 +85,9 @@ export default class Table {
                       cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
                     }, 50);
                   }
+                  cbs.forEach(cb => {
+                    cb(template);
+                  });
                 });
             });
           } else if (header.type === "numba") {
@@ -91,9 +99,16 @@ export default class Table {
               amount += cellData.yield;
               cell.innerHTML = app.numberToUSD(amount);
             }, 50);
-          } else {}
+          }
+          if (cellData.class)
+            cell.classList.add(cellData.class);
+
+          if (cellData.cb)
+            cbs.push(cellData.cb);
+
 
           template.appendChild(cell);
+
         }
       });
       if (!found) {
