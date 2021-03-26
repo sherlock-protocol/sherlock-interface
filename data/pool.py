@@ -16,10 +16,9 @@ def get_staking_pool_data():
     total_numba = 0
     tokens = []
 
-    filter = settings.POOL_CONTRACT_HTTP.events.TokenAdded.createFilter(fromBlock="0x0")
-    for ev in filter.get_all_entries():
-        token = ev.args._token
-        stake = ev.args._stake
+    poolTokens = settings.POOL_CONTRACT_HTTP.functions.getTokens().call()
+    for token in poolTokens:
+        stake = settings.POOL_CONTRACT_HTTP.functions.getStakeToken(token).call()
 
         TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
         token_decimals = TOKEN.functions.decimals().call()
@@ -80,31 +79,39 @@ def get_staking_pool_data():
     }
 
 def get_covered_protocols():
-    return [
-        {
-            'id': '2698812145d22d42d61c043b9933d0771afdf0fad79a42fc985105d0f27141b0',
-            'name': 'Maker',
-            'covered': '11000000000000000000000000', # total usd
-            'covered_breakdown': [
-                {
-                    "token": "x",
-                    "amount": 1
-                }
-            ],
-            'premium': '95129375946000000', # total usd
-            'balance': '100', # total usd
-            'pool_breakdown': [
-                {
-                    "token": "x",
-                    "balance": 1,
-                    "premium": 1,
-                    "last_paid": 500,
-                    "outstanding debt": 500
-                }
-            ],
+    poolTokens = settings.POOL_CONTRACT_HTTP.functions.getTokens().call()
+    prtc = {}
+    tokens = {}
+
+    for token in poolTokens:
+        TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
+        tokens[token] = {
+            "name": TOKEN.functions.name().call(),
+            "symbol": TOKEN.functions.symbol().call(),
+            "decimals": TOKEN.functions.decimals().call(),
         }
-    ]
-    data = []
+        protocols = settings.POOL_CONTRACT_HTTP.functions.getProtocols(token).call()
+        for p in protocols:
+            p = p.hex()
+            c = prtc.get(p, {})
+
+            #balance = settings.POOL_CONTRACT_HTTP.functions.getProtocolBalance(p, token).call()
+            premium = settings.POOL_CONTRACT_HTTP.functions.getProtocolPremium(p, token).call()
+            #debt = settings.POOL_CONTRACT_HTTP.functions.getAccruedDebt(p, token).call()
+
+            c[token] = {
+                #"balance": balance,
+                #"balance_str": str(balance),
+                "premium": premium,
+                "premium_str": str(premium),
+                #"debt": debt,
+                #"debt_str": str(debt)
+            }
+            prtc[p] = c
+    data = {
+        "tokens": tokens,
+        "protocols": prtc
+    }
     return data
 
 def get_pool_strategies():
