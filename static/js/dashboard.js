@@ -114,8 +114,8 @@ window.addEventListener('DOMContentLoaded', () => {
             .then(size => {
               index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
               size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-              for (var i = 0; i < size; i++) {
-                insurance.getWithdrawal(app.getCookie('wallet'), index + i - 1, item.token.address)
+              for (var i = index; i < size; i++) {
+                insurance.getWithdrawal(app.getCookie('wallet'), i, item.token.address)
                   .then(resp => {
                     let stake = _ethers.utils.formatUnits(resp.stake, item.token.decimals);
                     let block = parseInt(_ethers.utils.formatUnits(resp.blockInitiated, 'wei'));
@@ -127,7 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
                       let availableFromMs = (availableFrom - curBlock) * blockTimeMS;
                       let availableTillMs = (availableTill - curBlock) * blockTimeMS;
                       let claimable = true;
-                      
+
                       if (availableFromMs <= 0 && availableTillMs > 0) {
                         claimable = false;
                       }
@@ -135,13 +135,13 @@ window.addEventListener('DOMContentLoaded', () => {
                       if (availableTillMs > 0) {
                         document.querySelector('#withdrawals').classList.remove('hidden');
                         console.log(resp);
-                        // TODO: 
+                        // TODO:
                         // stake: stake,
                         // Should be formatted to something readable
                         //
                         //  Double check if availablefrom/till are correct
                         //
-                        // Check if rows are rendered properly -- if expired ones wont 
+                        // Check if rows are rendered properly -- if expired ones wont
                         // show up thats because of the current implementation see line 135ish
                         withdrawalsTable.addRow({
                           icon: item.token.symbol + '.svg',
@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             disabled: false,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                              insurance.withdrawCancel(index + i - 1, item.token.address)
+                              insurance.withdrawCancel(i, item.token.address)
                               .then(resp => {
                                 app.removeLoader(document.querySelector('#withdrawals'));
                               })
@@ -182,7 +182,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             disabled: claimable,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                              insurance.withdrawClaim(index + i - 1, item.token.address)
+                              insurance.withdrawClaim(i, item.token.address)
                               .then(resp => {
                                 app.removeLoader(document.querySelector('#withdrawals'));
                               })
