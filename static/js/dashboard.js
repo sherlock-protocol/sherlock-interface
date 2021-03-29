@@ -110,20 +110,16 @@ window.addEventListener('DOMContentLoaded', () => {
     data.pool.tokens.forEach((item, i) => {
       insurance.getWithrawalInitialIndex(app.getCookie('wallet'), item.token.address)
         .then(index => {
-          console.log('index', index);
           insurance.getWithdrawalSize(app.getCookie('wallet'), item.token.address)
             .then(size => {
-              console.log('size', size);
               index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
               size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
               for (var i = 0; i < size; i++) {
-                insurance.getWithdrawal(app.getCookie('wallet'), index + i, item.token.address)
+                insurance.getWithdrawal(app.getCookie('wallet'), index + i - 1, item.token.address)
                   .then(resp => {
                     let stake = _ethers.utils.formatUnits(resp.stake, item.token.decimals);
                     let block = parseInt(_ethers.utils.formatUnits(resp.blockInitiated, 'wei'));
                     let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
-
-                    console.log(resp);
 
                     provider.getBlockNumber().then(function(curBlock) {
                       let availableFrom = block + data.timperiod;
@@ -135,14 +131,18 @@ window.addEventListener('DOMContentLoaded', () => {
                       if (availableFromMs <= 0 && availableTillMs > 0) {
                         claimable = false;
                       }
-                      
+
                       if (availableTillMs > 0) {
                         document.querySelector('#withdrawals').classList.remove('hidden');
+                        console.log(resp);
                         // TODO: 
                         // stake: stake,
-                        // should be formatted to something readable
+                        // Should be formatted to something readable
                         //
-                        //Double check if availablefrom/till are correct
+                        //  Double check if availablefrom/till are correct
+                        //
+                        // Check if rows are rendered properly -- if expired ones wont 
+                        // show up thats because of the current implementation see line 135ish
                         withdrawalsTable.addRow({
                           icon: item.token.symbol + '.svg',
                           protocol: item.token.name,
@@ -151,27 +151,45 @@ window.addEventListener('DOMContentLoaded', () => {
                             ms: availableFromMs >= 0 ? availableFromMs : null,
                             doneText: "Click n' Claim",
                             func: (row) => {
-                              row.querySelector('td button').disabled = false;
+                              row.querySelector('td.claim button').disabled = false;
                             }
                           },
                           availableTill: {
                             ms: availableTillMs >= 0 ? availableTillMs : null,
+                            doneText: "Expired",
                             func: (row) => {
-                              row.clasSList.add('disabled');
+                              row.classList.add('disabled');
+                              row.querySelector('td.availableFrom').innerHTML = 'Expired';
                             }
                           },
                           cancel: {
                             label: "Cancel",
                             disabled: false,
                             func: () => {
-                              console.log('bla');
+                              app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+                              insurance.withdrawCancel(index + i - 1, item.token.address)
+                              .then(resp => {
+                                app.removeLoader(document.querySelector('#withdrawals'));
+                              })
+                              .catch(err => {
+                                app.removeLoader(document.querySelector('#withdrawals'));
+                                app.catchAll(err);
+                              });
                             }
                           },
                           claim: {
-                            label: "Claim Funds",
+                            label: "Claim",
                             disabled: claimable,
                             func: () => {
-                              console.log('bla');
+                              app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+                              insurance.withdrawClaim(index + i - 1, item.token.address)
+                              .then(resp => {
+                                app.removeLoader(document.querySelector('#withdrawals'));
+                              })
+                              .catch(err => {
+                                app.removeLoader(document.querySelector('#withdrawals'));
+                                app.catchAll(err);
+                              });
                             }
                           }
                         });

@@ -20,6 +20,11 @@ table {
 
   tbody {
     tr {
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
       td {
         padding: 10px 20px;
 

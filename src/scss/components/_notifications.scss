@@ -2,8 +2,8 @@
   position: fixed;
   left: 60%;
   right: 20px;
-  bottom: 20px;
-  z-index: 1;
+  bottom: 30px;
+  z-index: 10;
 }
 
 .notification {
@@ -18,6 +18,7 @@
   position: relative;
   opacity: 0;
   margin-top: -100px;
+  z-index: 10;
 
   button {
     align-self: flex-end;

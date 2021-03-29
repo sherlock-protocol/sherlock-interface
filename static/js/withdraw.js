@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let withdraw = () => {
     let value = document.querySelector('#withdraw input').value;
     if(!value) {
-      app.notify("Fill in a number idiot.", "L2P");
+      app.notify("L2P", "Fill in a number idiot.");
       return;
     }
     
