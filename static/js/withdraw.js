@@ -6,11 +6,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let enableApprove = () => {
     document.querySelector('#approve').classList.remove('hidden');
-    document.querySelector('#deposit').classList.add('hidden');
+    document.querySelector('#withdraw').classList.add('hidden');
   };
 
   let enableDeposit = () => {
-    document.querySelector('#deposit').classList.remove('hidden');
+    document.querySelector('#withdraw').classList.remove('hidden');
     document.querySelector('#approve').classList.add('hidden');
   };
 
@@ -45,31 +45,35 @@ window.addEventListener('DOMContentLoaded', () => {
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
         let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
-        document.querySelector('#deposit input').value = value;
+        document.querySelector('#withdraw input').value = parseFloat(value);
       });
   }
 
   let withdraw = () => {
-    app.addLoader(document.querySelector('#deposit'));
+    let value = document.querySelector('#withdraw input').value;
+    if(!value) {
+      app.notify("Fill in a number idiot.", "L2P");
+      return;
+    }
+    
+    app.addLoader(document.querySelector('#withdraw'));
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
-        console.log(balance);
-        let value = document.querySelector('#withdraw input').value;
-        let withdraw = _ethers.utils.parseUnits(value, data.token.decimals);
+        let withdraw = _ethers.utils.parseUnits(value, data.stake.decimals);
         if(withdraw.lte(balance)) {
-    //       new Insurance(contract => {
-    //         contract.stake(deposit, app.getCookie('wallet'), data.token.address)
-    //         .then(pending => {
-    //           app.removeLoader(document.querySelector('#deposit'));
-    //           location.href = '/';
-    //           pending.wait().then(response => {
-    //             console.log(response);
-    //           });
-    //         }).catch(err => {
-    //           app.catchAll(err);
-    //           app.removeLoader(document.querySelector('#deposit'));
-    //         });
-    //       })
+          new Insurance(contract => {
+            contract.withdrawStake(withdraw, data.token.address)
+            .then(pending => {
+              app.removeLoader(document.querySelector('#withdraw'));
+              location.href = '/';
+              pending.wait().then(response => {
+                console.log(response);
+              });
+            }).catch(err => {
+              app.catchAll(err);
+              app.removeLoader(document.querySelector('#withdraw'));
+            });
+          })
         } else {
           app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
         }
@@ -80,6 +84,6 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#approve #approveButton').addEventListener('click', approveClick);
 
   //Deposit actions
-  document.querySelector('#deposit #maxButton').addEventListener('click', maxDeposit);
-  document.querySelector('#deposit #withdrawButton').addEventListener('click', withdraw);
+  document.querySelector('#withdraw #maxButton').addEventListener('click', maxDeposit);
+  document.querySelector('#withdraw #withdrawButton').addEventListener('click', withdraw);
 });

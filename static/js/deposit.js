@@ -16,7 +16,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let approveClick = () => {
     app.addLoader(document.querySelector('#approve'));
-    console.log(tokenErc);
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
         console.log('pending', pending);
@@ -46,15 +45,19 @@ window.addEventListener('DOMContentLoaded', () => {
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
         let value = _ethers.utils.formatUnits(balance, data.token.decimals);
-        document.querySelector('#deposit input').value = value;
+        document.querySelector('#deposit input').value = parseFloat(value);
       });
   }
 
   let deposit = () => {
+    let value = document.querySelector('#deposit input').value;
+    if(!value) {
+      app.notify("Fill in a number idiot.", "L2P");
+      return;
+    }
     app.addLoader(document.querySelector('#deposit'));
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
-        let value = document.querySelector('#deposit input').value;
         let deposit = _ethers.utils.parseUnits(value, data.token.decimals);
         if(deposit.lte(balance)) {
           new Insurance(contract => {

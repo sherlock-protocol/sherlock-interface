@@ -1,7 +1,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: "Courier";
+  font-family: "courier";
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -64,6 +64,10 @@ h2 sup {
   .app {
     padding: 0 50px;
   }
+}
+@font-face {
+  font-family: "courier";
+  src: url("/static/font/courier/CourierPrime-Bold.ttf") format("ttf"), url("/static/font/courier/CourierPrime-Regular.ttf") format("ttf"), url("/static/font/courier/CourierPrime-Italic.ttf") format("ttf"), url("/static/font/courier/CourierPrime-BoldItalic.ttf") format("ttf");
 }
 .ct-label {
   fill: #fff;
@@ -1257,7 +1261,7 @@ table tbody tr td.fat {
   color: #8e44ad;
 }
 table tbody tr td.icon img {
-  height: 50px;
+  height: 40px;
 }
 table tbody tr td button {
   background: #8e44ad;

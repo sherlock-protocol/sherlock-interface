@@ -9,7 +9,7 @@
     <table id="tokenTable">
       <thead>
         <tr>
-          <th data-column="icon" data-column-type="image" data-column-class="icon" width="100"></th>
+          <th data-column="icon" data-column-type="image" data-column-class="icon" width="40"></th>
           <th data-column="protocol" data-column-class="fat">Protocol</th>
           <th data-column="poolsize" data-column-type="numba">Poolsize</th>
           <th data-column="apy" data-column-class="fat">APY</th>
@@ -19,8 +19,22 @@
       </tbody>
     </table>
   </div>
-  <div class="container">
+  <div id="withdrawals" class="container hidden">
     <h2>Withdrawals</h2>
+    <table id="withdrawalsTable">
+      <thead>
+        <th data-column="icon" data-column-type="image" data-column-class="icon" width="40"></th>
+        <th data-column="protocol" data-column-class="fat">Protocol</th>
+        <th data-column="stake" data-column-class="fat">Stake</th>
+        <th data-column="availableFrom" data-column-type="countdown">Available From</th>
+        <th data-column="availableTill" data-column-type="countdown">Available Till</th>
+        <th data-column="cancel" data-column-type="button">Cancel</th>
+        <th data-column="claim" data-column-type="button">Claim</th>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
 
   </div>
 </div>

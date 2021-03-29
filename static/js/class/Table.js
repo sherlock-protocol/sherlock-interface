@@ -29,7 +29,10 @@ export default class Table {
     });
   }
 
-  addRow(data, id, position) {
+  addRow(data, options) {
+    let id = options && options.id ? options.id : null;
+    let position = options && options.position ? options.position : null;
+    let disabled = options && options.disabled ? options.disabled : null;
     let sorted = [];
     let template = document.createElement("TR");
     let cbs = [];
@@ -37,6 +40,8 @@ export default class Table {
     if (!position) {
       position = this.tbody.children.length;
     }
+    template.setAttribute('data-id', position);
+
     this.headers.forEach(header => {
       let found = false;
       Object.entries(data).forEach(entry => {
@@ -49,6 +54,27 @@ export default class Table {
             cell.innerHTML = app.parse `${cellData}`;
           } else if (header.type === "image") {
             cell.innerHTML = app.parse `<img src="${this.imagePrefix}${app.parse`${cellData}`}">`;
+          } else if (header.type === "countdown") {
+            if (cellData && cellData.ms) {
+              clearInterval(header.intervals[position]);
+              let amount = cellData.ms;
+              cell.innerHTML = window.app.timeConversion(cellData.ms);
+              header.intervals[position] = setInterval((i) => {
+                amount -= 1000;
+                if (amount <= 0 && cellData && cellData.func) {
+                  cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+
+                  cellData.func(template);
+                  clearInterval(header.intervals[position]);
+                } else {
+                  cell.innerHTML = window.app.timeConversion(amount);
+
+                }
+              }, 1000);
+            } else {
+              cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+            }
+
           } else if (header.type === "button") {
             let button = document.createElement("button");
             button.innerHTML = app.parse `${cellData.label}`;
@@ -96,16 +122,15 @@ export default class Table {
             let amount = cellData.numba;
             cell.innerHTML = cellData.numba;
             clearInterval(header.intervals[position]);
-
             header.intervals[position] = setInterval(() => {
               amount += cellData.yield;
               cell.innerHTML = app.numberToUSD(amount);
             }, 50);
           }
-          if (cellData.class)
+          if (cellData && cellData.class)
             cell.classList.add(cellData.class);
 
-          if (cellData.cb)
+          if (cellData && cellData.cb)
             cbs.push(cellData.cb);
 
 
@@ -123,7 +148,7 @@ export default class Table {
     this.rows.push({
       el: template,
       index: position,
-      id: id,
+      id: position,
       data: data
     });
 
@@ -153,7 +178,7 @@ export default class Table {
 
   }
 
-  removeRow() {
+  removeRow(id) {
 
   }
   updateRow() {
