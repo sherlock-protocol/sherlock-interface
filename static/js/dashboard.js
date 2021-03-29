@@ -115,6 +115,7 @@ window.addEventListener('DOMContentLoaded', () => {
               index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
               size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
               for (var i = index; i < size; i++) {
+                let locali = i;
                 insurance.getWithdrawal(app.getCookie('wallet'), i, item.token.address)
                   .then(resp => {
                     let stake = _ethers.utils.formatUnits(resp.stake, item.token.decimals);
@@ -167,7 +168,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             disabled: false,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                              insurance.withdrawCancel(i, item.token.address)
+                              insurance.withdrawCancel(locali, item.token.address)
                               .then(resp => {
                                 app.removeLoader(document.querySelector('#withdrawals'));
                               })
@@ -182,7 +183,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             disabled: claimable,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                              insurance.withdrawClaim(i, item.token.address)
+                              insurance.withdrawClaim(locali, item.token.address)
                               .then(resp => {
                                 app.removeLoader(document.querySelector('#withdrawals'));
                               })
