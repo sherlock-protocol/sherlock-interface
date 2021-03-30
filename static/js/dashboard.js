@@ -118,54 +118,54 @@ window.addEventListener('DOMContentLoaded', () => {
                 let locali = i;
                 insurance.getWithdrawal(app.getCookie('wallet'), i, item.token.address)
                   .then(resp => {
-                    let stake = _ethers.utils.formatUnits(resp.stake, item.token.decimals);
+                    let stake = _ethers.utils.formatUnits(resp.stake, item.stake.decimals);
                     let block = parseInt(_ethers.utils.formatUnits(resp.blockInitiated, 'wei'));
                     let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
 
                     provider.getBlockNumber().then(function(curBlock) {
                       let availableFrom = block + data.timperiod;
                       let availableTill = block + data.timperiod + data.claimperiod;
-                      let availableFromMs = (availableFrom - curBlock) * blockTimeMS;
-                      let availableTillMs = (availableTill - curBlock) * blockTimeMS;
-                      let claimable = true;
-
-                      if (availableFromMs <= 0 && availableTillMs > 0) {
-                        claimable = false;
+                      let timeToAvailable = (availableFrom - curBlock) * blockTimeMS;
+                      let timeToExpire = (availableTill - curBlock) * blockTimeMS;
+                      let cancelable = false;
+                      let claimable = false;
+                      if (timeToAvailable > 0) {
+                        cancelable = true
+                      }
+                      if (timeToAvailable <= 0 && timeToExpire > 0) {
+                        claimable = true
                       }
 
-                      if (availableTillMs > 0) {
+                      // TODO vincent
+                      // - cancel/claim actions are exclusive (only one can be done at the time), so 1 button could be enough.
+                      // - addrow is done on callback, which means the order can be mixed up if callbacks are not returnd in order (which is something that will happen)
+                      // - EXPECTED TOKEN AMOUNT = `insurance.stakeToToken(resp.stake, item.token.address)`
+                      if (timeToExpire > 0) {
                         document.querySelector('#withdrawals').classList.remove('hidden');
-                        console.log(resp);
-                        // TODO:
-                        // stake: stake,
-                        // Should be formatted to something readable
-                        //
-                        //  Double check if availablefrom/till are correct
-                        //
-                        // Check if rows are rendered properly -- if expired ones wont
-                        // show up thats because of the current implementation see line 135ish
                         withdrawalsTable.addRow({
                           icon: item.token.symbol + '.svg',
                           protocol: item.token.name,
                           stake: stake,
                           availableFrom: {
-                            ms: availableFromMs >= 0 ? availableFromMs : null,
+                            ms: timeToAvailable >= 0 ? timeToAvailable : null,
                             doneText: "Click n' Claim",
                             func: (row) => {
                               row.querySelector('td.claim button').disabled = false;
+                              row.querySelector('td.cancel button').disabled = true;
                             }
                           },
                           availableTill: {
-                            ms: availableTillMs >= 0 ? availableTillMs : null,
+                            ms: timeToExpire >= 0 ? timeToExpire : null,
                             doneText: "Expired",
                             func: (row) => {
                               row.classList.add('disabled');
                               row.querySelector('td.availableFrom').innerHTML = 'Expired';
+                              row.querySelector('td.claim button').disabled = true;
                             }
                           },
                           cancel: {
                             label: "Cancel",
-                            disabled: false,
+                            disabled: !cancelable,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
                               insurance.withdrawCancel(locali, item.token.address)
@@ -180,7 +180,7 @@ window.addEventListener('DOMContentLoaded', () => {
                           },
                           claim: {
                             label: "Claim",
-                            disabled: claimable,
+                            disabled: !claimable,
                             func: () => {
                               app.addLoader(document.querySelector('#withdrawals'), "", 'small');
                               insurance.withdrawClaim(locali, item.token.address)
