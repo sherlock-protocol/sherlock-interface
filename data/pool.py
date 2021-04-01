@@ -11,6 +11,12 @@ usd_price = {
     '0x610178dA211FEF7D417bC0e6FeD39F05609AD788': 1500.00 * 100000
 }
 
+protocol_names = {
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": "AlchemIX",
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c2": "Badger",
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c3": "SET protocol"
+}
+
 def get_staking_pool_data():
     total = 0
     total_numba = 0
@@ -117,7 +123,8 @@ def get_covered_protocols():
             prtc[p] = c
     data = {
         "tokens": tokens,
-        "protocols": prtc
+        "protocols": prtc,
+        "protocol_names": protocol_names
     }
     return data
 
