@@ -1,7 +1,7 @@
 {% include 'partials/header.html' %}
   <div class="allocations">
     <div class="container">
-      <h1>Premiums per Block</h1>
+      <h1>Premiums per 24h</h1>
       <table>
         <thead>
           <tr>
@@ -19,7 +19,7 @@
               <td>Placeholder</td>
               {% for token in data.tokens %}
                 {% if data.protocols[protocol][token] %}
-                  <td>{{ data.protocols[protocol][token].premium }}</td>
+                  <td>{{ data.protocols[protocol][token].premium_str }}</td>
                 {% else %}
                   <td>-</td>
                 {% endif %}

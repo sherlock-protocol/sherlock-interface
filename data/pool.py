@@ -85,25 +85,32 @@ def get_covered_protocols():
 
     for token in poolTokens:
         TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
+        token_decimals = TOKEN.functions.decimals().call()
         tokens[token] = {
             "name": TOKEN.functions.name().call(),
             "symbol": TOKEN.functions.symbol().call(),
-            "decimals": TOKEN.functions.decimals().call(),
+            "decimals": token_decimals,
         }
         protocols = settings.POOL_CONTRACT_HTTP.functions.getProtocols(token).call()
         for p in protocols:
             p = p.hex()
             c = prtc.get(p, {})
 
+            divider = float("1" + "0" * token_decimals)
             #balance = settings.POOL_CONTRACT_HTTP.functions.getProtocolBalance(p, token).call()
             premium = settings.POOL_CONTRACT_HTTP.functions.getProtocolPremium(p, token).call()
-            #debt = settings.POOL_CONTRACT_HTTP.functions.getAccruedDebt(p, token).call()
+            premium_per_day = premium * blocks_per_day
 
+            premium_per_day_format = round(float(premium_per_day) / divider, 3)
+            #debt = settings.POOL_CONTRACT_HTTP.functions.getAccruedDebt(p, token).call()
+            premium_per_day_format_str = "%.2f" % premium_per_day_format
+            if premium_per_day_format < 0.001:
+                premium_per_day_format_str = "<0.001"
             c[token] = {
                 #"balance": balance,
                 #"balance_str": str(balance),
-                "premium": premium,
-                "premium_str": str(premium),
+                "premium": premium_per_day_format,
+                "premium_str": premium_per_day_format_str,
                 #"debt": debt,
                 #"debt_str": str(debt)
             }
