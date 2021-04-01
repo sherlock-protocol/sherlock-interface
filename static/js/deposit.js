@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let deposit = () => {
     let value = document.querySelector('#deposit input').value;
-    if(!value) {
+    if (!value) {
       app.notify("Fill in a number idiot.", "L2P");
       return;
     }
@@ -59,22 +59,26 @@ window.addEventListener('DOMContentLoaded', () => {
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
         let deposit = _ethers.utils.parseUnits(value, data.token.decimals);
-        if(deposit.lte(balance)) {
+        if (deposit.lte(balance)) {
           new Insurance(contract => {
             contract.stake(deposit, app.getCookie('wallet'), data.token.address)
-            .then(pending => {
-              app.removeLoader(document.querySelector('#deposit'));
-              location.href = '/';
-              pending.wait().then(response => {
-                console.log(response);
+              .then(pending => {
+
+                app.removeLoader(document.querySelector('#deposit'));
+                app.addLoader(document.querySelector('#deposit'), 'We will redirect you automaticly when the transaction is finished.');
+
+                pending.wait().then(response => {
+                  app.removeLoader(document.querySelector('#deposit'));
+                  location.href = '/';
+                });
+              }).catch(err => {
+                app.catchAll(err);
+                app.removeLoader(document.querySelector('#deposit'));
               });
-            }).catch(err => {
-              app.catchAll(err);
-              app.removeLoader(document.querySelector('#deposit'));
-            });
           })
         } else {
           app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
+          app.removeLoader(document.querySelector('#deposit'));
         }
       });
   }

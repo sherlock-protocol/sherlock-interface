@@ -20,9 +20,11 @@ body {
   color: #8e44ad;
 }
 
+h1,
 h2 {
   color: #8e44ad;
 }
+h1 sup,
 h2 sup {
   font-size: 14px;
 }

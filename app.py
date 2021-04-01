@@ -78,7 +78,7 @@ def allocations():
         tags=["allocations"],
         currentPage="allocations",
         env=env(),
-        data={"protocols": pool.get_covered_protocols()}
+        data=pool.get_covered_protocols()
     )
 
 

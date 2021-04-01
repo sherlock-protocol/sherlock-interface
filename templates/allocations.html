@@ -1,18 +1,33 @@
 {% include 'partials/header.html' %}
   <div class="allocations">
-    <div class="blocks__row">
-      <div class="allocations-chart blocks__row-block">
-        <h2>Covered Protocols</h2>
-        <div class="chart" id="coveredProtocolsChart">
-          
-        </div>
-      </div>
-      <div class="allocations-chart blocks__row-block">
-        <h2>Pool Strategies</h2>
-        <div class="chart" id="poolStrategiesChart">
-          
-        </div>
-      </div>
+    <div class="container">
+      <h1>Premiums per Block</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            {% for token in data.tokens %}
+              <th>
+                <img src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for protocol in data.protocols %}
+            <tr>
+              <td>Placeholder</td>
+              {% for token in data.tokens %}
+                {% if data.protocols[protocol][token] %}
+                  <td>{{ data.protocols[protocol][token].premium }}</td>
+                {% else %}
+                  <td>-</td>
+                {% endif %}
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 {% include 'partials/footer.html' %}

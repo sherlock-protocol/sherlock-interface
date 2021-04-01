@@ -78,7 +78,10 @@ export default class Table {
           } else if (header.type === "button") {
             let button = document.createElement("button");
             button.innerHTML = app.parse `${cellData.label}`;
-            button.addEventListener('click', cellData.func);
+            button.addEventListener('click', () => {
+              cellData.func(button);
+            });
+            button.setAttribute('action', cellData.action);
             button.disabled = cellData.disabled;
             cell.appendChild(button);
           } else if (header.type === "link") {

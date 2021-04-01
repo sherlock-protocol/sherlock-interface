@@ -18,7 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
     app.addLoader(document.querySelector('#approve'));
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
-        console.log('pending', pending);
         pending.wait().then(response => {
           app.removeLoader(document.querySelector('#approve'));
           enableDeposit();
@@ -65,9 +64,11 @@ window.addEventListener('DOMContentLoaded', () => {
             contract.withdrawStake(withdraw, data.token.address)
             .then(pending => {
               app.removeLoader(document.querySelector('#withdraw'));
-              location.href = '/';
+              app.addLoader(document.querySelector('#withdraw'), 'We will redirect you automaticly when the transaction is finished.');
+
               pending.wait().then(response => {
-                console.log(response);
+                app.removeLoader(document.querySelector('#withdraw'));
+                location.href = '/';
               });
             }).catch(err => {
               app.catchAll(err);
@@ -76,6 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
           })
         } else {
           app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
+          app.removeLoader(document.querySelector('#withdraw'));
         }
       });
   }
