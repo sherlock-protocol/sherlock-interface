@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="/static/css/dashboard.css">{% endif %}
   {% if currentPage == "allocations" %}
   <link rel="stylesheet" href="/static/css/allocations.css">{% endif %}
-  {% if currentPage == "faq" %}
-  <link rel="stylesheet" href="/static/css/faq.css">{% endif %}
 </head>
 
 <body>
@@ -23,15 +21,12 @@
     </div>
     <div class="side">
       <div class="meta">
-        <span id="walletName" {% if wallet == "None" %} class="hidden" {% endif %}></span>  
+        <span id="walletName" {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>  
       </div>
       <nav>
-        {% if currentPage != "landing" %}
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/allocations" class="{% if currentPage == "allocations" %}active{% endif %}">Allocations</a>
-        <a href="/faq" class="{% if currentPage == "faq" %}active{% endif %}">FAQ</a>
-        {% endif %}
-        <a href="#" class="cta{% if wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>
+        <a href="#" class="cta {% if env.wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>
       </nav>
     </div>
   </header>

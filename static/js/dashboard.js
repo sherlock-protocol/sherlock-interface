@@ -212,7 +212,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let main = (insurance) => {
     populateTokens(insurance);
-    fetchWithdrawals(insurance);
+    
+    if (app.getCookie('wallet') !== "None") {
+      fetchWithdrawals(insurance);
+    }
   }
 
   let signedInsurance = new Insurance(main);

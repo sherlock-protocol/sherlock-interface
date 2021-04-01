@@ -1,5 +1,8 @@
-table th img {
+table thead th img {
   height: 60px;
+  display: block;
+  margin: 0 auto;
+  width: 60px;
 }
 
 /*# sourceMappingURL=allocations.css.map */

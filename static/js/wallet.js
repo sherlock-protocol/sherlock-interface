@@ -22,40 +22,39 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
   }
 
-  let enableWallet = accounts => {
+  let enableWallet = (accounts, force) => {
     if (accounts && accounts.length) {
       let wallet = accounts[0];
       window.app.setCookie('wallet', wallet, 60);
+      if(force) location.href = location.href;
 
-      walletButtonEl.classList.add('hidden');
-      walletNameEl.innerText = window.app.formatHash(wallet);
-      walletNameEl.classList.remove('hidden');
 
     } else {
       app.notify("Error", "No active accounts found.")
     }
   }
 
-  let disableWallet = () => {
+  let disableWallet = force => {
     window.app.setCookie('wallet', "None", 60);
-    walletButtonEl.classList.remove('hidden');
-    walletNameEl.innerText = "";
-    walletNameEl.classList.add('hidden');
+    if(force) location.href = location.href;
   }
-
-  ethereum.on('accountsChanged', function(accounts) {
-    if (accounts && !accounts.length) {
-      disableWallet();
-    }
-  });
+  
+  setTimeout(() => {
+    ethereum.on('accountsChanged', function(accounts) {
+      if (accounts && !accounts.length) {
+        disableWallet(true);
+      } else {
+        enableWallet(accounts, true);
+      }
+    });  
+  }, 1000);
+  
   
   provider.listAccounts().then(accounts => {
     if (accounts && accounts.length) {
       enableWallet(accounts)
     } else {
-      console.log(window.app.getCookie('wallet'));
       if (window.app.getCookie('wallet') !== "None") {
-        console.log('none');
         window.app.setCookie('wallet', 'None', 60);
         location.href = "";
       } else {

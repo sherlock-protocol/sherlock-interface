@@ -16,7 +16,7 @@
         <tbody>
           {% for protocol in data.protocols %}
             <tr>
-              <td>Placeholder</td>
+              <td class="fat">{{ data.protocol_names[protocol] }}</td>
               {% for token in data.tokens %}
                 {% if data.protocols[protocol][token] %}
                   <td>{{ data.protocols[protocol][token].premium_str }}</td>

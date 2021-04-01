@@ -81,20 +81,6 @@ def allocations():
         data=pool.get_covered_protocols()
     )
 
-
-@app.route('/faq')
-def faq():
-    return render_template(
-        'faq.html',
-        title='FAQ',
-        desc='faq',
-        tags=["faq"],
-        currentPage="faq",
-        env=env(),
-        data={}
-    )
-
-
 if __name__ == '__main__':
     # print(pool.get_staking_pool_data())
     # print(pool.get_covered_protocols())

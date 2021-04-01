@@ -1,7 +1,16 @@
 table {
-  th {
-    img {
-      height: 60px;
+  thead {
+    th {
+      img {
+        height: 60px;
+        display: block;
+        margin: 0 auto;
+        width: 60px;
+      }
     }
+  }
+  
+  tbody{
+    
   }
 }
