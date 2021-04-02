@@ -110,20 +110,19 @@ window.addEventListener('DOMContentLoaded', () => {
   let fetchWithdrawals = async (insurance) => {
     let curBlock = await provider.getBlockNumber();
     data.pool.tokens.forEach(async (item, i) => {
-      let locali = i;
       let index = await insurance.getWithrawalInitialIndex(app.getCookie('wallet'), item.token.address);
       let size = await insurance.getWithdrawalSize(app.getCookie('wallet'), item.token.address);
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-      for (var i = index; i < size; i++) {
-        let withdrawal = await insurance.getWithdrawal(app.getCookie('wallet'), i, item.token.address);
-        renderWithdrawalRow(withdrawal, item, curBlock, insurance, locali, data.pool.usd_values);
+      for (var ii = index; ii < size; ii++) {
+        let withdrawal = await insurance.getWithdrawal(app.getCookie('wallet'), ii, item.token.address);
+        renderWithdrawalRow(withdrawal, item, curBlock, insurance, ii, data.pool.usd_values);
       }
     });
   }
 
-  let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, locali, usd_values) => {
+  let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, i, usd_values) => {
     if (!insurance) return;
 
     let stake = _ethers.utils.formatUnits(withdrawal.stake, item.stake.decimals);
@@ -132,6 +131,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let availableTill = block + data.timperiod + data.claimperiod;
     let timeToAvailable = (availableFrom - curBlock) * blockTimeMS;
     let timeToExpire = (availableTill - curBlock) * blockTimeMS;
+    // TODO vincent, cancelable not used?
     let cancelable = false;
     let claimable = false;
     if (timeToAvailable > 0) {
@@ -180,7 +180,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
               if (el.getAttribute('action') === "claim") {
                 app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                insurance.withdrawClaim(locali, item.token.address)
+                insurance.withdrawClaim(i, item.token.address)
                   .then(resp => {
                     app.removeLoader(document.querySelector('#withdrawals'));
                     rowEl.classList.add('disabled');
@@ -192,7 +192,7 @@ window.addEventListener('DOMContentLoaded', () => {
               } else if (el.getAttribute('action') === "cancel") {
                 console.log('cancel');
                 app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                insurance.withdrawCancel(locali, item.token.address)
+                insurance.withdrawCancel(i, item.token.address)
                   .then(resp => {
                     rowEl.classList.add('disabled');
                     app.removeLoader(document.querySelector('#withdrawals'));
@@ -211,7 +211,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let main = (insurance) => {
     populateTokens(insurance);
-    
+
     if (app.getCookie('wallet') !== "None") {
       fetchWithdrawals(insurance);
     }
