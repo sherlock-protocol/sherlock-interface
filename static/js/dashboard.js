@@ -118,13 +118,12 @@ window.addEventListener('DOMContentLoaded', () => {
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
       for (var i = index; i < size; i++) {
         let withdrawal = await insurance.getWithdrawal(app.getCookie('wallet'), i, item.token.address);
-        renderWithdrawalRow(withdrawal, item, curBlock, insurance, locali);
-
+        renderWithdrawalRow(withdrawal, item, curBlock, insurance, locali, data.pool.usd_values);
       }
     });
   }
 
-  let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, locali) => {
+  let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, locali, usd_values) => {
     if (!insurance) return;
 
     let stake = _ethers.utils.formatUnits(withdrawal.stake, item.stake.decimals);
@@ -154,7 +153,7 @@ window.addEventListener('DOMContentLoaded', () => {
         withdrawalsTable.addRow({
           icon: item.token.symbol + '.svg',
           protocol: item.token.name,
-          estimate: app.bigNumberToUSD(estimate, item.token.decimals),
+          estimate: app.bigNumberToUSD(estimate.mul(usd_values[item.token.address]), item.token.decimals),
           stake: stake,
           availableFrom: {
             ms: timeToAvailable >= 0 ? timeToAvailable : null,
