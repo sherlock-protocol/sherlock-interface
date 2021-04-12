@@ -11,10 +11,22 @@ usd_price = {
     '0x610178dA211FEF7D417bC0e6FeD39F05609AD788': 1500.00 * 100000
 }
 
-protocol_names = {
-    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": "AlchemIX",
-    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c2": "Badger",
-    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c3": "SET protocol"
+protocol_meta = {
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": {
+        "name": "AlchemIX",
+        "website": "https://alchemix.fi/",
+        "twitter": "https://twitter.com/alchemixfi",
+    },
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c2": {
+        "name": "Badger",
+        "website": "https://badger.finance/",
+        "twitter": "https://twitter.com/BadgerDAO",
+    },
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c3": {
+        "name": "SET Protocol",
+        "website": "https://www.tokensets.com/",
+        "twitter": "https://twitter.com/SetProtocol",
+    },
 }
 
 def get_staking_pool_data():
@@ -124,7 +136,7 @@ def get_covered_protocols():
     data = {
         "tokens": tokens,
         "protocols": prtc,
-        "protocol_names": protocol_names,
+        "protocol_meta": protocol_meta,
         "usd": usd_price
     }
     return data
