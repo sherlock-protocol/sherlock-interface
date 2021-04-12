@@ -29,5 +29,24 @@
         </tbody>
       </table>
     </div>
+    
+    <div class="container">
+      <h1>Protocol</h1>
+      {% for protocol in data.protocols %}
+      <div class="hbox protocol" id="a{{protocol}}">        
+        <div class="flex">
+          <h3>{{ data.protocol_names[protocol] }}</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <b>Pay out in:</b>
+          {% for token in data.protocols[protocol] %}
+            <img height="30px" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
+          {% endfor %}
+          <a class="button website" href="#">Website</a>
+        </div>
+        
+          <div class="pie"></div>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 {% include 'partials/footer.html' %}

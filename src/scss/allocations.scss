@@ -1,16 +1,24 @@
-table {
-  thead {
-    th {
-      img {
-        height: 60px;
-        display: block;
-        margin: 0 auto;
-        width: 60px;
+.allocations {
+  table {
+    thead {
+      th {
+        img {
+          height: 60px;
+          display: block;
+          margin: 0 auto;
+          width: 60px;
+        }
       }
     }
   }
-  
-  tbody{
-    
+
+  .protocol {
+    .pie {
+      width: 300px;
+    }
+
+    .website {
+      float: right;
+    }
   }
 }

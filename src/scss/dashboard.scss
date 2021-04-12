@@ -10,3 +10,49 @@
   font-weight: 400;
   animation: shift 4s ease-in-out infinite alternate;
 }
+
+table {
+  .expander {h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+    .token-split {
+      .flex {
+        
+        .fat {
+          font-weight: bold;
+        }
+
+        & > div {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          background: $white;
+          margin-top: 10px;
+          margin-right: 10px;
+          padding: 5px 10px; 
+
+          &:first-child {
+            margin-top: 0;
+          }
+
+          & > span:first-of-type {
+            margin-left: auto;
+            display: block;
+            margin-right: 20px;
+          }
+
+          & > span:last-of-type {
+          }
+
+          img {
+            margin-right: 50px;
+            height: 32px;
+            justify-self: flex-start;
+          }
+        }
+      }
+    }
+  }
+}

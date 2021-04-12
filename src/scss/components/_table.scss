@@ -39,6 +39,14 @@ table {
           }
         }
 
+        &.icons {
+
+          img {
+            height: 24px;
+            display: inline;
+          }
+        }
+
         button {
           background: $primary;
           color: $white;
@@ -59,8 +67,10 @@ table {
         background: tint($primary, 94%);
       }
 
-      &:hover {
-        background: tint($primary, 80%);
+      &:not(.expander) {
+        &:hover {
+          background: tint($primary, 80%);
+        }
       }
     }
   }

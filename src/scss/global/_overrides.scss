@@ -19,6 +19,7 @@ body {
   font-weight: bold;
   color: $primary;
 }
+
 h1,
 h2 {
   color: $primary;
@@ -31,4 +32,24 @@ h2 {
 .justify-box {
   display: flex;
   justify-content: space-between;
+}
+
+.scrollx {
+  overflow-x: auto;
+  // @media only screen and (max-width: 1350px) {
+  //   table {
+  //     position: relative;
+  // 
+  //     &:after {
+  //       content: "«»";
+  //       background: $primary;
+  //       color: $white;
+  //       border-radius: 50%;
+  //       width: 100px;
+  //       height: 30px;
+  //       padding: 5px 10px;
+  //       position: static;
+  //     }
+  //   }
+  // }
 }

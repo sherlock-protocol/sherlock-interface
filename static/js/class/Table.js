@@ -29,7 +29,7 @@ export default class Table {
     });
   }
 
-  addRow(data, options) {
+  addRow(options) {
     let id = options && options.id ? options.id : null;
     let position = options && options.position ? options.position : null;
     let disabled = options && options.disabled ? options.disabled : null;
@@ -44,92 +44,13 @@ export default class Table {
 
     this.headers.forEach(header => {
       let found = false;
-      Object.entries(data).forEach(entry => {
+      Object.entries(options.row).forEach(entry => {
+        console.log(entry[0], header.name);
         if (entry[0] === header.name) {
           found = true;
           let cellData = entry[1];
-          let cell = document.createElement("TD");
-          if (header.class) cell.classList.add(header.class);
-          if (!header.type) {
-            cell.innerHTML = app.parse `${cellData}`;
-          } else if (header.type === "image") {
-            cell.innerHTML = app.parse `<img src="${this.imagePrefix}${app.parse`${cellData}`}">`;
-          } else if (header.type === "countdown") {
-            if (cellData && cellData.ms) {
-              clearInterval(header.intervals[position]);
-              let amount = cellData.ms;
-              cell.innerHTML = window.app.timeConversion(cellData.ms);
-              header.intervals[position] = setInterval((i) => {
-                amount -= 1000;
-                if (amount <= 0 && cellData && cellData.func) {
-                  cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+          let cell = this.renderCell(cellData, header, position, cbs, template);
 
-                  cellData.func(template);
-                  clearInterval(header.intervals[position]);
-                } else {
-                  cell.innerHTML = window.app.timeConversion(amount);
-
-                }
-              }, 1000);
-            } else {
-              cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
-            }
-
-          } else if (header.type === "button") {
-            let button = document.createElement("button");
-            button.innerHTML = app.parse `${cellData.label}`;
-            button.addEventListener('click', () => {
-              cellData.func(button);
-            });
-            button.setAttribute('action', cellData.action);
-            button.disabled = cellData.disabled;
-            cell.appendChild(button);
-          } else if (header.type === "link") {
-            let a = document.createElement("a");
-            a.innerHTML = app.parse `${cellData.label}`;
-            a.setAttribute('href', cellData.href);
-            a.classList.add(cellData.label.toLowerCase());
-            a.classList.add('button');
-            cell.appendChild(a);
-            if (cellData.disabled) {
-              a.classList.add('disabled');
-            }
-          } else if (header.type === "stake") {
-            let img = document.createElement("img");
-            img.setAttribute("src", "static/img/mini-loader.svg");
-            img.classList.add('loader-mini');
-            cell.appendChild(img);
-            new Erc20(cellData.stake.address, (erc) => {
-              cellData.insurance.getStakerTVL(app.getCookie('wallet'), cellData.token.address)
-                .then(userSize => {
-                  let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
-                  if (!balanceInt) {
-                    cell.innerHTML = '$0.00';
-                  } else {
-                    let tokenPrice = _ethers.BigNumber.from(cellData.token_price);
-                    let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
-                    let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
-                    let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-                    userSize = userSize.mul(tokenPrice);
-                    header.intervals[position] = setInterval(() => {
-                      userSize = userSize.add(userYield);
-                      cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
-                    }, 50);
-                  }
-                  cbs.forEach(cb => {
-                    cb(template);
-                  });
-                });
-            });
-          } else if (header.type === "numba") {
-            let amount = cellData.numba;
-            cell.innerHTML = cellData.numba;
-            clearInterval(header.intervals[position]);
-            header.intervals[position] = setInterval(() => {
-              amount += cellData.yield;
-              cell.innerHTML = app.numberToUSD(amount);
-            }, 50);
-          }
           if (cellData && cellData.class)
             cell.classList.add(cellData.class);
 
@@ -145,8 +66,14 @@ export default class Table {
         template.innerHTML += `<td></td>`;
       }
     });
-
+    
     this.tbody.insertBefore(template, this.tbody.children[position]);
+    
+    if(options.collapse) {
+      let collapser = this.renderCollapse(options.collapse, template);
+      this.tbody.insertBefore(collapser, this.tbody.children[position + 1]);
+      
+    }
 
     this.rows.push({
       el: template,
@@ -156,6 +83,121 @@ export default class Table {
     });
 
     return template;
+  }
+
+  renderCell(cellData, header, position, cbs, template) {
+    let cell = document.createElement("TD");
+
+    if (header.class) cell.classList.add(header.class);
+    if (!header.type) {
+      console.log(cellData);
+      cell.innerHTML = app.parse `${cellData}`;
+    } else if (header.type === "image") {
+      if(cellData.name) {
+        cell.innerHTML = app.parse `<img src="${this.imagePrefix}${app.parse`${cellData.file}`}" title="${cellData.name}">`;
+      } else {
+        cellData.forEach(item => {
+          cell.innerHTML += app.parse `<img src="${this.imagePrefix}${app.parse`${item.file}`}" title="${item.name}">`;
+        });
+      }
+    } else if (header.type === "countdown") {
+      if (cellData && cellData.ms) {
+        clearInterval(header.intervals[position]);
+        let amount = cellData.ms;
+        cell.innerHTML = window.app.timeConversion(cellData.ms);
+        header.intervals[position] = setInterval((i) => {
+          amount -= 1000;
+          if (amount <= 0 && cellData && cellData.func) {
+            cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+
+            cellData.func(template);
+            clearInterval(header.intervals[position]);
+          } else {
+            cell.innerHTML = window.app.timeConversion(amount);
+
+          }
+        }, 1000);
+      } else {
+        cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+      }
+
+    } else if (header.type === "button") {
+      let button = document.createElement("button");
+      button.innerHTML = app.parse `${cellData.label}`;
+      button.addEventListener('click', () => {
+        cellData.func(button);
+      });
+      button.setAttribute('action', cellData.action);
+      button.disabled = cellData.disabled;
+      cell.appendChild(button);
+    } else if (header.type === "link") {
+      let a = document.createElement("a");
+      a.innerHTML = app.parse `${cellData.label}`;
+      a.setAttribute('href', cellData.href);
+      a.classList.add(cellData.label.toLowerCase());
+      a.classList.add('button');
+      cell.appendChild(a);
+      if (cellData.disabled) {
+        a.classList.add('disabled');
+      }
+    } else if (header.type === "stake") {
+      let img = document.createElement("img");
+      img.setAttribute("src", "static/img/mini-loader.svg");
+      img.classList.add('loader-mini');
+      cell.appendChild(img);
+      new Erc20(cellData.stake.address, (erc) => {
+        cellData.insurance.getStakerTVL(app.getCookie('wallet'), cellData.token.address)
+          .then(userSize => {
+            let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
+            if (!balanceInt) {
+              cell.innerHTML = '$0.00';
+            } else {
+              let tokenPrice = _ethers.BigNumber.from(cellData.token_price);
+              let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
+              let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
+              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+              userSize = userSize.mul(tokenPrice);
+              header.intervals[position] = setInterval(() => {
+                userSize = userSize.add(userYield);
+                cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
+              }, 50);
+            }
+            cbs.forEach(cb => {
+              cb(template);
+            });
+          });
+      });
+    } else if (header.type === "numba") {
+      let amount = cellData.numba;
+      cell.innerHTML = cellData.numba;
+      clearInterval(header.intervals[position]);
+      header.intervals[position] = setInterval(() => {
+        amount += cellData.yield;
+        cell.innerHTML = app.numberToUSD(amount);
+      }, 50);
+    }
+
+    return cell;
+  }
+  
+  renderCollapse(data, row) {
+    let expander = document.createElement("tr");
+    let template = data.template;
+    expander.classList.add('expander');  
+    expander.classList.add('hidden');  
+    
+    expander.innerHTML = `
+    <td colspan="${this.headers.length}">
+      ${template}
+    </td>
+    `;
+    
+    row.addEventListener('click', e => {
+      if(e.target.nodeName === "A") return;
+      expander.classList.toggle('hidden'); 
+    })
+    if(data.func) data.func(expander);      
+    return expander;
   }
 
   addColumns(columns) {

@@ -8,4 +8,35 @@
   animation: shift 4s ease-in-out infinite alternate;
 }
 
+table .expander h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 24px;
+}
+table .expander .token-split .flex .fat {
+  font-weight: bold;
+}
+table .expander .token-split .flex > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: #FFF;
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+table .expander .token-split .flex > div:first-child {
+  margin-top: 0;
+}
+table .expander .token-split .flex > div > span:first-of-type {
+  margin-left: auto;
+  display: block;
+  margin-right: 20px;
+}
+table .expander .token-split .flex > div img {
+  margin-right: 50px;
+  height: 32px;
+  justify-self: flex-start;
+}
+
 /*# sourceMappingURL=dashboard.css.map */

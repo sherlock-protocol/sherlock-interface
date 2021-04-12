@@ -34,15 +34,53 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (app.getCookie('wallet') == 'None') {
       window.data.pool.tokens.forEach((item, i) => {
-
         tokenTable.addRow({
-          icon: item.token.symbol + '.svg',
-          protocol: item.token.name,
-          poolsize: {
-            numba: item.pool.usd_size,
-            yield: item.pool.usd_numba
+          row: {
+            apy: item.pool.apy + '%',
+            payout: [{
+              file: 'dai.svg',
+              name: 'DAI token'
+            }, {
+              file: 'usdc.svg',
+              name: 'USD coin'
+            }, {
+              file: 'weth.svg',
+              name: 'Wrapped ETH'
+            }],
+            protocol: {
+              file: item.token.symbol + '.svg',
+              name: item.token.name
+            },
+            poolsize: {
+              numba: item.pool.usd_size,
+              yield: item.pool.usd_numba
+            }
           },
-          apy: item.pool.apy
+          collapse: {
+            template: `
+            <h2>${item.token.name}</h2>
+            <div class="hbox token-split">
+              <div class="flex">
+                <h4>Global</h4>
+                <p>Expected yearly return</p>
+                <div>
+                  <img src="/static/svg/crypto/color/dai.svg">
+                  <span class="fat">90%</span>
+                  <span>DAI</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/usdc.svg">
+                  <span class="fat">10%</span>
+                  <span>USDC</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/weth.svg">
+                  <span class="fat">10%</span>
+                  <span>WETH</span>
+                </div>
+              </div>
+            </div>`,
+          }
         });
       });
     } else {
@@ -65,38 +103,100 @@ window.addEventListener('DOMContentLoaded', () => {
       }]);
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
-          icon: item.token.symbol + '.svg',
-          protocol: item.token.name,
-          poolsize: {
-            numba: item.pool.usd_size,
-            yield: item.pool.usd_numba
-          },
-          apy: item.pool.apy + '%',
-          withdraw: {
-            label: 'Withdraw',
-            disabled: true,
-            href: '/withdraw/' + item.token.address,
-          },
-          deposit: {
-            label: 'Deposit',
-            disabled: false,
-            href: '/deposit/' + item.token.address,
-          },
-          userStake: {
-            stake: item.stake,
-            token: item.token,
-            token_price: data.pool.usd_values[item.token.address],
-            pool: item.pool,
-            insurance: insurance,
-            class: 'userstake',
-            cb: row => {
-              let withdraw = row.querySelector('.withdraw');
-              let value = row.querySelector('.userstake');
-              if (value.innerHTML !== "$0.00") {
-                withdraw.classList.remove('disabled');
-              }
+          collapse: {
+            template: `
+            <h2>${item.token.name}</h2>
+            <div class="hbox token-split">
+              <div class="flex">
+                <h4>Global</h4>
+                <p>Expected yearly return</p>
+                <div>
+                  <img src="/static/svg/crypto/color/dai.svg">
+                  <span class="fat">90%</span>
+                  <span>DAI Token</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/usdc.svg">
+                  <span class="fat">10%</span>
+                  <span>USD Coin</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/weth.svg">
+                  <span class="fat">10%</span>
+                  <span>Wrapped ETH</span>
+                </div>
+              </div>
+              <div class="flex">
+                <h4>User</h4>
+                <p>Your expected yearly return</p>
+                <div>
+                  <img src="/static/svg/crypto/color/dai.svg">
+                  <span class="fat">90</span>
+                  <span>DAI Token</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/usdc.svg">
+                  <span class="fat">10</span>
+                  <span>USD Coin</span>
+                </div>
+                <div>
+                  <img src="/static/svg/crypto/color/weth.svg">
+                  <span class="fat">10</span>
+                  <span>Wrapped ETH</span>
+                </div>
+              </div>
+            </div>
+            `,
+            func: (template) => {
+
             }
           },
+          row: {
+            protocol: {
+              file: item.token.symbol + '.svg',
+              name: item.token.name
+            },
+            poolsize: {
+              numba: item.pool.usd_size,
+              yield: item.pool.usd_numba
+            },
+            apy: item.pool.apy + '%',
+            withdraw: {
+              label: 'Withdraw',
+              disabled: true,
+              href: '/withdraw/' + item.token.address,
+            },
+            deposit: {
+              label: 'Deposit',
+              disabled: false,
+              href: '/deposit/' + item.token.address,
+            },
+            payout: [{
+              file: 'dai.svg',
+              name: 'DAI token'
+            }, {
+              file: 'usdc.svg',
+              name: 'USD coin'
+            }, {
+              file: 'weth.svg',
+              name: 'Wrapped ETH'
+            }],
+            userStake: {
+              stake: item.stake,
+              token: item.token,
+              token_price: data.pool.usd_values[item.token.address],
+              pool: item.pool,
+              insurance: insurance,
+              class: 'userstake',
+              cb: row => {
+                let withdraw = row.querySelector('.withdraw');
+                let value = row.querySelector('.userstake');
+                if (value.innerHTML !== "$0.00") {
+                  withdraw.classList.remove('disabled');
+                }
+              }
+            },
+          }
         });
       });
     }
@@ -131,20 +231,17 @@ window.addEventListener('DOMContentLoaded', () => {
     let availableTill = block + data.timperiod + data.claimperiod;
     let timeToAvailable = (availableFrom - curBlock) * blockTimeMS;
     let timeToExpire = (availableTill - curBlock) * blockTimeMS;
-    // TODO vincent, cancelable not used?
-    let cancelable = false;
     let claimable = false;
-    if (timeToAvailable > 0) {
-      cancelable = true
-    }
     if (timeToAvailable <= 0 && timeToExpire > 0) {
       claimable = true
     }
 
     // TODO vincent
-    // - cancel/claim actions are exclusive (only one can be done at the time), so 1 button could be enough.
     // - addrow is done on callback, which means the order can be mixed up if callbacks are not returnd in order (which is something that will happen)
     // - EXPECTED TOKEN AMOUNT = `insurance.stakeToToken(resp.stake, item.token.address)`
+
+    // TODO evert
+    // - 
     (async () => {
       let estimate = await insurance.stakeToToken(withdrawal.stake, item.token.address);
       if (timeToExpire > 0) {
