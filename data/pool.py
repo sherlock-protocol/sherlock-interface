@@ -124,7 +124,8 @@ def get_covered_protocols():
     data = {
         "tokens": tokens,
         "protocols": prtc,
-        "protocol_names": protocol_names
+        "protocol_names": protocol_names,
+        "usd": usd_price
     }
     return data
 
