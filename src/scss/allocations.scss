@@ -13,6 +13,22 @@
   }
 
   .protocol {
+    height: 250px;
+    margin-bottom: 20px;
+
+    .meta {
+      display: flex;
+      align-items: center;
+
+      & > * {
+        margin-right: 10px;
+      }
+    }
+
+    p {
+      flex: 1;
+    }
+
     .pie {
       width: 300px;
     }

@@ -16,16 +16,22 @@ protocol_meta = {
         "name": "AlchemIX",
         "website": "https://alchemix.fi/",
         "twitter": "https://twitter.com/alchemixfi",
+        "logo": "alchmix",
+        "desc": "Alchemix is a DeFi protocol that allows for the creation of synthetic tokens that represent the future yield of a deposit. It enables users to retrieve near instant tokenized value against temporary* deposits of stablecoins. A magic money potion if you will, however one that is crafted in Defi with perhaps a sprinkling of ancient wisdom(!). The protocol presents a powerful new DeFi primitive offering myriad applications for users and an exciting new tool for other developers.",
     },
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c2": {
         "name": "Badger",
         "website": "https://badger.finance/",
         "twitter": "https://twitter.com/BadgerDAO",
+        "logo": "badger",
+        "desc": "Badger is a decentralized autonomous organization (DAO) with a single purpose: build the products and infrastructure necessary to accelerate Bitcoin as collateral across other blockchains.",
     },
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c3": {
         "name": "SET Protocol",
         "website": "https://www.tokensets.com/",
         "twitter": "https://twitter.com/SetProtocol",
+        "logo": "setprotocol",
+        "desc": "The asset management protocol.",
     },
 }
 

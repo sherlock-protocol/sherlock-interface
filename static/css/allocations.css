@@ -4,6 +4,20 @@
   margin: 0 auto;
   width: 60px;
 }
+.allocations .protocol {
+  height: 250px;
+  margin-bottom: 20px;
+}
+.allocations .protocol .meta {
+  display: flex;
+  align-items: center;
+}
+.allocations .protocol .meta > * {
+  margin-right: 10px;
+}
+.allocations .protocol p {
+  flex: 1;
+}
 .allocations .protocol .pie {
   width: 300px;
 }

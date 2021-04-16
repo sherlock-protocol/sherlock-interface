@@ -16,7 +16,7 @@
         <tbody>
           {% for protocol in data.protocols %}
             <tr>
-              <td class="fat">{{ data.protocol_names[protocol] }}</td>
+              <td class="fat">{{ data.protocol_meta[protocol].name }}</td>
               {% for token in data.tokens %}
                 {% if data.protocols[protocol][token] %}
                   <td>{{ data.protocols[protocol][token].premium_str }}</td>
@@ -34,14 +34,17 @@
       <h1>Protocol</h1>
       {% for protocol in data.protocols %}
       <div class="hbox protocol" id="a{{protocol}}">        
-        <div class="flex">
-          <h3>{{ data.protocol_names[protocol] }}</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <b>Pay out in:</b>
-          {% for token in data.protocols[protocol] %}
-            <img height="30px" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
-          {% endfor %}
-          <a class="button website" href="#">Website</a>
+        <div class="flex vbox">
+          <h3>{{ data.protocol_meta[protocol].name }}</h3>
+          <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
+          <div class="hbox meta">
+            <b>Pay out in:</b>
+            {% for token in data.protocols[protocol] %}
+              <img height="30px" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
+            {% endfor %}
+            <div class="flex"></div>
+            <a class="button website" href="{{ data.protocol_meta[protocol].website }}">Website</a>
+          </div>
         </div>
         
           <div class="pie"></div>
