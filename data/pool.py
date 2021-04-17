@@ -1,5 +1,6 @@
 import settings
 from web3 import Web3
+from datetime import datetime, timedelta
 
 blocks_per_day = 6484
 blocks_per_year = blocks_per_day * 365
@@ -91,6 +92,54 @@ def get_staking_pool_data():
                 "apy": apy
             },
         })
+
+    fee_token = [
+        {
+            "token": {
+                "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+                "name": "DAI token",
+                "symbol": "dai",
+                "decimals": 6
+            },
+            "percentage": 60.58
+        },
+        {
+            "token": {
+                "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+                "name": "USD coin",
+                "symbol": "usdc",
+                "decimals": 8
+            },
+            "percentage": 10.32
+        },
+        {
+            "token": {
+                "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+                "name": "AAVE governance",
+                "symbol": "aave",
+                "decimals": 18
+            },
+            "percentage": 29.10,
+        }
+    ]
+
+    #"history":
+    history = []
+
+    d = datetime.utcnow().replace(hour=0, minute=0, second=0)
+    for i in range(24):
+        if i < 10:
+            count = 2.32 - i * 0.06
+        else:
+            count = 1.50 + i * 0.11
+
+        history.append(
+            {
+                "datetime": (d + timedelta(hours=i)).strftime("%m-%d-%Y, %H:%M"),
+                "count": round(count, 2)
+            }
+        )
+
     return {
         "tokens": tokens,
         "total": total,
@@ -98,7 +147,9 @@ def get_staking_pool_data():
         "usd_total_format": "%.2f" % round(total, 2),
         "usd_total_numba": total_numba,
         "usd_total_numba_str": str(total_numba),
-        "usd_values": usd_price
+        "usd_values": usd_price,
+        "fee_token": fee_token,
+        "fee_token_history": history
        # "usd_total_numba_format":  "%.2f" % round(total_numba, 2),
     }
 
