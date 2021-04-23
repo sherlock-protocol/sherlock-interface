@@ -9,8 +9,66 @@ usd_price = {
     '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853': 1.00 * 100000,
     '0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6': 1.01 * 100000,
     '0x8A791620dd6260079BF849Dc5567aDC3F2FdC318': 400.00 * 100000,
-    '0x610178dA211FEF7D417bC0e6FeD39F05609AD788': 1500.00 * 100000
+    '0x610178dA211FEF7D417bC0e6FeD39F05609AD788': 1500.00 * 100000,
+    '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e': 30.00 * 100000,
+    '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0': 32.12 * 100000,
+    '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82': 48.650 * 100000
 }
+
+
+# covering 500k dai for AlchemIX
+# covering 2m usdc and 50k eth for Badger
+# covering 100k AAVE for SET
+covered = {
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1":{
+        "tokens":{
+            "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853":{
+                "covered": 500000.0,
+                "covered_str":"500000.0"
+            }
+        }
+    },
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c2":{
+        "tokens":{
+            "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6":{
+                "covered": 2000000.0,
+                "covered_str":"2000000.0"
+            },
+            "0x610178dA211FEF7D417bC0e6FeD39F05609AD788":{
+                "covered": 50000.0,
+                "covered_str":"50000.0"
+            },
+            "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e":{
+                "covered": 50000.0,
+                "covered_str":"50000.0"
+            },
+            "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0":{
+                "covered": 20000.0,
+                "covered_str":"20000.0"
+            },
+            "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82":{
+                "covered": 1253.22,
+                "covered_str":"1253.22"
+            }
+        }
+    },
+    "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c3":{
+        "tokens":{
+            "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318":{
+                "covered": 100000.0,
+                "covered_str":"100000.0"
+            }
+        }
+    }
+}
+
+for k,v in covered.items():
+    usd = 0
+    for token, c in v["tokens"].items():
+        usd += usd_price[token] * c["covered"]
+
+    covered[k]["usd"] = usd
+    covered[k]["usd_str"] = str(usd)
 
 protocol_meta = {
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": {
@@ -156,7 +214,18 @@ def get_staking_pool_data():
 def get_covered_protocols():
     poolTokens = settings.POOL_CONTRACT_HTTP.functions.getTokens().call()
     prtc = {}
-    tokens = {}
+    tokens = {
+        "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e": {},
+        "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0": {},
+        "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82": {}
+    }
+    for token, v in tokens.items():
+        TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
+        tokens[token] = {
+            "name": TOKEN.functions.name().call(),
+            "symbol": TOKEN.functions.symbol().call(),
+            "decimals": TOKEN.functions.decimals().call(),
+        }
 
     for token in poolTokens:
         TOKEN = settings.INFURA_HTTP.eth.contract(address=token, abi=settings.ERC20_ABI)
@@ -193,6 +262,7 @@ def get_covered_protocols():
     data = {
         "tokens": tokens,
         "protocols": prtc,
+        "protocols_covered": covered,
         "protocol_meta": protocol_meta,
         "usd": usd_price
     }
