@@ -5,12 +5,46 @@
   width: 60px;
 }
 .allocations .protocol {
-  height: 250px;
   margin-bottom: 20px;
+  background: #FFF;
+  padding: 20px;
+}
+.allocations .protocol:first-of-type {
+  margin-top: 20px;
+}
+.allocations .protocol table th:last-child img {
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
+}
+.allocations .protocol table td b {
+  text-align: center;
+  display: block;
+  color: #8e44ad;
+  font-size: 120%;
+}
+.allocations .protocol table td:last-child {
+  font-size: 140%;
+  padding: 20px;
+}
+.allocations .protocol h3 {
+  color: #8e44ad;
+  font-size: 22px;
+  margin-bottom: 0;
+}
+.allocations .protocol p.flex {
+  font-size: 20px;
 }
 .allocations .protocol .meta {
   display: flex;
   align-items: center;
+  font-size: 20px;
+}
+.allocations .protocol .meta img {
+  height: 60px;
+}
+.allocations .protocol .meta .button {
+  font-size: 22px;
 }
 .allocations .protocol .meta > * {
   margin-right: 10px;
@@ -20,6 +54,7 @@
 }
 .allocations .protocol .pie {
   width: 300px;
+  height: 300px;
 }
 .allocations .protocol .website {
   float: right;

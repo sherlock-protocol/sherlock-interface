@@ -1,3 +1,5 @@
+@import "global/variables";
+
 .allocations {
   table {
     thead {
@@ -13,12 +15,62 @@
   }
 
   .protocol {
-    height: 250px;
     margin-bottom: 20px;
+    background: $white;
+    padding: 20px;
+
+    &:first-of-type {
+      margin-top: 20px;
+    }
+
+    table {
+      th {
+        &:last-child {
+          img {
+            margin-left: auto;
+            margin-right: 0;
+            display: block;
+          }
+        }
+      }
+
+      td {
+        b {
+          text-align: center;
+          display: block;
+          color: $primary;
+          font-size: 120%;
+        }
+
+        &:last-child {
+          font-size: 140%;
+          padding: 20px;
+        }
+      }
+    }
+
+    h3 {
+      color: $primary;
+      font-size: 22px;
+      margin-bottom: 0;
+    }
+
+    p.flex {
+      font-size: 20px;
+    }
 
     .meta {
       display: flex;
       align-items: center;
+      font-size: 20px;
+
+      img {
+        height: 60px;
+      }
+
+      .button {
+        font-size: 22px;
+      }
 
       & > * {
         margin-right: 10px;
@@ -31,6 +83,7 @@
 
     .pie {
       width: 300px;
+      height: 300px;
     }
 
     .website {

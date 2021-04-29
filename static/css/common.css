@@ -1281,6 +1281,9 @@ table tbody tr.disabled {
 table tbody tr td {
   padding: 10px 20px;
 }
+table tbody tr td.align-right {
+  text-align: right;
+}
 table tbody tr td.fat {
   font-weight: bold;
   color: #8e44ad;

@@ -45,7 +45,6 @@ export default class Table {
     this.headers.forEach(header => {
       let found = false;
       Object.entries(options.row).forEach(entry => {
-        console.log(entry[0], header.name);
         if (entry[0] === header.name) {
           found = true;
           let cellData = entry[1];
@@ -90,7 +89,6 @@ export default class Table {
 
     if (header.class) cell.classList.add(header.class);
     if (!header.type) {
-      console.log(cellData);
       cell.innerHTML = app.parse `${cellData}`;
     } else if (header.type === "image") {
       if(cellData.name) {
@@ -195,6 +193,7 @@ export default class Table {
     row.addEventListener('click', e => {
       if(e.target.nodeName === "A") return;
       expander.classList.toggle('hidden'); 
+      if(data.collapseFunc) data.collapseFunc(expander);
     })
     if(data.func) data.func(expander);      
     return expander;

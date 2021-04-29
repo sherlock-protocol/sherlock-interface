@@ -37,16 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
         tokenTable.addRow({
           row: {
             apy: item.pool.apy + '%',
-            payout: [{
-              file: 'dai.svg',
-              name: 'DAI token'
-            }, {
-              file: 'usdc.svg',
-              name: 'USD coin'
-            }, {
-              file: 'weth.svg',
-              name: 'Wrapped ETH'
-            }],
             protocol: {
               file: item.token.symbol + '.svg',
               name: item.token.name
@@ -56,31 +46,12 @@ window.addEventListener('DOMContentLoaded', () => {
               yield: item.pool.usd_numba
             }
           },
-          collapse: {
-            template: `
-            <h2>${item.token.name}</h2>
-            <div class="hbox token-split">
-              <div class="flex">
-                <h4>Global</h4>
-                <p>Expected yearly return</p>
-                <div>
-                  <img src="/static/svg/crypto/color/dai.svg">
-                  <span class="fat">90%</span>
-                  <span>DAI</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/usdc.svg">
-                  <span class="fat">10%</span>
-                  <span>USDC</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/weth.svg">
-                  <span class="fat">10%</span>
-                  <span>WETH</span>
-                </div>
-              </div>
-            </div>`,
-          }
+            collapse: {
+              template: tokenCollapse.template(item),
+              collapseFunc: (template) => {
+                tokenCollapse.collapseFunc(template);
+              }
+            },
         });
       });
     } else {
@@ -104,51 +75,9 @@ window.addEventListener('DOMContentLoaded', () => {
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
           collapse: {
-            template: `
-            <h2>${item.token.name}</h2>
-            <div class="hbox token-split">
-              <div class="flex">
-                <h4>Global</h4>
-                <p>Expected yearly return</p>
-                <div>
-                  <img src="/static/svg/crypto/color/dai.svg">
-                  <span class="fat">90%</span>
-                  <span>DAI Token</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/usdc.svg">
-                  <span class="fat">10%</span>
-                  <span>USD Coin</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/weth.svg">
-                  <span class="fat">10%</span>
-                  <span>Wrapped ETH</span>
-                </div>
-              </div>
-              <div class="flex">
-                <h4>User</h4>
-                <p>Your expected yearly return</p>
-                <div>
-                  <img src="/static/svg/crypto/color/dai.svg">
-                  <span class="fat">90</span>
-                  <span>DAI Token</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/usdc.svg">
-                  <span class="fat">10</span>
-                  <span>USD Coin</span>
-                </div>
-                <div>
-                  <img src="/static/svg/crypto/color/weth.svg">
-                  <span class="fat">10</span>
-                  <span>Wrapped ETH</span>
-                </div>
-              </div>
-            </div>
-            `,
-            func: (template) => {
-
+            template: tokenCollapse.template(item),
+            collapseFunc: (template) => {
+              tokenCollapse.collapseFunc(template);
             }
           },
           row: {
@@ -222,6 +151,70 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let tokenCollapse = {
+    func: () => {
+
+    },
+    collapseFunc: (template) => {
+      let chartEl = template.querySelector('.chart');
+      let piedata = {
+        labels: [],
+        series: [[]]
+      };
+
+      data.pool.fee_token_history.forEach((item, i) => {
+        piedata.labels.push(i);
+        piedata.series[0].push(item.count);
+      });
+
+      let uniqueChart = new Chartist.Line(chartEl, piedata, {
+        fullWidth: false,
+        showPoint: false,
+
+        chartPadding: 0,
+        axisX: {
+          showLabel: false,
+          showGrid: false
+        },
+        axisY: {
+          showLabel: false,
+          showGrid: false
+        }
+      });
+    },
+    template: (item) => `
+      <h2>${item.token.name}</h2>
+      <div class="hbox token-split">
+        <div class="flex vbox payout">
+          <h4>Exposed to</h4>
+          <p>Your stake would be exposed to the following tokens.</p>
+          <div class="flex"></div>
+          <div class="expected">
+            <img src="/static/svg/crypto/color/dai.svg">
+            <span class="fat">90%</span>
+            <span>DAI Token</span>
+          </div>
+          <div class="expected">
+            <img src="/static/svg/crypto/color/usdc.svg">
+            <span class="fat">10%</span>
+            <span>USD Coin</span>
+          </div>
+          <div class="expected">
+            <img src="/static/svg/crypto/color/weth.svg">
+            <span class="fat">10%</span>
+            <span>Wrapped ETH</span>
+          </div>
+        </div>
+        <div class="flex vbox">
+          <h4>Market</h4>
+          <p>Something about the market and that it affects the stakes</p>
+          <div class="flex"></div>
+          <div class="chart"></div>
+        </div>
+      </div>
+      `
+  }
+
   let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, i, usd_values) => {
     if (!insurance) return;
 
@@ -248,56 +241,60 @@ window.addEventListener('DOMContentLoaded', () => {
         renderWithdrawalRow();
         document.querySelector('#withdrawals').classList.remove('hidden');
         withdrawalsTable.addRow({
-          icon: item.token.symbol + '.svg',
-          protocol: item.token.name,
-          estimate: app.bigNumberToUSD(estimate.mul(usd_values[item.token.address]), item.token.decimals),
-          stake: stake,
-          availableFrom: {
-            ms: timeToAvailable >= 0 ? timeToAvailable : null,
-            doneText: "Click n' Claim",
-            func: (row) => {
-              row.querySelector('td.action button').innerHTML = "Claim";
-              row.querySelector('td.action button').setAttribute('action', 'claim');
-            }
-          },
-          availableTill: {
-            ms: timeToExpire >= 0 ? timeToExpire : null,
-            doneText: "Expired",
-            func: (row) => {
-              row.classList.add('disabled');
-              row.querySelector('td.availableFrom').innerHTML = 'Expired';
-              row.querySelector('td.action button').disabled = true;
-            }
-          },
-          action: {
-            label: claimable ? "Claim" : "Cancel",
-            action: claimable ? "claim" : "cancel",
-            func: (el) => {
-              let rowEl = el.parentNode.parentNode;
+          row: {
+            icon: {
+              name: item.token.name,
+              file: item.token.symbol + '.svg'
+            },
+            protocol: item.token.name,
+            estimate: app.bigNumberToUSD(estimate.mul(usd_values[item.token.address]), item.token.decimals),
+            stake: stake,
+            availableFrom: {
+              ms: timeToAvailable >= 0 ? timeToAvailable : null,
+              doneText: "Click n' Claim",
+              func: (row) => {
+                row.querySelector('td.action button').innerHTML = "Claim";
+                row.querySelector('td.action button').setAttribute('action', 'claim');
+              }
+            },
+            availableTill: {
+              ms: timeToExpire >= 0 ? timeToExpire : null,
+              doneText: "Expired",
+              func: (row) => {
+                row.classList.add('disabled');
+                row.querySelector('td.availableFrom').innerHTML = 'Expired';
+                row.querySelector('td.action button').disabled = true;
+              }
+            },
+            action: {
+              label: claimable ? "Claim" : "Cancel",
+              action: claimable ? "claim" : "cancel",
+              func: (el) => {
+                let rowEl = el.parentNode.parentNode;
 
-              if (el.getAttribute('action') === "claim") {
-                app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                insurance.withdrawClaim(i, item.token.address)
-                  .then(resp => {
-                    app.removeLoader(document.querySelector('#withdrawals'));
-                    rowEl.classList.add('disabled');
-                  })
-                  .catch(err => {
-                    app.removeLoader(document.querySelector('#withdrawals'));
-                    app.catchAll(err);
-                  });
-              } else if (el.getAttribute('action') === "cancel") {
-                console.log('cancel');
-                app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                insurance.withdrawCancel(i, item.token.address)
-                  .then(resp => {
-                    rowEl.classList.add('disabled');
-                    app.removeLoader(document.querySelector('#withdrawals'));
-                  })
-                  .catch(err => {
-                    app.removeLoader(document.querySelector('#withdrawals'));
-                    app.catchAll(err);
-                  });
+                if (el.getAttribute('action') === "claim") {
+                  app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+                  insurance.withdrawClaim(i, item.token.address)
+                    .then(resp => {
+                      app.removeLoader(document.querySelector('#withdrawals'));
+                      rowEl.classList.add('disabled');
+                    })
+                    .catch(err => {
+                      app.removeLoader(document.querySelector('#withdrawals'));
+                      app.catchAll(err);
+                    });
+                } else if (el.getAttribute('action') === "cancel") {
+                  app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+                  insurance.withdrawCancel(i, item.token.address)
+                    .then(resp => {
+                      rowEl.classList.add('disabled');
+                      app.removeLoader(document.querySelector('#withdrawals'));
+                    })
+                    .catch(err => {
+                      app.removeLoader(document.querySelector('#withdrawals'));
+                      app.catchAll(err);
+                    });
+                }
               }
             }
           }

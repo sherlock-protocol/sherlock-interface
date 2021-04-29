@@ -13,27 +13,40 @@ table .expander h2 {
   margin-bottom: 0;
   font-size: 24px;
 }
-table .expander .token-split .flex .fat {
+table .expander .token-split .chart {
+  flex: 1;
+  background: #FFF;
+  max-height: calc(100% - 20px);
+}
+table .expander .token-split .chart * {
+  color: #8e44ad;
+}
+table .expander .token-split .flex.payout .fat {
   font-weight: bold;
 }
-table .expander .token-split .flex > div {
+table .expander .token-split .flex.payout > div.expected {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   background: #FFF;
-  margin-top: 10px;
+  margin-bottom: 10px;
   margin-right: 10px;
   padding: 5px 10px;
 }
-table .expander .token-split .flex > div:first-child {
-  margin-top: 0;
+table .expander .token-split .flex.payout > div.expected:last-of-type {
+  margin-bottom: 0;
 }
-table .expander .token-split .flex > div > span:first-of-type {
+table .expander .token-split .flex.payout > div.expected > span {
+  flex: 1;
+}
+table .expander .token-split .flex.payout > div.expected > span:first-of-type {
   margin-left: auto;
   display: block;
   margin-right: 20px;
+  flex: 2;
+  text-align: right;
 }
-table .expander .token-split .flex > div img {
+table .expander .token-split .flex.payout > div.expected img {
   margin-right: 50px;
   height: 32px;
   justify-self: flex-start;

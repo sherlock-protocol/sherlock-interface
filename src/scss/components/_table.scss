@@ -27,6 +27,10 @@ table {
 
       td {
         padding: 10px 20px;
+        
+        &.align-right {
+          text-align: right;
+        }
 
         &.fat {
           font-weight: bold;

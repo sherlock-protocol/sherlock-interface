@@ -5,51 +5,66 @@
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  // color: transparent;
   text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px mix(black,red,50);
   font-weight: 400;
   animation: shift 4s ease-in-out infinite alternate;
 }
 
 table {
-  .expander {h2 {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 24px;
-  }
+  .expander {
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 24px;
+    }
+
     .token-split {
-      .flex {
-        
+      .chart {
+        flex: 1;
+        background: $white;
+        max-height: calc(100% - 20px);
+
+        & * {
+          color: $primary;
+        }
+      }
+
+      .flex.payout {
         .fat {
           font-weight: bold;
         }
 
         & > div {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          background: $white;
-          margin-top: 10px;
-          margin-right: 10px;
-          padding: 5px 10px; 
+          &.expected {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: $white;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            padding: 5px 10px;
 
-          &:first-child {
-            margin-top: 0;
-          }
+            &:last-of-type {
+              margin-bottom: 0;
+            }
 
-          & > span:first-of-type {
-            margin-left: auto;
-            display: block;
-            margin-right: 20px;
-          }
+            & > span {
+              flex: 1;
+            }
 
-          & > span:last-of-type {
-          }
+            & > span:first-of-type {
+              margin-left: auto;
+              display: block;
+              margin-right: 20px;
+              flex: 2;
+              text-align: right;
+            }
 
-          img {
-            margin-right: 50px;
-            height: 32px;
-            justify-self: flex-start;
+            img {
+              margin-right: 50px;
+              height: 32px;
+              justify-self: flex-start;
+            }
           }
         }
       }

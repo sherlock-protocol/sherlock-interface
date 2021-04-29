@@ -60,11 +60,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
           group.append(
             new Chartist.Svg('image', {
               'xlink:href': `/static/svg/crypto/color/${label.image}.svg`,
-              width: '30px',
-              height: '30px',
+              width: '60px',
+              height: '60px',
               title: 'nla',
-              x: context.x - 15,
-              y: context.y - 15
+              x: context.x - 30,
+              y: context.y - 30
             })
           );
           context.element.replace(group);

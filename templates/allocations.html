@@ -1,42 +1,11 @@
 {% include 'partials/header.html' %}
-  <div class="allocations">
-    <div class="container">
-      <h1>Premiums per 24h</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Protocol</th>
-            {% for token in data.tokens %}
-              <th>
-                <img src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
-              </th>
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for protocol in data.protocols %}
-            <tr>
-              <td class="fat">{{ data.protocol_meta[protocol].name }}</td>
-              {% for token in data.tokens %}
-                {% if data.protocols[protocol][token] %}
-                  <td>{{ data.protocols[protocol][token].premium_str }}</td>
-                {% else %}
-                  <td>-</td>
-                {% endif %}
-              {% endfor %}
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    
-    <div class="container">
-      <h1>Protocol</h1>
-      {% for protocol in data.protocols %}
-      <div class="hbox protocol" id="a{{protocol}}">        
+<div class="allocations">    
+    {% for protocol in data.protocols %}
+    <div class="vbox protocol" id="a{{protocol}}">
+      <h2>{{ data.protocol_meta[protocol].name }}</h2>
+      <div class="hbox">
         <div class="flex vbox">
-          <h3>{{ data.protocol_meta[protocol].name }}</h3>
-          <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
+          <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>            
           <div class="hbox meta">
             <b>Pay out in:</b>
             {% for token in data.protocols[protocol] %}
@@ -44,12 +13,38 @@
             {% endfor %}
             <div class="flex"></div>
             <a class="button website" href="{{ data.protocol_meta[protocol].website }}">Website</a>
+            <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}">Twitter</a>
           </div>
         </div>
-        
-          <div class="pie"></div>
+        <div class="pie"></div>
       </div>
-      {% endfor %}
+      <h2>Covered</h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            {% for token in data.protocols_covered[protocol].tokens %}
+            <th style="width:100px;" title="{{ data.tokens[token].name }}">
+              <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="{{ data.tokens[token].name }}">
+            </th>
+            {% endfor %}      
+            <th class="flex">
+              <img height="25" src="/static/svg/crypto/color/usd.svg" alt="USD">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Covered</td>
+            {% for token in data.protocols_covered[protocol].tokens %}
+            <!-- <td><b>{{ data.protocols_covered[protocol].tokens[token].covered }}</b></td> -->
+              <td><b>10k</b></td>
+            {% endfor %}      
+            <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    {% endfor %}
   </div>
 {% include 'partials/footer.html' %}
