@@ -19,12 +19,20 @@ usd_price = {
 # covering 500k dai for AlchemIX
 # covering 2m usdc and 50k eth for Badger
 # covering 100k AAVE for SET
+def human_format(num):
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    # add more suffixes if you need them
+    return '%.2f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
+
 covered = {
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1":{
         "tokens":{
             "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853":{
                 "covered": 500000.0,
-                "covered_str":"500000.0"
+                "covered_str": human_format(500000.0)
             }
         }
     },
@@ -32,23 +40,23 @@ covered = {
         "tokens":{
             "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6":{
                 "covered": 2000000.0,
-                "covered_str":"2000000.0"
+                "covered_str":human_format(2000000.0)
             },
             "0x610178dA211FEF7D417bC0e6FeD39F05609AD788":{
                 "covered": 50000.0,
-                "covered_str":"50000.0"
+                "covered_str":human_format(50000.0)
             },
             "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e":{
                 "covered": 50000.0,
-                "covered_str":"50000.0"
+                "covered_str":human_format(50000.0)
             },
             "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0":{
                 "covered": 20000.0,
-                "covered_str":"20000.0"
+                "covered_str":human_format(20000.0)
             },
             "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82":{
                 "covered": 1253.22,
-                "covered_str":"1253.22"
+                "covered_str":human_format(1253.22)
             }
         }
     },
@@ -56,7 +64,7 @@ covered = {
         "tokens":{
             "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318":{
                 "covered": 100000.0,
-                "covered_str":"100000.0"
+                "covered_str":human_format(100000.0)
             }
         }
     }
@@ -68,7 +76,7 @@ for k,v in covered.items():
         usd += usd_price[token] * c["covered"]
 
     covered[k]["usd"] = usd
-    covered[k]["usd_str"] = str(usd)
+    covered[k]["usd_str"] = '{:20,.2f}'.format(usd / 100000)
 
 protocol_meta = {
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": {
