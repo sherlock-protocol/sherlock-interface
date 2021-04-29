@@ -73,7 +73,7 @@ for k,v in covered.items():
         c["covered_str"] = human_format(p / 100000)
 
     covered[k]["usd"] = usd
-    covered[k]["usd_str"] = human_format(usd / 100000)
+    covered[k]["usd_str"] = '{:20,.2f}'.format(usd / 100000)
 
 protocol_meta = {
     "561ca898cce9f021c15a441ef41899706e923541cee724530075d1a1144761c1": {
