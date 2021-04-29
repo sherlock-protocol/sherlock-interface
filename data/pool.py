@@ -32,7 +32,6 @@ covered = {
         "tokens":{
             "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853":{
                 "covered": 500000.0,
-                "covered_str": human_format(500000.0)
             }
         }
     },
@@ -40,23 +39,18 @@ covered = {
         "tokens":{
             "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6":{
                 "covered": 2000000.0,
-                "covered_str":human_format(2000000.0)
             },
             "0x610178dA211FEF7D417bC0e6FeD39F05609AD788":{
                 "covered": 50000.0,
-                "covered_str":human_format(50000.0)
             },
             "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e":{
                 "covered": 50000.0,
-                "covered_str":human_format(50000.0)
             },
             "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0":{
                 "covered": 20000.0,
-                "covered_str":human_format(20000.0)
             },
             "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82":{
                 "covered": 1253.22,
-                "covered_str":human_format(1253.22)
             }
         }
     },
@@ -64,7 +58,6 @@ covered = {
         "tokens":{
             "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318":{
                 "covered": 100000.0,
-                "covered_str":human_format(100000.0)
             }
         }
     }
@@ -73,7 +66,11 @@ covered = {
 for k,v in covered.items():
     usd = 0
     for token, c in v["tokens"].items():
-        usd += usd_price[token] * c["covered"]
+        p = usd_price[token] * c["covered"]
+        usd += p
+
+        c["covered"] = p
+        c["covered_str"] = human_format(p / 100000)
 
     covered[k]["usd"] = usd
     covered[k]["usd_str"] = human_format(usd / 100000)
