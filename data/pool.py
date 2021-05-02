@@ -206,10 +206,13 @@ def get_staking_pool_data():
     return {
         "tokens": tokens,
         "total": total,
-        "usd_total_str": str(total),
         "usd_total_format": "%.2f" % round(total, 2),
         "usd_total_numba": total_numba,
         "usd_total_numba_str": str(total_numba),
+        "usd_first_money_numba": 0,
+        "usd_first_money_numba_str": str(0),
+        "usd_first_money_out": 12543733.25,
+        "usd_first_money_out_str": str(12543733.25),
         "usd_values": usd_price,
         "fee_token": fee_token,
         "fee_token_history": history
