@@ -65,13 +65,13 @@ export default class Table {
         template.innerHTML += `<td></td>`;
       }
     });
-    
+
     this.tbody.insertBefore(template, this.tbody.children[position]);
-    
-    if(options.collapse) {
+
+    if (options.collapse) {
       let collapser = this.renderCollapse(options.collapse, template);
       this.tbody.insertBefore(collapser, this.tbody.children[position + 1]);
-      
+
     }
 
     this.rows.push({
@@ -91,7 +91,7 @@ export default class Table {
     if (!header.type) {
       cell.innerHTML = app.parse `${cellData}`;
     } else if (header.type === "image") {
-      if(cellData.name) {
+      if (cellData.name) {
         cell.innerHTML = app.parse `<img src="${this.imagePrefix}${app.parse`${cellData.file}`}" title="${cellData.name}">`;
       } else {
         cellData.forEach(item => {
@@ -177,25 +177,33 @@ export default class Table {
 
     return cell;
   }
-  
+
   renderCollapse(data, row) {
     let expander = document.createElement("tr");
     let template = data.template;
-    expander.classList.add('expander');  
-    expander.classList.add('hidden');  
-    
+    expander.classList.add('expander');
+    expander.classList.add('hidden');
+
     expander.innerHTML = `
     <td colspan="${this.headers.length}">
       ${template}
     </td>
     `;
-    
+
     row.addEventListener('click', e => {
-      if(e.target.nodeName === "A") return;
-      expander.classList.toggle('hidden'); 
-      if(data.collapseFunc) data.collapseFunc(expander);
+      if (e.target.nodeName === "A") return;
+      let state = expander.classList.contains('hidden');
+      if (data.closeOther)
+        this.el.querySelectorAll('.expander').forEach(expander => {
+          expander.classList.add('hidden');
+        });
+      expander.classList.toggle('hidden');
+      if (!state) {
+        expander.classList.add('hidden');
+      }
+      if (data.collapseFunc) data.collapseFunc(expander);
     })
-    if(data.func) data.func(expander);      
+    if (data.func) data.func(expander);
     return expander;
   }
 

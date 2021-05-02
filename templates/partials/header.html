@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="/static/css/landing.css">{% endif %}
   {% if currentPage == "dashboard" %}
   <link rel="stylesheet" href="/static/css/dashboard.css">{% endif %}
-  {% if currentPage == "allocations" %}
-  <link rel="stylesheet" href="/static/css/allocations.css">{% endif %}
+  {% if currentPage == "breakdown" %}
+  <link rel="stylesheet" href="/static/css/breakdown.css">{% endif %}
 </head>
 
 <body>
@@ -25,7 +25,7 @@
       </div>
       <nav>
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
-        <a href="/allocations" class="{% if currentPage == "allocations" %}active{% endif %}">Allocations</a>
+        <a href="/breakdown" class="{% if currentPage == "breakdown" %}active{% endif %}">Breakdown</a>
         <a href="#" class="cta {% if env.wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>
       </nav>
     </div>

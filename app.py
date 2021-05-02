@@ -69,14 +69,14 @@ def withdraw(address):
             )
     return "Not supported", 404
 
-@app.route('/allocations')
-def allocations():
+@app.route('/breakdown')
+def breakdown():
     return render_template(
-        'allocations.html',
-        title='Allocations',
-        desc='allocations',
-        tags=["allocations"],
-        currentPage="allocations",
+        'breakdown.html',
+        title='Breakdown',
+        desc='breakdown',
+        tags=["breakdown"],
+        currentPage="breakdown",
         env=env(),
         data=pool.get_covered_protocols()
     )

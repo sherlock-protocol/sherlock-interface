@@ -1,13 +1,31 @@
 @import "global/variables";
 
-#poolsize h2 {
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
+.stats {
   box-sizing: border-box;
-  text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px mix(black,red,50);
-  font-weight: 400;
-  animation: shift 4s ease-in-out infinite alternate;
+  margin: 20px 0;
+
+  .container {
+    height: 100%;
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  h2 {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px mix(black,red,50);
+    font-weight: 400;
+    animation: shift 4s ease-in-out infinite alternate;
+  }
 }
 
 table {

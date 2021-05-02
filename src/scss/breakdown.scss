@@ -1,6 +1,6 @@
 @import "global/variables";
 
-.allocations {
+.breakdown {
   table {
     thead {
       th {
@@ -45,6 +45,7 @@
         &:last-child {
           font-size: 140%;
           padding: 20px;
+          white-space: nowrap;
         }
       }
     }

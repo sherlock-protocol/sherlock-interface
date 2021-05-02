@@ -1,5 +1,5 @@
 {% include 'partials/header.html' %}
-<div class="allocations">
+<div class="breakdown">
     {% for protocol in data.protocols %}
     <div class="vbox protocol" id="a{{protocol}}">
       <h2>{{ data.protocol_meta[protocol].name }}</h2>
@@ -7,11 +7,6 @@
         <div class="flex vbox">
           <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
           <div class="hbox meta">
-            <b>Pay out in:</b>
-            {% for token in data.protocols[protocol] %}
-              <img height="30px" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="" title="{{ data.tokens[token].name }}">
-            {% endfor %}
-            <div class="flex"></div>
             <a class="button website" href="{{ data.protocol_meta[protocol].website }}">Website</a>
             <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}">Twitter</a>
           </div>
@@ -19,10 +14,10 @@
         <div class="pie"></div>
       </div>
       <h2>Covered</h2>
+      
       <table>
         <thead>
           <tr>
-            <th></th>
             {% for token in data.protocols_covered[protocol].tokens %}
             <th style="width:100px;" title="{{ data.tokens[token].name }}">
               <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="{{ data.tokens[token].name }}">
@@ -35,9 +30,8 @@
         </thead>
         <tbody>
           <tr>
-            <td>Covered</td>
             {% for token in data.protocols_covered[protocol].tokens %}
-              <td><b>{{ data.protocols_covered[protocol].tokens[token].covered_str }}</b></td>
+              <td>${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
             {% endfor %}
             <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>
           </tr>

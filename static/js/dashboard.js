@@ -47,6 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
           },
             collapse: {
+              closeOther: true,
               template: tokenCollapse.template(item),
               collapseFunc: (template) => {
                 tokenCollapse.collapseFunc(template);
@@ -75,6 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
           collapse: {
+            closeOther: true,
             template: tokenCollapse.template(item),
             collapseFunc: (template) => {
               tokenCollapse.collapseFunc(template);
@@ -189,21 +191,13 @@ window.addEventListener('DOMContentLoaded', () => {
           <h4>Exposed to</h4>
           <p>Your stake would be exposed to the following tokens.</p>
           <div class="flex"></div>
-          <div class="expected">
-            <img src="/static/svg/crypto/color/dai.svg">
-            <span class="fat">90%</span>
-            <span>DAI Token</span>
-          </div>
-          <div class="expected">
-            <img src="/static/svg/crypto/color/usdc.svg">
-            <span class="fat">10%</span>
-            <span>USD Coin</span>
-          </div>
-          <div class="expected">
-            <img src="/static/svg/crypto/color/weth.svg">
-            <span class="fat">10%</span>
-            <span>Wrapped ETH</span>
-          </div>
+          ${data.pool.fee_token.map(token => `
+            <div class="expected">
+              <img src="/static/svg/crypto/color/${token.token.symbol}.svg">
+              <span>${token.token.name}</span>
+              <span class="fat">${token.percentage}%</span>
+            </div>
+          `).join("") }
         </div>
         <div class="flex vbox">
           <h4>Market</h4>

@@ -1,4 +1,18 @@
-#poolsize h2 {
+.stats {
+  box-sizing: border-box;
+  margin: 20px 0;
+}
+.stats .container {
+  height: 100%;
+  margin: 0 10px;
+}
+.stats .container:first-child {
+  margin-left: 0;
+}
+.stats .container:last-child {
+  margin-right: 0;
+}
+.stats h2 {
   text-align: center;
   width: 100%;
   overflow: hidden;
