@@ -160,7 +160,7 @@ def get_staking_pool_data():
         {
             "token": {
                 "address": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
-                "name": "DAI token",
+                "name": "DAI",
                 "symbol": "dai",
                 "decimals": 6
             },
@@ -169,7 +169,7 @@ def get_staking_pool_data():
         {
             "token": {
                 "address": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
-                "name": "USD coin",
+                "name": "USDC",
                 "symbol": "usdc",
                 "decimals": 8
             },
@@ -178,7 +178,7 @@ def get_staking_pool_data():
         {
             "token": {
                 "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-                "name": "AAVE governance",
+                "name": "AAVE",
                 "symbol": "aave",
                 "decimals": 18
             },
@@ -280,4 +280,3 @@ def get_pool_strategies():
     #   return [{'name': 'ATokenV2StrategyToAave', 'token_address': '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD', 'strategy_address': '0x5852A4a9687dAFFCd5464a2790d3F4d5E5001A69', 'oracle_address': '0x0000000000000000000000000000000000000000', 'balance': "14121785424705346597586066"}, {'name': 'AaveStrategyToUniswap', 'token_address': '0x85821C543d5773cA19b91F5b37e39FeC308C6FA7', 'strategy_address': '0xBb8974C5F93ED2935E4E0d9abC95551310c48F62', 'oracle_address': '0xb3Ef934755f162e2Aa1c7Aae4CD6167aE2694d25', 'balance': "182203692109052093154252"}]
     data = []
     return data
-

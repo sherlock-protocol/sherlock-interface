@@ -21,7 +21,7 @@
     </div>
     <div class="side">
       <div class="meta">
-        <span id="walletName" {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>  
+        <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
       </div>
       <nav>
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>

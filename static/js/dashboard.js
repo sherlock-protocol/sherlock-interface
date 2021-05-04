@@ -58,18 +58,18 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
       tokenTable.addColumns([{
         index: null,
-        name: 'User Stake',
+        name: 'Current Balance',
         class: 'fat',
         column: 'userStake',
         type: 'stake'
       }, {
         index: null,
-        name: 'Deposit',
+        name: 'Stake Funds',
         type: "link",
         column: 'deposit',
       }, {
         index: null,
-        name: 'Withdraw',
+        name: 'Activate Cooldown',
         type: "link",
         column: 'withdraw'
       }]);
@@ -93,21 +93,21 @@ window.addEventListener('DOMContentLoaded', () => {
             },
             apy: item.pool.apy + '%',
             withdraw: {
-              label: 'Withdraw',
+              label: 'Activate',
               disabled: true,
               href: '/withdraw/' + item.token.address,
             },
             deposit: {
-              label: 'Deposit',
+              label: 'Stake',
               disabled: false,
               href: '/deposit/' + item.token.address,
             },
             payout: [{
               file: 'dai.svg',
-              name: 'DAI token'
+              name: 'DAI'
             }, {
               file: 'usdc.svg',
-              name: 'USD coin'
+              name: 'USDC'
             }, {
               file: 'weth.svg',
               name: 'Wrapped ETH'
@@ -188,8 +188,8 @@ window.addEventListener('DOMContentLoaded', () => {
       <h2>${item.token.name}</h2>
       <div class="hbox token-split">
         <div class="flex vbox payout">
-          <h4>Exposed to</h4>
-          <p>Your stake would be exposed to the following tokens.</p>
+          <h4>Interest paid in SherX</h4>
+          <p>Current composition of SherX token</p>
           <div class="flex"></div>
           ${data.pool.fee_token.map(token => `
             <div class="expected">
@@ -200,8 +200,8 @@ window.addEventListener('DOMContentLoaded', () => {
           `).join("") }
         </div>
         <div class="flex vbox">
-          <h4>Market</h4>
-          <p>Something about the market and that it affects the stakes</p>
+          <h4>Rewards</h4>
+          <p>APY paid to ${item.token.name} stakers over the last 30 days</p>
           <div class="flex"></div>
           <div class="chart"></div>
         </div>
@@ -228,7 +228,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // - EXPECTED TOKEN AMOUNT = `insurance.stakeToToken(resp.stake, item.token.address)`
 
     // TODO evert
-    // - 
+    // -
     (async () => {
       let estimate = await insurance.stakeToToken(withdrawal.stake, item.token.address);
       if (timeToExpire > 0) {
