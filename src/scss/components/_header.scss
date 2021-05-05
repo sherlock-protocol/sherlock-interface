@@ -76,12 +76,14 @@ header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    text-decoration: none;
 
     img {
       height: 50px;
     }
 
     span {
+      color: $white;
       // margin-left: 20px;
     }
   }

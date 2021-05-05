@@ -27,7 +27,7 @@ table {
 
       td {
         padding: 10px 20px;
-        
+
         &.align-right {
           text-align: right;
         }
@@ -44,18 +44,21 @@ table {
         }
 
         &.icons {
-
           img {
             height: 24px;
             display: inline;
           }
         }
 
+        .button {
+          font-size: 16px;
+        }
+
         button {
           background: $primary;
           color: $white;
           border: none;
-          padding: 5px 10px;
+          padding: 4px 5px;
           font-weight: bold;
           border: none;
           cursor: pointer;

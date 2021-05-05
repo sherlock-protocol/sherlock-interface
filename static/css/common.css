@@ -858,10 +858,15 @@ header .logo {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  text-decoration: none;
 }
 header .logo img {
   height: 50px;
 }
+header .logo span {
+  color: #FFF;
+}
+
 @media only screen and (max-width: 2000px) {
   header {
     padding-left: 500px;
@@ -1295,11 +1300,14 @@ table tbody tr td.icons img {
   height: 24px;
   display: inline;
 }
+table tbody tr td .button {
+  font-size: 16px;
+}
 table tbody tr td button {
   background: #8e44ad;
   color: #FFF;
   border: none;
-  padding: 5px 10px;
+  padding: 4px 5px;
   font-weight: bold;
   border: none;
   cursor: pointer;

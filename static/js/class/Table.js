@@ -132,7 +132,6 @@ export default class Table {
       let a = document.createElement("a");
       a.innerHTML = app.parse `${cellData.label}`;
       a.setAttribute('href', cellData.href);
-      a.classList.add(cellData.label.toLowerCase());
       a.classList.add('button');
       cell.appendChild(a);
       if (cellData.disabled) {

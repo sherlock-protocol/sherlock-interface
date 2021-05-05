@@ -58,18 +58,19 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
       tokenTable.addColumns([{
         index: null,
-        name: 'Current Balance',
+        name: 'Balance',
         class: 'fat',
         column: 'userStake',
         type: 'stake'
       }, {
         index: null,
-        name: 'Stake Funds',
+        name: '',
         type: "link",
         column: 'deposit',
       }, {
         index: null,
-        name: 'Activate Cooldown',
+        class: 'withdraw',
+        name: '',
         type: "link",
         column: 'withdraw'
       }]);
@@ -93,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
             },
             apy: item.pool.apy + '%',
             withdraw: {
-              label: 'Activate',
+              label: 'Activate Cooldown',
               disabled: true,
               href: '/withdraw/' + item.token.address,
             },
@@ -120,7 +121,7 @@ window.addEventListener('DOMContentLoaded', () => {
               insurance: insurance,
               class: 'userstake',
               cb: row => {
-                let withdraw = row.querySelector('.withdraw');
+                let withdraw = row.querySelector('.withdraw a');
                 let value = row.querySelector('.userstake');
                 if (value.innerHTML !== "$0.00") {
                   withdraw.classList.remove('disabled');
