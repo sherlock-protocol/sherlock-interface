@@ -63,6 +63,7 @@ covered = {
     }
 }
 
+total_covered_usd = 0
 for k,v in covered.items():
     usd = 0
     for token, c in v["tokens"].items():
@@ -72,6 +73,7 @@ for k,v in covered.items():
         c["covered"] = p
         c["covered_str"] = human_format(p / 100000)
 
+    total_covered_usd += usd
     covered[k]["usd"] = usd
     covered[k]["usd_str"] = '{:20,.2f}'.format(usd / 100000)
 
@@ -271,6 +273,8 @@ def get_covered_protocols():
         "tokens": tokens,
         "protocols": prtc,
         "protocols_covered": covered,
+        "total_covered_usd": total_covered_usd,
+        "total_covered_usd_str": '{:20,.2f}'.format(total_covered_usd / 100000).strip(),
         "protocol_meta": protocol_meta,
         "usd": usd_price
     }
