@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', () => {
             contract.stake(deposit, app.getCookie('wallet'), data.token.address)
               .then(pending => {
                 app.removeLoader(document.querySelector('#deposit'));
-                app.addLoader(document.querySelector('#deposit'), 'We will redirect you automaticly when the transaction is finished.');
+                app.addLoader(document.querySelector('#deposit'), 'We will redirect you automatically when the transaction is finished.');
 
                 pending.wait().then(response => {
                   app.removeLoader(document.querySelector('#deposit'));

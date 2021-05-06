@@ -2,7 +2,7 @@
 <div class="dashboard">
   <div class="hbox stats">
     <div id="poolsize" class="container purp flex centered">
-        <h4>Insurance pool size:</h4>
+        <h4>Total funds:</h4>
         <h2>$0.00</h2>
     </div>
 
@@ -13,7 +13,7 @@
   </div>
 
   <div class="container">
-    <h2>Assets</h2>
+    <h2>Staking Pools</h2>
     <div class="scrollx">
       <table id="tokenTable">
         <thead>
@@ -29,17 +29,17 @@
   </div>
 
   <div id="withdrawals" class="container hidden">
-    <h2>Withdrawals</h2>
+    <h2>Funds in Cooldown</h2>
     <div class="scrollx">
       <table id="withdrawalsTable">
         <thead>
           <th data-column="icon" data-column-type="image" data-column-class="icon" width="40"></th>
-          <th data-column="protocol" data-column-class="fat">Protocol</th>
-          <th data-column="estimate" data-column-class="fat">Estimated Value</th>
-          <th data-column="stake">Stake</th>
-          <th data-column="availableFrom" data-column-type="countdown" data-column-class="availableFrom">Available From</th>
-          <th data-column="availableTill" data-column-type="countdown">Available Till</th>
-          <th data-column="action" data-column-type="button" data-column-class="action">Action</th>
+          <th data-column="protocol" data-column-class="fat">Pool</th>
+          <th data-column="estimate" data-column-class="fat">Balance</th>
+          <th data-column="stake">lockTokens</th>
+          <th data-column="availableFrom" data-column-type="countdown" data-column-class="availableFrom">Earliest Unstake</th>
+          <th data-column="availableTill" data-column-type="countdown">Latest Unstake</th>
+          <th data-column="action" data-column-type="button" data-column-class="action"></th>
         </thead>
         <tbody></tbody>
       </table>

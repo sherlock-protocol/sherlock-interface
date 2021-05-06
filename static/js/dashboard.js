@@ -246,9 +246,9 @@ window.addEventListener('DOMContentLoaded', () => {
             stake: stake,
             availableFrom: {
               ms: timeToAvailable >= 0 ? timeToAvailable : null,
-              doneText: "Click n' Claim",
+              doneText: "Unstake Available",
               func: (row) => {
-                row.querySelector('td.action button').innerHTML = "Claim";
+                row.querySelector('td.action button').innerHTML = "Unstake";
                 row.querySelector('td.action button').setAttribute('action', 'claim');
               }
             },
@@ -262,7 +262,7 @@ window.addEventListener('DOMContentLoaded', () => {
               }
             },
             action: {
-              label: claimable ? "Claim" : "Cancel",
+              label: claimable ? "Unstake" : "Cancel",
               action: claimable ? "claim" : "cancel",
               func: (el) => {
                 let rowEl = el.parentNode.parentNode;
