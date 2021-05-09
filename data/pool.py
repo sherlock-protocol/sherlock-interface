@@ -214,7 +214,7 @@ def get_staking_pool_data():
         "usd_first_money_numba": 0,
         "usd_first_money_numba_str": str(0),
         "usd_first_money_out": 12543733.25,
-        "usd_first_money_out_str": str(12543733.25),
+        "usd_first_money_out_str": '{:20,.2f}'.format(12543733.25).strip(),
         "usd_values": usd_price,
         "fee_token": fee_token,
         "fee_token_history": history
