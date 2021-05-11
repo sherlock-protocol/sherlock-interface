@@ -59,6 +59,8 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool["first_money_out_usd_str"] = str(pool["first_money_out_usd"])
     pool["first_money_out_usd_format"] = human_format(pool["first_money_out_usd"])
 
+    unalloc = settings.SHERLOCK_CONTRACT_HTTP.functions.getUnallocatedSherXTotal(data["address"]).call()
+    total += unalloc * get_price(settings.SHERLOCK_ADDRESS) / 10**18
     total += pool["usd_size"]
     total_fmo += pool["first_money_out_usd"]
 
