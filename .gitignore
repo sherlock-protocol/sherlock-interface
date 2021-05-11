@@ -6,3 +6,4 @@ venv/
 .env
 
 static/json/abi/Sherlock.json
+indexer/*.json

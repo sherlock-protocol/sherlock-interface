@@ -1,8 +1,10 @@
+import os
+
 from web3 import Web3
 from flask import Flask, render_template, request
 
 import settings
-from data import pool, tokens, price, protocols, sherlock
+from data.cache import pool, tokens, price, protocols, sherlock
 
 app = Flask(__name__, template_folder="templates")
 
@@ -97,5 +99,18 @@ def breakdown():
     )
 
 
+def index():
+    import time
+    import indexer
+
+    while True:
+        indexer.run()
+        time.sleep(50)
+
+
 if __name__ == '__main__':
+    if os.environ.get("FLASK_ENV") == "development":
+        import threading
+        x = threading.Thread(target=index, args=())
+        x.start()
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)
