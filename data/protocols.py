@@ -9,6 +9,12 @@ BADGER_PROTOCOL = "0x9ceb4e7d9163b5097134e3510672288d95e50a96ed52a3208ad623d63a3
 ALCHEMIX_PROTOCOL = "0xdd413d9b3b2f5f77677c67d4b2382c0590df319a049f5ab28ed78137a4312537"
 SET_PROTOCOL = "0x7ac86e2883eb827a4d72f9dd7e597d09f426ebe1152c1c63092f81a9a6f73803"
 
+PROTOCOL_PREMIUMS = {
+    BADGER_PROTOCOL:{},
+    ALCHEMIX_PROTOCOL:{},
+    SET_PROTOCOL:{},
+}
+
 PROTOCOL_META = {
     ALCHEMIX_PROTOCOL: {
         "name": "AlchemIX",
@@ -93,11 +99,12 @@ def get_protocols_covered():
 
 
 def get_protocols_premium():
-    protocol_premiums = {}
+    protocol_premiums = copy.deepcopy(PROTOCOL_PREMIUMS)
+
     for symbol, data in TOKENS.items():
         protocols = SHERLOCK_CONTRACT_HTTP.functions.getProtocols(data["address"]).call()
         for protocol_id in protocols:
-            protocol_id = protocol_id.hex()
+            protocol_id = "0x"+protocol_id.hex()
 
             premium = SHERLOCK_CONTRACT_HTTP.functions.getProtocolPremium(protocol_id, data["address"]).call()
             premium_per_day = premium * BLOCKS_PER_DAY
@@ -107,8 +114,7 @@ def get_protocols_premium():
             if premium_per_day_format < 0.001:
                 premium_per_day_format_str = "<0.001"
 
-            protocol_premiums["0x"+protocol_id] = {}
-            protocol_premiums["0x"+protocol_id][data["address"]] = {
+            protocol_premiums[protocol_id][data["address"]] = {
                 "premium": premium_per_day_format,
                 "premium_str": premium_per_day_format_str
             }
