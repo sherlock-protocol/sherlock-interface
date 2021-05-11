@@ -1,12 +1,8 @@
-import settings
 from web3 import Web3
-
-from data import pool
 from flask import Flask, render_template, request
 
-from data.tokens import get_tokens
-from data.price import usd_price
-from data.protocols import get_protocols_premium, get_protocols_covered, PROTOCOL_META
+import settings
+from data import pool, tokens, price, protocols
 
 app = Flask(__name__, template_folder="templates")
 
@@ -75,7 +71,7 @@ def withdraw(address):
 
 @app.route('/breakdown')
 def breakdown():
-    covered, usd_total = get_protocols_covered()
+    covered, usd_total = protocols.get_protocols_covered()
     return render_template(
         'breakdown.html',
         title='Breakdown',
@@ -84,11 +80,11 @@ def breakdown():
         currentPage="breakdown",
         env=env(),
         data= {
-            "tokens": get_tokens(),
-            "protocols": get_protocols_premium(),
+            "tokens": tokens.get_tokens(),
+            "protocols": protocols.get_protocols_premium(),
             "protocols_covered": covered,
-            "protocol_meta": PROTOCOL_META,
-            "usd": usd_price,
+            "protocol_meta": protocols.PROTOCOL_META,
+            "usd": price.usd_price,
             "total_covered_usd": usd_total,
             "total_covered_usd_str": '{:20,.2f}'.format(usd_total / 100000).strip(),
         }

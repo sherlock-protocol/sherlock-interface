@@ -1,4 +1,7 @@
+import copy
+
 from settings import TOKENS, SHERLOCK_CONTRACT_HTTP, BLOCKS_PER_DAY
+
 from data.helper import human_format
 from data.price import get_price
 
@@ -69,7 +72,6 @@ PROTOCOL_COVERED = {
     }
 }
 
-import copy
 def get_protocols_covered():
     protocols_covered = copy.deepcopy(PROTOCOL_COVERED)
 

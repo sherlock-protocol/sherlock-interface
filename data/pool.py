@@ -1,6 +1,6 @@
-import settings
 from web3 import Web3
-from datetime import datetime, timedelta
+
+import settings
 from data.price import get_price, usd_price
 from data.helper import human_format
 
