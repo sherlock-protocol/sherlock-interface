@@ -15,6 +15,16 @@ table {
       font-size: 18px;
       color: $primary;
       text-align: left;
+      font-family: 'montserrat';
+
+      &.align-right {
+        text-align: right;
+      }
+
+      &.fat {
+        font-weight: bold;
+        color: $primary;
+      }
     }
   }
 

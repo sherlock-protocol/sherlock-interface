@@ -15,6 +15,7 @@
 .stats h2 {
   text-align: center;
   width: 100%;
+  font-family: "courier";
   overflow: hidden;
   box-sizing: border-box;
   text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px maroon;
@@ -34,6 +35,9 @@ table .expander .token-split .chart {
 }
 table .expander .token-split .chart * {
   color: #8e44ad;
+}
+table .expander .token-split h4 {
+  margin-bottom: 0;
 }
 table .expander .token-split .flex.payout .fat {
   font-weight: bold;

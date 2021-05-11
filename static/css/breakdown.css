@@ -4,6 +4,21 @@
   margin: 0 auto;
   width: 60px;
 }
+.breakdown .welcome {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  background: #FFF;
+  padding: 20px;
+  align-items: center;
+}
+.breakdown .welcome table {
+  margin: -20px;
+}
+.breakdown .welcome p,
+.breakdown .welcome td,
+.breakdown .welcome th {
+  font-size: 20px;
+}
 .breakdown .protocol {
   margin-bottom: 20px;
   background: #FFF;
@@ -11,6 +26,17 @@
 }
 .breakdown .protocol:first-of-type {
   margin-top: 20px;
+}
+.breakdown .protocol .smoking-kills {
+  margin-top: 20px;
+}
+.breakdown .protocol .smoking-kills h2 {
+  margin-left: 20px;
+}
+.breakdown .protocol table {
+  margin: 0 -20px;
+  box-sizing: border-box;
+  width: calc(100% + 40px);
 }
 .breakdown .protocol table th:last-child img {
   margin-left: auto;
@@ -34,7 +60,8 @@
   margin-bottom: 0;
 }
 .breakdown .protocol p.flex {
-  font-size: 20px;
+  font-size: 16px;
+  margin-right: 20px;
 }
 .breakdown .protocol .meta {
   display: flex;

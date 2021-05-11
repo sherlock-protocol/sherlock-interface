@@ -64,13 +64,13 @@ window.addEventListener('DOMContentLoaded', () => {
         type: 'stake'
       }, {
         index: null,
-        name: '',
+        name: 'Stake',
         type: "link",
         column: 'deposit',
       }, {
         index: null,
         class: 'withdraw',
-        name: '',
+        name: 'Cooldown',
         type: "link",
         column: 'withdraw'
       }]);
@@ -94,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
             },
             apy: item.pool.apy + '%',
             withdraw: {
-              label: 'Activate Cooldown',
+              label: 'Activate',
               disabled: true,
               href: '/withdraw/' + item.token.address,
             },
@@ -228,8 +228,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // - addrow is done on callback, which means the order can be mixed up if callbacks are not returnd in order (which is something that will happen)
     // - EXPECTED TOKEN AMOUNT = `insurance.stakeToToken(resp.stake, item.token.address)`
 
-    // TODO evert
-    // -
     (async () => {
       let estimate = await insurance.stakeToToken(withdrawal.stake, item.token.address);
       if (timeToExpire > 0) {

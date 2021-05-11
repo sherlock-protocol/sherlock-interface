@@ -76,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
               });
           })
         } else {
-          app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
+          app.notify('Insufficient funds', 'Our name is Sherlock. It is our business to know what other people do not know.');
           app.removeLoader(document.querySelector('#deposit'));
         }
       });
