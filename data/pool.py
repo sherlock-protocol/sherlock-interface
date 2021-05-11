@@ -4,9 +4,13 @@ import settings
 from data.price import get_price, usd_price
 from data.helper import human_format
 
+
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
-    stake = settings.SHERLOCK_CONTRACT_HTTP.functions.getLockToken(data["address"]).call()
-    STAKE = settings.INFURA_HTTP.eth.contract(address=stake, abi=settings.ERC20_ABI)
+    stake = settings.SHERLOCK_HTTP.functions.getLockToken(
+        data["address"]).call()
+    STAKE = settings.INFURA_HTTP.eth.contract(
+        address=stake, abi=settings.ERC20_ABI)
+
     token = {
         "token": {
             "address": data["address"],
@@ -14,7 +18,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
             "symbol": symbol,
             "decimals": data["decimals"],
         },
-        "stake":{
+        "stake": {
             "address": stake,
             "name": STAKE.functions.name().call(),
             "symbol": STAKE.functions.symbol().call(),
@@ -25,22 +29,29 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool = token["pool"]
 
     # TVL
-    pool["size"] = settings.SHERLOCK_CONTRACT_HTTP.functions.getStakersPoolBalance(data["address"]).call()
+    pool["size"] = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(
+        data["address"]).call()
     pool["size_str"] = str(pool["size"])
     pool["size_format"] = "%.2f" % round(pool["size"] / data["divider"], 2)
 
-    pool["usd_size"] = pool["size"] / data["divider"] * get_price(data["address"])
+    pool["usd_size"] = pool["size"] / \
+        data["divider"] * get_price(data["address"])
     pool["usd_size_str"] = "%.2f" % round(pool["usd_size"], 2)
 
     # Premium
-    sherx_weight = settings.SHERLOCK_CONTRACT_HTTP.functions.getSherXWeight(data["address"]).call()
+    sherx_weight = settings.SHERLOCK_HTTP.functions.getSherXWeight(
+        data["address"]).call()
     pool["sherx_percentage"] = "%.2f" % round(float(sherx_weight / 10**16), 2)
 
     # Numba
-    sherx_per_block = settings.SHERLOCK_CONTRACT_HTTP.functions.getTotalSherXPerBlock(data["address"]).call()
-    premium_per_block =  get_price(settings.SHERLOCK_ADDRESS) * sherx_per_block * data["divider"] / get_price(data["address"]) / 10**18
+    sherx_per_block = settings.SHERLOCK_HTTP.functions.getTotalSherXPerBlock(
+        data["address"]).call()
+    premium_per_block = get_price(settings.SHERLOCK) * sherx_per_block * \
+        data["divider"] / get_price(data["address"]) / 10**18
+
     # TODO int to float? to keep precision
-    pool["numba"] = int(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
+    # 1 block = 13 seconds. So 260 of these increments per block
+    pool["numba"] = int(premium_per_block / 260)
     pool["numba_str"] = str(pool["numba"])
     pool["usd_numba"] = pool["numba"] * get_price(data["address"])
     pool["usd_numba_str"] = str(pool["usd_numba"])
@@ -50,17 +61,21 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     if pool["size"] == 0:
         pool["apy"] = str(99999999.99)
     else:
-        pool["apy"]  = "%.2f" % round(float(premium_per_year) / pool["size"], 2)
+        pool["apy"] = "%.2f" % round(float(premium_per_year) / pool["size"], 2)
 
     # First money out
-    pool["first_money_out"] = settings.SHERLOCK_CONTRACT_HTTP.functions.getFirstMoneyOut(data["address"]).call()
+    pool["first_money_out"] = settings.SHERLOCK_HTTP.functions.getFirstMoneyOut(
+        data["address"]).call()
     pool["first_money_out_str"] = str(pool["first_money_out"])
-    pool["first_money_out_usd"] = pool["first_money_out"] / data["divider"] * get_price(data["address"])
+    pool["first_money_out_usd"] = pool["first_money_out"] / \
+        data["divider"] * get_price(data["address"])
     pool["first_money_out_usd_str"] = str(pool["first_money_out_usd"])
-    pool["first_money_out_usd_format"] = human_format(pool["first_money_out_usd"])
+    pool["first_money_out_usd_format"] = human_format(
+        pool["first_money_out_usd"])
 
-    unalloc = settings.SHERLOCK_CONTRACT_HTTP.functions.getUnallocatedSherXTotal(data["address"]).call()
-    total += unalloc * get_price(settings.SHERLOCK_ADDRESS) / 10**18
+    unalloc = settings.SHERLOCK_HTTP.functions.getUnallocatedSherXTotal(
+        data["address"]).call()
+    total += unalloc * get_price(settings.SHERLOCK) / 10**18
     total += pool["usd_size"]
     total_fmo += pool["first_money_out_usd"]
 
@@ -68,9 +83,10 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
 
 def get_total_numba():
-    sherx_total = settings.SHERLOCK_CONTRACT_HTTP.functions.getSherXPerBlock().call()
-    sherx_total_50ms = int(sherx_total / 260) # 1 block = 13 seconds. So 260 of these increments per block
-    return sherx_total_50ms / 10**18 * get_price(settings.SHERLOCK_ADDRESS)
+    sherx_total = settings.SHERLOCK_HTTP.functions.getSherXPerBlock().call()
+    # 1 block = 13 seconds. So 260 of these increments per block
+    sherx_total_50ms = int(sherx_total / 260)
+    return sherx_total_50ms / 10**18 * get_price(settings.SHERLOCK)
 
 
 def get_staking_pool_data():
@@ -79,10 +95,11 @@ def get_staking_pool_data():
     tokens = []
 
     for symbol, data in settings.TOKENS.items():
-        if not settings.SHERLOCK_CONTRACT_HTTP.functions.isStake(data["address"]).call():
+        if not settings.SHERLOCK_HTTP.functions.isStake(data["address"]).call():
             continue
 
-        total, total_fmo, token = _get_staking_pool_token_data(total, total_fmo, symbol, data)
+        total, total_fmo, token = _get_staking_pool_token_data(
+            total, total_fmo, symbol, data)
         tokens.append(token)
 
     total_numba = get_total_numba()

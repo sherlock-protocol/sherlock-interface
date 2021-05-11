@@ -22,8 +22,10 @@ with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "to
     ERC20_ABI = json.load(json_data)["abi"]
 
 if NETWORK == 'KOVAN':
-    INFURA_HTTP = Web3(HTTPProvider("https://kovan.infura.io/v3/%s" % INFURA_TOKEN))
-    INFURA_WSS = Web3(WebsocketProvider("wss://kovan.infura.io/ws/v3/%s" % INFURA_TOKEN))
+    INFURA_HTTP = Web3(HTTPProvider(
+        "https://kovan.infura.io/v3/%s" % INFURA_TOKEN))
+    INFURA_WSS = Web3(WebsocketProvider(
+        "wss://kovan.infura.io/ws/v3/%s" % INFURA_TOKEN))
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     INFURA_WSS = Web3(WebsocketProvider("wss://127.0.0.1:8545"))
@@ -33,12 +35,13 @@ else:
 if NETWORK == 'KOVAN':
     raise ValueError("Kovan not supported")
 elif NETWORK == 'LOCALHOST':
-    SHERLOCK_ADDRESS = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
+    SHERLOCK = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
 
-SHERLOCK_CONTRACT_HTTP = INFURA_HTTP.eth.contract(address=SHERLOCK_ADDRESS, abi=POOL_ABI)
+SHERLOCK_HTTP = INFURA_HTTP.eth.contract(
+    address=SHERLOCK, abi=POOL_ABI)
 
 TOKENS = {}
-for token in SHERLOCK_CONTRACT_HTTP.functions.getTokens().call():
+for token in SHERLOCK_HTTP.functions.getTokens().call():
     w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
     token_decimals = w.functions.decimals().call()
     TOKENS[w.functions.symbol().call()] = {

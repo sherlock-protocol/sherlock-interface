@@ -1,6 +1,6 @@
 import copy
 
-from settings import TOKENS, SHERLOCK_CONTRACT_HTTP, BLOCKS_PER_DAY
+from settings import TOKENS, SHERLOCK_HTTP, BLOCKS_PER_DAY
 
 from data.helper import human_format
 from data.price import get_price
@@ -10,9 +10,9 @@ ALCHEMIX_PROTOCOL = "0xdd413d9b3b2f5f77677c67d4b2382c0590df319a049f5ab28ed78137a
 SET_PROTOCOL = "0x7ac86e2883eb827a4d72f9dd7e597d09f426ebe1152c1c63092f81a9a6f73803"
 
 PROTOCOL_PREMIUMS = {
-    BADGER_PROTOCOL:{},
-    ALCHEMIX_PROTOCOL:{},
-    SET_PROTOCOL:{},
+    BADGER_PROTOCOL: {},
+    ALCHEMIX_PROTOCOL: {},
+    SET_PROTOCOL: {},
 }
 
 PROTOCOL_META = {
@@ -40,38 +40,38 @@ PROTOCOL_META = {
 }
 
 PROTOCOL_COVERED = {
-    ALCHEMIX_PROTOCOL:{
-        "tokens":{
-            TOKENS["DAI"]["address"]:{
+    ALCHEMIX_PROTOCOL: {
+        "tokens": {
+            TOKENS["DAI"]["address"]: {
                 "covered": 500000.0,
             }
         }
     },
-    BADGER_PROTOCOL:{
-        "tokens":{
-            TOKENS["WBTC"]["address"]:{
+    BADGER_PROTOCOL: {
+        "tokens": {
+            TOKENS["WBTC"]["address"]: {
                 "covered": 2500.0,
             },
         }
     },
-    SET_PROTOCOL:{
-        "tokens":{
-            TOKENS["DAI"]["address"]:{
+    SET_PROTOCOL: {
+        "tokens": {
+            TOKENS["DAI"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["USDC"]["address"]:{
+            TOKENS["USDC"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["WETH"]["address"]:{
+            TOKENS["WETH"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["WBTC"]["address"]:{
+            TOKENS["WBTC"]["address"]: {
                 "covered": 2500.0,
             },
-            TOKENS["AAVE"]["address"]:{
+            TOKENS["AAVE"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["SUSHI"]["address"]:{
+            TOKENS["SUSHI"]["address"]: {
                 "covered": 100000.0,
             }
         }
@@ -83,7 +83,7 @@ def get_protocols_covered():
     protocols_covered = copy.deepcopy(PROTOCOL_COVERED)
 
     total_covered_usd = 0
-    for k,v in protocols_covered.items():
+    for k, v in protocols_covered.items():
         usd = 0
         for token, c in v["tokens"].items():
             p = get_price(token) * c["covered"]
@@ -94,29 +94,39 @@ def get_protocols_covered():
 
         total_covered_usd += usd
         protocols_covered[k]["usd"] = usd
-        protocols_covered[k]["usd_str"] = '{:20,.2f}'.format(usd / 100000).strip()
+        protocols_covered[k]["usd_str"] = '{:20,.2f}'.format(
+            usd / 100000).strip()
 
     return protocols_covered, total_covered_usd
+
+
+def _get_protocol_premium(symbol, data, protocol_id):
+    premium = SHERLOCK_HTTP.functions.getProtocolPremium(
+        protocol_id, data["address"]).call()
+
+    premium_per_day = premium * BLOCKS_PER_DAY
+
+    premium_per_day_format = round(float(premium_per_day) / data["divider"], 3)
+    premium_per_day_format_str = "%.2f" % premium_per_day_format
+    if premium_per_day_format < 0.001:
+        premium_per_day_format_str = "<0.001"
+
+    return {
+        "premium": premium_per_day_format,
+        "premium_str": premium_per_day_format_str
+    }
 
 
 def get_protocols_premium():
     protocol_premiums = copy.deepcopy(PROTOCOL_PREMIUMS)
 
     for symbol, data in TOKENS.items():
-        protocols = SHERLOCK_CONTRACT_HTTP.functions.getProtocols(data["address"]).call()
+        protocols = SHERLOCK_HTTP.functions.getProtocols(
+            data["address"]).call()
         for protocol_id in protocols:
             protocol_id = "0x"+protocol_id.hex()
 
-            premium = SHERLOCK_CONTRACT_HTTP.functions.getProtocolPremium(protocol_id, data["address"]).call()
-            premium_per_day = premium * BLOCKS_PER_DAY
+            premium_data = _get_protocol_premium(symbol, data, protocol_id)
+            protocol_premiums[protocol_id][data["address"]] = premium_data
 
-            premium_per_day_format = round(float(premium_per_day) / data["divider"], 3)
-            premium_per_day_format_str = "%.2f" % premium_per_day_format
-            if premium_per_day_format < 0.001:
-                premium_per_day_format_str = "<0.001"
-
-            protocol_premiums[protocol_id][data["address"]] = {
-                "premium": premium_per_day_format,
-                "premium_str": premium_per_day_format_str
-            }
     return protocol_premiums
