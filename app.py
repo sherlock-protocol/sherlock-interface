@@ -90,7 +90,7 @@ def breakdown():
             "protocols": protocols.get_protocols_premium(),
             "protocols_covered": covered,
             "protocol_meta": protocols.PROTOCOL_META,
-            "usd": price.usd_price,
+            "usd": price.get_prices(),
             "total_covered_usd": usd_total,
             "total_covered_usd_str": usd_total_format
         }

@@ -1,8 +1,8 @@
 from web3 import Web3
 
 import settings
-from data.price import get_price, usd_price
-from data.helper import human_format
+
+from data import price, helper
 
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
@@ -35,7 +35,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool["size_format"] = "%.2f" % round(pool["size"] / data["divider"], 2)
 
     pool["usd_size"] = pool["size"] / \
-        data["divider"] * get_price(data["address"])
+        data["divider"] * price.get_price(data["address"])
     pool["usd_size_str"] = "%.2f" % round(pool["usd_size"], 2)
 
     # Premium
@@ -46,14 +46,14 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     # Numba
     sherx_per_block = settings.SHERLOCK_HTTP.functions.getTotalSherXPerBlock(
         data["address"]).call()
-    premium_per_block = get_price(settings.SHERLOCK) * sherx_per_block * \
-        data["divider"] / get_price(data["address"]) / 10**18
+    premium_per_block = price.get_price(settings.SHERLOCK) * sherx_per_block * \
+        data["divider"] / price.get_price(data["address"]) / 10**18
 
     # TODO int to float? to keep precision
     # 1 block = 13 seconds. So 260 of these increments per block
     pool["numba"] = int(premium_per_block / 260)
     pool["numba_str"] = str(pool["numba"])
-    pool["usd_numba"] = pool["numba"] * get_price(data["address"])
+    pool["usd_numba"] = pool["numba"] * price.get_price(data["address"])
     pool["usd_numba_str"] = str(pool["usd_numba"])
 
     # Apy
@@ -68,14 +68,14 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         data["address"]).call()
     pool["first_money_out_str"] = str(pool["first_money_out"])
     pool["first_money_out_usd"] = pool["first_money_out"] / \
-        data["divider"] * get_price(data["address"])
+        data["divider"] * price.get_price(data["address"])
     pool["first_money_out_usd_str"] = str(pool["first_money_out_usd"])
-    pool["first_money_out_usd_format"] = human_format(
+    pool["first_money_out_usd_format"] = helper.human_format(
         pool["first_money_out_usd"])
 
     unalloc = settings.SHERLOCK_HTTP.functions.getUnallocatedSherXTotal(
         data["address"]).call()
-    total += unalloc * get_price(settings.SHERLOCK) / 10**18
+    total += unalloc * price.get_price(settings.SHERLOCK) / 10**18
     total += pool["usd_size"]
     total_fmo += pool["first_money_out_usd"]
 
@@ -86,7 +86,7 @@ def get_total_numba():
     sherx_total = settings.SHERLOCK_HTTP.functions.getSherXPerBlock().call()
     # 1 block = 13 seconds. So 260 of these increments per block
     sherx_total_50ms = int(sherx_total / 260)
-    return sherx_total_50ms / 10**18 * get_price(settings.SHERLOCK)
+    return sherx_total_50ms / 10**18 * price.get_price(settings.SHERLOCK)
 
 
 def get_staking_pool_data():
@@ -113,5 +113,5 @@ def get_staking_pool_data():
         "usd_first_money_numba_str": str(0),
         "usd_first_money_out": total_fmo,
         "usd_first_money_out_str": '{:20,.2f}'.format(total_fmo).strip(),
-        "usd_values": usd_price
+        "usd_values": price.get_prices()
     }
