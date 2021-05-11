@@ -5,4 +5,4 @@ venv/
 .DS_Store
 .env
 
-static/json/abi/Insurance.json
+static/json/abi/Sherlock.json

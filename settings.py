@@ -12,9 +12,9 @@ NETWORK = config('NETWORK')
 CHAINID = config('CHAINID', cast=int)
 INFURA_TOKEN = config('INFURA_TOKEN')
 
-with open(os.path.join(CONTRACTS, "artifacts", "contracts", "interfaces", "ISolution.sol", "ISolution.json")) as json_data:
+with open(os.path.join(CONTRACTS, "artifacts", "contracts", "interfaces", "ISherlock.sol", "ISherlock.json")) as json_data:
     POOL_ABI = json.load(json_data)["abi"]
-    with open(os.path.join("static", "json", "abi", "Insurance.json"), "w+") as static:
+    with open(os.path.join("static", "json", "abi", "Sherlock.json"), "w+") as static:
         static.write(json.dumps(POOL_ABI))
 
 
@@ -33,12 +33,20 @@ else:
 if NETWORK == 'KOVAN':
     raise ValueError("Kovan not supported")
 elif NETWORK == 'LOCALHOST':
-    POOL_ADDRESS = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
+    SHERLOCK_ADDRESS = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
 
-POOL_CONTRACT_HTTP = INFURA_HTTP.eth.contract(address=POOL_ADDRESS, abi=POOL_ABI)
+SHERLOCK_CONTRACT_HTTP = INFURA_HTTP.eth.contract(address=SHERLOCK_ADDRESS, abi=POOL_ABI)
 
-PROTOCOL_NAMES = {
-    "2698812145d22d42d61c043b9933d0771afdf0fad79a42fc985105d0f27141b0": "Maker",
-    "d88eb2629f4cc00a052d4e86cd29a0be2b39e7b0c2fe1c459f7e4c1aa3d4df3b": "Yearn",
-    "c94af803b7bf4f45b7e9822e53806f6d873074abc6cedbfccfa727bf00c623e6": "PieDao"
-}
+TOKENS = {}
+for token in SHERLOCK_CONTRACT_HTTP.functions.getTokens().call():
+    w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
+    token_decimals = w.functions.decimals().call()
+    TOKENS[w.functions.symbol().call()] = {
+        "address": token,
+        "name":  w.functions.name().call(),
+        "decimals": token_decimals,
+        "divider": float("1" + "0" * token_decimals)
+    }
+
+BLOCKS_PER_DAY = 6484
+BLOCKS_PER_YEAR = BLOCKS_PER_DAY * 365
