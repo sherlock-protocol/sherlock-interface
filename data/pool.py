@@ -6,7 +6,6 @@ from data.helper import human_format
 
 def get_staking_pool_data():
     total = 0
-    total_numba = 0
     tokens = []
 
     total_fmo = 0
@@ -35,7 +34,8 @@ def get_staking_pool_data():
 
         # use exchange rate
         premium_per_block =  get_price(settings.SHERLOCK_ADDRESS) * sherx_per_block * data["divider"] / get_price(data["address"]) / 10**18
-        premium_per_50ms = float(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
+        # TODO int to float? to keep precision
+        premium_per_50ms = int(premium_per_block / 260) # 1 block = 13 seconds. So 260 of these increments per block
         premium_per_50ms_usd = premium_per_50ms * get_price(data["address"])
         premium_per_year = premium_per_block * settings.BLOCKS_PER_YEAR
 
