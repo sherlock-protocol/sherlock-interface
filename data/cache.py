@@ -1,4 +1,6 @@
+import time
 import json
+import copy
 
 from cachetools import cached, TTLCache
 
@@ -7,10 +9,25 @@ from data.protocols import PROTOCOL_META
 
 CACHE_TIME = 10
 
-
 class pool:
-    @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_staking_pool_data():
+        data = copy.deepcopy(pool.get_staking_pool_data_stored())
+
+        diff = time.time() - data["block_timestamp"]
+        if diff < 0:
+            return data
+
+        diff_ms = diff * 1000
+        data["total"] += diff_ms / 50 * data["usd_total_numba"]
+        data["usd_total_format"] = "%.2f" % round(data["total"], 2)
+
+        # TODO only do this for SHERX
+        # for token in data["tokens"]:
+        #     token["pool"]["size"] = += diff_ms / 50 * token["pool"]["usd_numba"]
+        return data
+
+    @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
+    def get_staking_pool_data_stored():
         with open(indexer.POOL, "r") as f:
             return json.load(f)
 

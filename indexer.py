@@ -5,7 +5,7 @@ from data import pool, tokens, price, protocols, sherlock
 
 INDENT = None
 SORT_KEYS = False
-if os.environ.get("FLASK_ENV") == "development":
+if os.environ.get("FLASK_ENV").lower() == "development":
     INDENT = 4
     SORT_KEYS = True
 

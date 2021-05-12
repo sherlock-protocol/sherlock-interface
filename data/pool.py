@@ -1,8 +1,13 @@
+import os
+
 from web3 import Web3
 
 import settings
-
 from data import price, helper
+
+TIMESTAMP_ERROR = 0
+if os.environ.get("FLASK_ENV").lower() == 'development':
+    TIMESTAMP_ERROR = -55
 
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
@@ -103,6 +108,10 @@ def get_staking_pool_data():
         tokens.append(token)
 
     total_numba = get_total_numba()
+
+    last_block = settings.INFURA_HTTP.eth.get_block_number()
+    last_block_data = settings.INFURA_HTTP.eth.get_block(last_block)
+
     return {
         "tokens": tokens,
         "total": total,
@@ -113,5 +122,6 @@ def get_staking_pool_data():
         "usd_first_money_numba_str": str(0),
         "usd_first_money_out": total_fmo,
         "usd_first_money_out_str": '{:20,.2f}'.format(total_fmo).strip(),
-        "usd_values": price.get_prices()
+        "usd_values": price.get_prices(),
+        "block_timestamp": last_block_data["timestamp"] + TIMESTAMP_ERROR
     }

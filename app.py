@@ -1,4 +1,6 @@
+import indexer
 import os
+import datetime
 
 from web3 import Web3
 from flask import Flask, render_template, request
@@ -99,18 +101,21 @@ def breakdown():
     )
 
 
-def index():
-    import time
-    import indexer
+def do_indexer():
+    import pathlib
+    fname = pathlib.Path(indexer.COVERED)
+    if not fname.exists():
+        return True
 
-    while True:
-        indexer.run()
-        time.sleep(50)
+    mtime = datetime.datetime.fromtimestamp(fname.stat().st_mtime)
+    diff = datetime.datetime.now() - mtime
+    if diff.total_seconds() > 60:
+        return True
+    return False
 
 
 if __name__ == '__main__':
-    if os.environ.get("FLASK_ENV") == "development":
-        import threading
-        x = threading.Thread(target=index, args=())
-        x.start()
+    if os.environ.get("FLASK_ENV").lower() == "development" and do_indexer():
+        indexer.run()
+
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)
