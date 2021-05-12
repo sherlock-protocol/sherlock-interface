@@ -15,13 +15,13 @@
             <td>
               {{ data.protocol_meta[protocol].name }}
             </td>
-            <td class="fat">${{ data.protocols_covered[protocol].usd_str }}</td>
-            <td class="fat align-right">10%</td>
+            <td>${{ data.protocols_covered[protocol].usd_str }}</td>
+            <td class="align-right">{{ data.protocols_covered[protocol].percentage_str }}%</td>
           </tr>
         {% endfor %}
         <tr>
           <td class="fat">Total Covered</td>
-          <td class="fat">$ {{ data.total_covered_usd_str }}</td>
+          <td class="fat">${{ data.total_covered_usd_str }}</td>
           <td class="fat align-right">100%</td>
         </tr>
       </tbody>

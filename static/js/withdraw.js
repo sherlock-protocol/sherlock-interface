@@ -61,7 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
         let withdraw = _ethers.utils.parseUnits(value, data.stake.decimals);
         if(withdraw.lte(balance)) {
           new Insurance(contract => {
-            contract.withdrawStake(withdraw, data.token.address)
+            contract.activateCooldown(withdraw, data.token.address)
             .then(pending => {
               app.removeLoader(document.querySelector('#withdraw'));
               app.addLoader(document.querySelector('#withdraw'), 'We will redirect you automatically when the transaction is finished.');

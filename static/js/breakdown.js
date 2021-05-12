@@ -8,7 +8,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       series: [],
       labels: [],
     }
-
     Object.entries(tokenData).forEach(entry => {
       let address = entry[0];
       let token = data.tokens[entry[0]];
@@ -50,7 +49,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         chartPadding: 20
       }]
     ];
-    
+
     let chart = new Chartist.Pie(pieEl, data, options, responsiveOptions)
       .on('draw', context => {
         let label = data.labels[context.index];

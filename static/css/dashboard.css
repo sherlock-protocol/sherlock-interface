@@ -20,29 +20,34 @@
   box-sizing: border-box;
   text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px maroon;
   font-weight: 400;
-  animation: shift 4s ease-in-out infinite alternate;
 }
 
-table .expander h2 {
+.staking-pools {
+  padding: 0;
+}
+.staking-pools h2 {
+  margin-left: 20px;
+}
+.staking-pools table .expander h2 {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 24px;
 }
-table .expander .token-split .chart {
+.staking-pools table .expander .token-split .chart {
   flex: 1;
   background: #FFF;
   max-height: calc(100% - 20px);
 }
-table .expander .token-split .chart * {
+.staking-pools table .expander .token-split .chart * {
   color: #8e44ad;
 }
-table .expander .token-split h4 {
+.staking-pools table .expander .token-split h4 {
   margin-bottom: 0;
 }
-table .expander .token-split .flex.payout .fat {
+.staking-pools table .expander .token-split .flex.payout .fat {
   font-weight: bold;
 }
-table .expander .token-split .flex.payout > div.expected {
+.staking-pools table .expander .token-split .flex.payout > div.expected {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -51,20 +56,20 @@ table .expander .token-split .flex.payout > div.expected {
   margin-right: 10px;
   padding: 5px 10px;
 }
-table .expander .token-split .flex.payout > div.expected:last-of-type {
+.staking-pools table .expander .token-split .flex.payout > div.expected:last-of-type {
   margin-bottom: 0;
 }
-table .expander .token-split .flex.payout > div.expected > span {
+.staking-pools table .expander .token-split .flex.payout > div.expected > span {
   flex: 1;
 }
-table .expander .token-split .flex.payout > div.expected > span:first-of-type {
+.staking-pools table .expander .token-split .flex.payout > div.expected > span:first-of-type {
   margin-left: auto;
   display: block;
   margin-right: 20px;
   flex: 2;
   text-align: right;
 }
-table .expander .token-split .flex.payout > div.expected img {
+.staking-pools table .expander .token-split .flex.payout > div.expected img {
   margin-right: 50px;
   height: 32px;
   justify-self: flex-start;

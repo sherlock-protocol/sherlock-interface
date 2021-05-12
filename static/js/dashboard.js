@@ -142,48 +142,45 @@ window.addEventListener('DOMContentLoaded', () => {
   let fetchWithdrawals = async (insurance) => {
     let curBlock = await provider.getBlockNumber();
     data.pool.tokens.forEach(async (item, i) => {
-      let index = await insurance.getWithrawalInitialIndex(app.getCookie('wallet'), item.token.address);
-      let size = await insurance.getWithdrawalSize(app.getCookie('wallet'), item.token.address);
+      let index = await insurance.getInitialUnstakeEntry(app.getCookie('wallet'), item.token.address);
+      let size = await insurance.getUnstakeEntrySize(app.getCookie('wallet'), item.token.address);
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
       for (var ii = index; ii < size; ii++) {
-        let withdrawal = await insurance.getWithdrawal(app.getCookie('wallet'), ii, item.token.address);
+        let withdrawal = await insurance.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         renderWithdrawalRow(withdrawal, item, curBlock, insurance, ii, data.pool.usd_values);
       }
     });
   }
 
   let tokenCollapse = {
-    func: () => {
-
-    },
     collapseFunc: (template) => {
-      let chartEl = template.querySelector('.chart');
-      let piedata = {
-        labels: [],
-        series: [[]]
-      };
-
-      data.pool.fee_token_history.forEach((item, i) => {
-        piedata.labels.push(i);
-        piedata.series[0].push(item.count);
-      });
-
-      let uniqueChart = new Chartist.Line(chartEl, piedata, {
-        fullWidth: false,
-        showPoint: false,
-
-        chartPadding: 0,
-        axisX: {
-          showLabel: false,
-          showGrid: false
-        },
-        axisY: {
-          showLabel: false,
-          showGrid: false
-        }
-      });
+      // let chartEl = template.querySelector('.chart');
+      // let piedata = {
+      //   labels: [],
+      //   series: [[]]
+      // };
+      // 
+      // data.pool.fee_token_history.forEach((item, i) => {
+      //   piedata.labels.push(i);
+      //   piedata.series[0].push(item.count);
+      // });
+      // 
+      // let uniqueChart = new Chartist.Line(chartEl, piedata, {
+      //   fullWidth: false,
+      //   showPoint: false,
+      // 
+      //   chartPadding: 0,
+      //   axisX: {
+      //     showLabel: false,
+      //     showGrid: false
+      //   },
+      //   axisY: {
+      //     showLabel: false,
+      //     showGrid: false
+      //   }
+      // });
     },
     template: (item) => `
       <h2>${item.token.name}</h2>
@@ -192,13 +189,6 @@ window.addEventListener('DOMContentLoaded', () => {
           <h4>Interest paid in SherX</h4>
           <p>Current composition of SherX token</p>
           <div class="flex"></div>
-          ${data.pool.fee_token.map(token => `
-            <div class="expected">
-              <img src="/static/svg/crypto/color/${token.token.symbol}.svg">
-              <span>${token.token.name}</span>
-              <span class="fat">${token.percentage}%</span>
-            </div>
-          `).join("") }
         </div>
         <div class="flex vbox">
           <h4>Rewards</h4>
@@ -213,10 +203,10 @@ window.addEventListener('DOMContentLoaded', () => {
   let renderWithdrawalRow = async (withdrawal, item, curBlock, insurance, i, usd_values) => {
     if (!insurance) return;
 
-    let stake = _ethers.utils.formatUnits(withdrawal.stake, item.stake.decimals);
+    let stake = _ethers.utils.formatUnits(withdrawal.lock, item.stake.decimals);
     let block = parseInt(_ethers.utils.formatUnits(withdrawal.blockInitiated, 'wei'));
-    let availableFrom = block + data.timperiod;
-    let availableTill = block + data.timperiod + data.claimperiod;
+    let availableFrom = block + data.cooldown_period;
+    let availableTill = block + data.cooldown_period + data.unstake_window;
     let timeToAvailable = (availableFrom - curBlock) * blockTimeMS;
     let timeToExpire = (availableTill - curBlock) * blockTimeMS;
     let claimable = false;
@@ -226,11 +216,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // TODO vincent
     // - addrow is done on callback, which means the order can be mixed up if callbacks are not returnd in order (which is something that will happen)
-    // - EXPECTED TOKEN AMOUNT = `insurance.stakeToToken(resp.stake, item.token.address)`
 
     (async () => {
-      let estimate = await insurance.stakeToToken(withdrawal.stake, item.token.address);
+      let estimate = await insurance.LockToToken(withdrawal.lock, item.token.address);
+      console.log(timeToExpire);
       if (timeToExpire > 0) {
+        console.log(withdrawal);
         renderWithdrawalRow();
         document.querySelector('#withdrawals').classList.remove('hidden');
         withdrawalsTable.addRow({
@@ -267,7 +258,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (el.getAttribute('action') === "claim") {
                   app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                  insurance.withdrawClaim(i, item.token.address)
+                  console.log(item);
+                  insurance.unstake(i, item.token.address, app.getCookie('wallet'))
                     .then(resp => {
                       app.removeLoader(document.querySelector('#withdrawals'));
                       rowEl.classList.add('disabled');
@@ -278,7 +270,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     });
                 } else if (el.getAttribute('action') === "cancel") {
                   app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                  insurance.withdrawCancel(i, item.token.address)
+                  insurance.cancelCooldown(i, item.token.address)
                     .then(resp => {
                       rowEl.classList.add('disabled');
                       app.removeLoader(document.querySelector('#withdrawals'));

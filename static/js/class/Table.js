@@ -143,7 +143,7 @@ export default class Table {
       img.classList.add('loader-mini');
       cell.appendChild(img);
       new Erc20(cellData.stake.address, (erc) => {
-        cellData.insurance.getStakerTVL(app.getCookie('wallet'), cellData.token.address)
+        cellData.insurance.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
           .then(userSize => {
             let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
             if (!balanceInt) {
@@ -152,6 +152,10 @@ export default class Table {
               let tokenPrice = _ethers.BigNumber.from(cellData.token_price);
               let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
               let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
+              if(userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
+                cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
+                return;
+              }
               let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
               userSize = userSize.mul(tokenPrice);
               header.intervals[position] = setInterval(() => {
@@ -169,7 +173,7 @@ export default class Table {
       cell.innerHTML = cellData.numba;
       clearInterval(header.intervals[position]);
       header.intervals[position] = setInterval(() => {
-        amount += cellData.yield;
+        amount += cellData.yield / 1000000;
         cell.innerHTML = app.numberToUSD(amount);
       }, 50);
     }
