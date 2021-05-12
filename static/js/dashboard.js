@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
           row: {
             apy: item.pool.apy + '%',
             protocol: {
-              file: item.token.symbol + '.svg',
+              file: item.token.symbol.toLowerCase() + '.svg',
               name: item.token.name
             },
             poolsize: {
@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
           },
           row: {
             protocol: {
-              file: item.token.symbol + '.svg',
+              file: item.token.symbol.toLowerCase() + '.svg',
               name: item.token.name
             },
             poolsize: {
@@ -228,7 +228,7 @@ window.addEventListener('DOMContentLoaded', () => {
           row: {
             icon: {
               name: item.token.name,
-              file: item.token.symbol + '.svg'
+              file: item.token.symbol.toLowerCase() + '.svg'
             },
             protocol: item.token.name,
             estimate: app.bigNumberToUSD(estimate.mul(usd_values[item.token.address]), item.token.decimals),

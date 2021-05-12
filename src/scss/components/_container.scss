@@ -8,11 +8,11 @@
   }
 
   &.purp {
-    background: $primary;
-    color: $white;
-
+    background: tint($primary, 90%);
+    // color: $white;
+    // 
     h2 {
-      color: $white;
+      font-weight: bolder;
     }
   }
 

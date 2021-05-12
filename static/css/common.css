@@ -1390,11 +1390,10 @@ table tbody tr:not(.expander):hover {
   text-align: center;
 }
 .container.purp {
-  background: #8e44ad;
-  color: #FFF;
+  background: #f4ecf7;
 }
 .container.purp h2 {
-  color: #FFF;
+  font-weight: bolder;
 }
 .container:first-child {
   margin-top: 20px;

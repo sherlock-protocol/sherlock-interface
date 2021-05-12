@@ -58,7 +58,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
           group.append(
             new Chartist.Svg('image', {
-              'xlink:href': `/static/svg/crypto/color/${label.image.toLowercase()}.svg`,
+              'xlink:href': `/static/svg/crypto/color/${label.image.toLowerCase()}.svg`,
               width: '60px',
               height: '60px',
               title: 'nla',
