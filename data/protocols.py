@@ -97,6 +97,13 @@ def get_protocols_covered():
         protocols_covered[k]["usd_str"] = '{:20,.2f}'.format(
             usd / 100000).strip()
 
+    for k, v in protocols_covered.items():
+        protocols_covered[k]["percentage"] = protocols_covered[k]["usd"] / \
+            total_covered_usd * 100
+
+        protocols_covered[k]["percentage_str"] = "%.2f" % round(
+            float(protocols_covered[k]["percentage"]), 2)
+
     return protocols_covered, total_covered_usd
 
 

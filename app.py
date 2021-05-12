@@ -17,7 +17,7 @@ def env():
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.SHERLOCK,
-        "wallet": request.cookies.get('wallet')
+        "wallet": request.cookies.get('wallet', 'None')
     }
 
 
