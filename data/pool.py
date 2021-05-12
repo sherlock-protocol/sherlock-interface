@@ -6,7 +6,7 @@ import settings
 from data import price, helper
 
 TIMESTAMP_ERROR = 0
-if os.environ.get("FLASK_ENV").lower() == 'development':
+if os.environ.get("FLASK_ENV") == 'development':
     TIMESTAMP_ERROR = -55
 
 

@@ -17,6 +17,7 @@ def env():
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.SHERLOCK,
+        "git_hash": settings.GIT_HASH,
         "wallet": request.cookies.get('wallet', 'None')
     }
 
@@ -115,7 +116,7 @@ def do_indexer():
 
 
 if __name__ == '__main__':
-    if os.environ.get("FLASK_ENV").lower() == "development" and do_indexer():
+    if os.environ.get("FLASK_ENV") == "development" and do_indexer():
         indexer.run()
 
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)

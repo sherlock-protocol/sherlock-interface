@@ -1,7 +1,9 @@
-from web3 import Web3, HTTPProvider, WebsocketProvider
-from decouple import config
 import os
 import json
+import subprocess
+
+from decouple import config
+from web3 import Web3, HTTPProvider, WebsocketProvider
 
 CONTRACTS = config('CONTRACTS')
 
@@ -53,3 +55,6 @@ for token in SHERLOCK_HTTP.functions.getTokens().call():
 
 BLOCKS_PER_DAY = 6484
 BLOCKS_PER_YEAR = BLOCKS_PER_DAY * 365
+
+call = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
+GIT_HASH = call.stdout.strip().decode()
