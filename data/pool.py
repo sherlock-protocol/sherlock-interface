@@ -121,14 +121,16 @@ def get_staking_pool_data():
 
     return {
         "tokens": tokens,
-        "total": total,
-        "usd_total_format": "%.2f" % round(total, 2),
+        "usd_total": total,
+        "usd_total_str": str(total),
+        "usd_total_format": '{:20,.2f}'.format(total/100000).strip(),
         "usd_total_numba": total_numba,
         "usd_total_numba_str": str(total_numba),
-        "usd_first_money_numba": 0,
-        "usd_first_money_numba_str": str(0),
-        "usd_first_money_out": total_fmo,
-        "usd_first_money_out_str": '{:20,.2f}'.format(total_fmo).strip(),
+        "usd_buffer_numba": 0,
+        "usd_buffer_numba_str": str(0),
+        "usd_buffer_out": total_fmo,
+        "usd_buffer_out_str": str(total_fmo),
+        "usd_buffer_out_format": '{:20,.2f}'.format(total_fmo/100000).strip(),
         "usd_values": price.get_prices(),
         "block_timestamp": last_block_data["timestamp"] + TIMESTAMP_ERROR
     }

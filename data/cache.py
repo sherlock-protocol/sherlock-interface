@@ -9,6 +9,7 @@ from data.protocols import PROTOCOL_META
 
 CACHE_TIME = 10
 
+
 class pool:
     def get_staking_pool_data():
         data = copy.deepcopy(pool.get_staking_pool_data_stored())
@@ -18,8 +19,10 @@ class pool:
             return data
 
         diff_ms = diff * 1000
-        data["total"] += diff_ms / 50 * data["usd_total_numba"]
-        data["usd_total_format"] = "%.2f" % round(data["total"], 2)
+        data["usd_total"] += diff_ms / 50 * data["usd_total_numba"]
+        data["usd_total_str"] += str(data["usd_total"])
+        data["usd_total_format"] = '{:20,.2f}'.format(
+            data["usd_total"]/100000).strip()
 
         # TODO only do this for SHERX
         # for token in data["tokens"]:
