@@ -1,6 +1,6 @@
 import Table from "./class/Table.js"
 import Erc20 from "./ether/Erc20.js"
-import Sherlock from "./ether/sherlock.js"
+import Sherlock from "./ether/Sherlock.js"
 import SafeString from "./modules/helpers.js";
 
 const blockTimeMS = 13325;
