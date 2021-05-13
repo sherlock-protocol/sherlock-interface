@@ -118,7 +118,7 @@ def do_indexer():
 
     mtime = datetime.datetime.fromtimestamp(fname.stat().st_mtime)
     diff = datetime.datetime.now() - mtime
-    if diff.total_seconds() > 60:
+    if diff.total_seconds() > 1:
         return True
     return False
 

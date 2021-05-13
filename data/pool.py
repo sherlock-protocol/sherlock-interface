@@ -56,10 +56,17 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
     # TODO int to float? to keep precision
     # 1 block = 13 seconds. So 260 of these increments per block
-    pool["numba"] = int(premium_per_block / 260)
-    pool["numba_str"] = str(pool["numba"])
-    pool["usd_numba"] = pool["numba"] * price.get_price(data["address"])
-    pool["usd_numba_str"] = str(pool["usd_numba"])
+    if data["address"] == settings.SHERLOCK:
+        pool["numba"] = int(premium_per_block / 260)
+        pool["numba_str"] = str(pool["numba"])
+        pool["usd_numba"] = pool["numba"] * \
+            price.get_price(data["address"]) / data["divider"]
+        pool["usd_numba_str"] = str(pool["usd_numba"])
+    else:
+        pool["numba"] = 0
+        pool["numba_str"] = "0"
+        pool["usd_numba"] = 0
+        pool["usd_numba_str"] = "0"
 
     # Apy
     premium_per_year = premium_per_block * settings.BLOCKS_PER_YEAR
