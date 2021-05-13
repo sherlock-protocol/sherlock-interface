@@ -104,6 +104,11 @@ def get_protocols_covered():
         protocols_covered[k]["percentage_str"] = "%.2f" % round(
             float(protocols_covered[k]["percentage"]), 2)
 
+        protocols_covered[k]["sorted"] = (
+            sorted(v["tokens"], key=lambda i: v["tokens"]
+                   [i]["covered"], reverse=True)
+        )
+
     return protocols_covered, total_covered_usd
 
 
