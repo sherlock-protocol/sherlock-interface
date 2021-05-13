@@ -3,12 +3,18 @@ import os
 import datetime
 
 from web3 import Web3
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 
 import settings
 from data.cache import pool, tokens, price, protocols, sherlock
 
 app = Flask(__name__, template_folder="templates")
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 def env():

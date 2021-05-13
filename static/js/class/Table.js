@@ -153,7 +153,6 @@ export default class Table {
               let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
               let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
 
-
               if(userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
                 cell.innerHTML = app.bigNumberToUSD(userSize.mul(tokenPrice), cellData.token.decimals);
                 return;
