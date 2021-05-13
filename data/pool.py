@@ -20,13 +20,13 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         "token": {
             "address": data["address"],
             "name": data["name"],
-            "symbol": symbol,
+            "symbol": symbol.lower(),
             "decimals": data["decimals"],
         },
         "stake": {
             "address": stake,
             "name": STAKE.functions.name().call(),
-            "symbol": STAKE.functions.symbol().call(),
+            "symbol": STAKE.functions.symbol().call().lower(),
             "decimals": STAKE.functions.decimals().call(),
         },
         "pool": {}
