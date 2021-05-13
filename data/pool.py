@@ -16,6 +16,14 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     STAKE = settings.INFURA_HTTP.eth.contract(
         address=stake, abi=settings.ERC20_ABI)
 
+    try:
+        xrate = settings.SHERLOCK_HTTP.functions.LockToTokenXRate(
+            data["address"]).call()
+        xrate = xrate / data["divider"]
+        xrate = round(xrate, 2)
+    except ValueError:
+        xrate = "~"
+
     token = {
         "token": {
             "address": data["address"],
@@ -29,6 +37,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
             "symbol": STAKE.functions.symbol().call().lower(),
             "decimals": STAKE.functions.decimals().call(),
         },
+        "xrate": xrate,
         "pool": {}
     }
     pool = token["pool"]

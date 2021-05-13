@@ -87,7 +87,8 @@ def withdraw(address):
                 env=e,
                 data={
                     "token": entry["token"],
-                    "stake": entry["stake"]
+                    "stake": entry["stake"],
+                    "xrate": entry["xrate"]
                 }
             )
     return "Not supported", 404

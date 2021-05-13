@@ -1,7 +1,7 @@
 {% include 'partials/header.html' %}
 <div class="modal">
   <div id="approve" class="modal-container hidden">
-    <h1>Approve {{ data.token.name}}</h1>
+    <h1>Approve {{ data.stake.name}}</h1>
     <p>You need to approve our Insurance contract to activate the cooldown period for {{ data.stake.symbol }}.</p>
     <br>
     <button type="button" name="button" id="approveButton">Approve</button>
@@ -15,6 +15,7 @@
       <button type="button" name="button" id="maxButton">MAX</button>
     </div>
     <br>
+    <p>1 {{ data.stake.symbol }} = {{ data.xrate }} {{ data.token.symbol }}</p>
     <button type="button" name="button" id="withdrawButton">Activate Cooldown</button>
   </div>
 </div>
