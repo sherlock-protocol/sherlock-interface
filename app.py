@@ -3,7 +3,7 @@ import os
 import datetime
 
 from web3 import Web3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 import settings
 from data.cache import pool, tokens, price, protocols, sherlock
@@ -41,6 +41,10 @@ def dashboard():
 
 @app.route('/deposit/<address>')
 def deposit(address):
+    e = env()
+    if e["wallet"] == "None":
+        return redirect("/", code=302)
+
     address = Web3.toChecksumAddress(address)
     for entry in pool.get_staking_pool_data()["tokens"]:
         if address == entry["token"]["address"]:
@@ -50,7 +54,7 @@ def deposit(address):
                 desc='deposit',
                 tags=["deposit"],
                 currentPage="deposit",
-                env=env(),
+                env=e,
                 data={
                     "token": entry["token"],
                     "stake": entry["stake"]
@@ -61,6 +65,10 @@ def deposit(address):
 
 @app.route('/withdraw/<address>')
 def withdraw(address):
+    e = env()
+    if e["wallet"] == "None":
+        return redirect("/", code=302)
+
     address = Web3.toChecksumAddress(address)
     for entry in pool.get_staking_pool_data()["tokens"]:
         if address == entry["token"]["address"]:
@@ -70,7 +78,7 @@ def withdraw(address):
                 desc='withdraw',
                 tags=["withdraw"],
                 currentPage="withdraw",
-                env=env(),
+                env=e,
                 data={
                     "token": entry["token"],
                     "stake": entry["stake"]
