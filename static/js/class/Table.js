@@ -204,8 +204,9 @@ export default class Table {
       if (!state) {
         expander.classList.add('hidden');
       }
-      if (data.collapseFunc) data.collapseFunc(expander);
+      if (data.collapseFunc) data.collapseFunc(expander, row);
     })
+    
     if (data.func) data.func(expander);
     return expander;
   }
@@ -227,16 +228,5 @@ export default class Table {
         intervals: {},
       });
     });
-  }
-
-  getRow() {
-
-  }
-
-  removeRow(id) {
-
-  }
-  updateRow() {
-
   }
 }

@@ -46,13 +46,13 @@ window.addEventListener('DOMContentLoaded', () => {
               yield: item.pool.usd_numba
             }
           },
-            collapse: {
-              closeOther: true,
-              template: tokenCollapse.template(item),
-              collapseFunc: (template) => {
-                tokenCollapse.collapseFunc(template);
-              }
-            },
+          collapse: {
+            closeOther: true,
+            template: tokenCollapse.template(item),
+            collapseFunc: (template, row) => {
+              tokenCollapse.collapseFunc(template, row);
+            }
+          },
         });
       });
     } else {
@@ -62,25 +62,14 @@ window.addEventListener('DOMContentLoaded', () => {
         class: 'fat',
         column: 'userStake',
         type: 'stake'
-      }, {
-        index: null,
-        name: 'Stake',
-        type: "link",
-        column: 'deposit',
-      }, {
-        index: null,
-        class: 'withdraw',
-        name: 'Cooldown',
-        type: "link",
-        column: 'withdraw'
       }]);
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
           collapse: {
             closeOther: true,
             template: tokenCollapse.template(item),
-            collapseFunc: (template) => {
-              tokenCollapse.collapseFunc(template);
+            collapseFunc: (template, row) => {
+              tokenCollapse.collapseFunc(template, row);
             }
           },
           row: {
@@ -93,16 +82,6 @@ window.addEventListener('DOMContentLoaded', () => {
               yield: item.pool.usd_numba
             },
             apy: item.pool.apy + '%',
-            withdraw: {
-              label: 'Activate',
-              disabled: true,
-              href: '/withdraw/' + item.token.address,
-            },
-            deposit: {
-              label: 'Stake',
-              disabled: false,
-              href: '/deposit/' + item.token.address,
-            },
             payout: [{
               file: 'dai.svg',
               name: 'DAI'
@@ -113,6 +92,7 @@ window.addEventListener('DOMContentLoaded', () => {
               file: 'weth.svg',
               name: 'Wrapped ETH'
             }],
+            name: item.token.name,
             userStake: {
               stake: item.stake,
               token: item.token,
@@ -120,14 +100,7 @@ window.addEventListener('DOMContentLoaded', () => {
               pool: item.pool,
               insurance: insurance,
               class: 'userstake',
-              cb: row => {
-                let withdraw = row.querySelector('.withdraw a');
-                let value = row.querySelector('.userstake');
-                if (value.innerHTML !== "$0.00") {
-                  withdraw.classList.remove('disabled');
-                }
-              }
-            },
+            }
           }
         });
       });
@@ -155,7 +128,18 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   let tokenCollapse = {
-    collapseFunc: (template) => {
+    collapseFunc: (expander, row) => {
+      let cooldown = expander.querySelector('.cooldown');
+      let harvest = expander.querySelector('.harvest');
+      let value = row.querySelector('.userstake');
+
+      if (value.innerHTML !== "$0.00") {
+        cooldown.classList.remove('disabled');
+        harvest.classList.remove('disabled');
+      } else {
+        cooldown.classList.add('disabled');
+        harvest.classList.add('disabled');
+      }
       // let chartEl = template.querySelector('.chart');
       // let piedata = {
       //   labels: [],
@@ -184,17 +168,12 @@ window.addEventListener('DOMContentLoaded', () => {
     },
     template: (item) => `
       <h2>${item.token.name}</h2>
-      <div class="hbox token-split">
-        <div class="flex vbox payout">
-          <h4>Interest paid in SherX</h4>
-          <p>Current composition of SherX token</p>
-          <div class="flex"></div>
-        </div>
-        <div class="flex vbox">
-          <h4>Rewards</h4>
-          <p>APY paid to ${item.token.name} stakers over the last 30 days</p>
-          <div class="flex"></div>
-          <div class="chart"></div>
+      <div class="vbox">
+        <h4>Actions</h4>
+        <div class="hbox">
+          <a class="button stake" href="/stake/${item.token.address}">Stake</a>
+          <a class="button cooldown" href="/cooldown/${item.token.address}">Cooldown</a>
+          <a class="button harvest" href="/harvest/${item.token.address}">Harvest</a>
         </div>
       </div>
       `
@@ -219,9 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     (async () => {
       let estimate = await insurance.LockToToken(withdrawal.lock, item.token.address);
-      console.log(timeToExpire);
       if (timeToExpire > 0) {
-        console.log(withdrawal);
         renderWithdrawalRow();
         document.querySelector('#withdrawals').classList.remove('hidden');
         withdrawalsTable.addRow({
@@ -258,7 +235,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (el.getAttribute('action') === "claim") {
                   app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                  console.log(item);
                   insurance.unstake(i, item.token.address, app.getCookie('wallet'))
                     .then(resp => {
                       app.removeLoader(document.querySelector('#withdrawals'));

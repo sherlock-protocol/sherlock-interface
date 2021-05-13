@@ -29,13 +29,16 @@ header {
       a {
         color: $white;
         text-decoration: none;
-        font-size: 24px;
+        font-size: 18px;
         padding: 5px 20px;
         background: tint($primary, 10%);
         box-sizing: border-box;
         display: inline-block;
         margin-left: 10px;
         position: relative;
+        font-family: "montserrat";
+        text-transform: uppercase;
+        font-weight: 600;
 
         &:hover {
           &:after {

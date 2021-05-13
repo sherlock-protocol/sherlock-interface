@@ -14,11 +14,6 @@
 .breakdown .welcome table {
   margin: -20px;
 }
-.breakdown .welcome p,
-.breakdown .welcome td,
-.breakdown .welcome th {
-  font-size: 20px;
-}
 .breakdown .protocol {
   margin-bottom: 20px;
   background: #FFF;
@@ -33,10 +28,11 @@
 .breakdown .protocol .smoking-kills h2 {
   margin-left: 20px;
 }
-.breakdown .protocol table {
+.breakdown .protocol .scrollx {
   margin: 0 -20px;
+}
+.breakdown .protocol table {
   box-sizing: border-box;
-  width: calc(100% + 40px);
 }
 .breakdown .protocol table th:last-child img {
   margin-left: auto;

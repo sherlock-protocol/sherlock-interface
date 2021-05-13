@@ -24,12 +24,6 @@
     table {
       margin: -20px;
     }
-
-    p,
-    td,
-    th {
-      font-size: 20px;
-    }
   }
 
   .protocol {
@@ -48,11 +42,14 @@
         margin-left: 20px;
       }
     }
+    
+    .scrollx {
+      
+      margin: 0 -20px;
+    }
 
     table {
-      margin: 0 -20px;
       box-sizing: border-box;
-      width: calc(100% + 40px);
 
       th {
         &:last-child {

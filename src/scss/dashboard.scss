@@ -4,6 +4,13 @@
   box-sizing: border-box;
   margin: 20px 0;
 
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "montserrat";
+    text-transform: uppercase;
+  }
+
   .container {
     height: 100%;
     margin: 0 10px;
@@ -23,7 +30,6 @@
     font-family: 'courier';
     overflow: hidden;
     box-sizing: border-box;
-    // text-shadow: 0 0 3px #eee, 5px 5px 2px teal, -5px -2px 2px mix(black,red,50);
     font-weight: 400;
   }
 }
@@ -40,6 +46,7 @@
       h2 {
         margin-top: 0;
         margin-bottom: 0;
+        margin-left: 0;
         font-size: 24px;
       }
 

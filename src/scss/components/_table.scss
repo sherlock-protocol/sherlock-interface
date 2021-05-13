@@ -12,10 +12,11 @@ table {
   thead {
     th {
       padding: 10px 20px;
-      font-size: 18px;
+      font-size: 16px;
       color: $primary;
       text-align: left;
       font-family: 'montserrat';
+      text-transform: uppercase;
 
       &.align-right {
         text-align: right;

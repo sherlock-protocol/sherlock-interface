@@ -6,7 +6,7 @@
         <tr>
           <th>Protocol</th>
           <th>Coverage</th>
-          <th class="align-right">%</th>
+          <th>%</th>
         </tr>
       </thead>
       <tbody>
@@ -16,13 +16,13 @@
               {{ data.protocol_meta[protocol].name }}
             </td>
             <td>${{ data.protocols_covered[protocol].usd_str }}</td>
-            <td class="align-right">{{ data.protocols_covered[protocol].percentage_str }}%</td>
+            <td>{{ data.protocols_covered[protocol].percentage_str }}%</td>
           </tr>
         {% endfor %}
         <tr>
           <td class="fat">Total Covered</td>
           <td class="fat">${{ data.total_covered_usd_str }}</td>
-          <td class="fat align-right">100%</td>
+          <td class="fat">100%</td>
         </tr>
       </tbody>
     </table>
@@ -34,36 +34,38 @@
         <div class="flex vbox">
           <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
           <div class="hbox meta">
-            <a class="button website" href="{{ data.protocol_meta[protocol].website }}">Website</a>
-            <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}">Twitter</a>
+            <a class="button website" href="{{ data.protocol_meta[protocol].website }}" target="_blank">Website</a>
+            <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}" target="_blank">Twitter</a>
           </div>
         </div>
         <div class="pie"></div>
       </div>
       <div class="">
         <h2>Coverage Breakdown</h2>
-        <table>
-          <thead>
-            <tr>
-              {% for token in data.protocols_covered[protocol].tokens %}
-              <th style="width:100px;" title="{{ data.tokens[token].name }}">
-                <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="{{ data.tokens[token].name }}">
-              </th>
-              {% endfor %}
-              <th class="flex">
-                <img height="25" src="/static/svg/crypto/color/usd.svg" alt="USD">
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for token in data.protocols_covered[protocol].tokens %}
-                <td>${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
-              {% endfor %}
-              <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="scrollx">
+          <table>
+            <thead>
+              <tr>
+                {% for token in data.protocols_covered[protocol].tokens %}
+                <th style="width:100px;" title="{{ data.tokens[token].name }}">
+                  <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="{{ data.tokens[token].name }}">
+                </th>
+                {% endfor %}
+                <th class="flex">
+                  <img height="25" src="/static/svg/crypto/color/usd.svg" alt="USD">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {% for token in data.protocols_covered[protocol].tokens %}
+                  <td>${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
+                {% endfor %}
+                <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     {% endfor %}
