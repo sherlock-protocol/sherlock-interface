@@ -7,7 +7,7 @@ from data import price, helper
 
 TIMESTAMP_ERROR = 0
 if os.environ.get("FLASK_ENV") == 'development':
-    TIMESTAMP_ERROR = -55
+    TIMESTAMP_ERROR = -67
 
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):

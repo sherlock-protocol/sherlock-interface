@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, redirect, send_from_directory
 
 import settings
 from data.cache import pool, tokens, price, protocols, sherlock
+from data.pool import TIMESTAMP_ERROR
 
 app = Flask(__name__, template_folder="templates")
 
@@ -24,7 +25,8 @@ def env():
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.SHERLOCK,
         "git_hash": settings.GIT_HASH,
-        "wallet": request.cookies.get('wallet', 'None')
+        "wallet": request.cookies.get('wallet', 'None'),
+        "time_error": TIMESTAMP_ERROR
     }
 
 

@@ -173,7 +173,7 @@ export default class Table {
                 // calculate diff in blocktime with useryield
                 let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
                 let curBlock = await provider.getBlockNumber();
-                let curBlockTimestamp = (await provider.getBlock(curBlock)).timestamp * 1000 - 67000;
+                let curBlockTimestamp = ((await provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000 ;
                 let currentTimeStamp = Date.now();
                 let multiplier =  Math.round((currentTimeStamp - curBlockTimestamp) / 50)
                 let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
