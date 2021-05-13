@@ -158,8 +158,9 @@ export default class Table {
                 return;
               }
 
-              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize).div(10*18);
+              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
               userSize = userSize.mul(tokenPrice);
+
               header.intervals[position] = setInterval(() => {
                 userSize = userSize.add(userYield);
                 cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
