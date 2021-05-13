@@ -153,12 +153,14 @@ export default class Table {
               let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
               let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
 
-              userSize = userSize.mul(tokenPrice);
+
               if(userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
-                cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
+                cell.innerHTML = app.bigNumberToUSD(userSize.mul(tokenPrice), cellData.token.decimals);
                 return;
               }
-              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+
+              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize).div(10*18);
+              userSize = userSize.mul(tokenPrice);
               header.intervals[position] = setInterval(() => {
                 userSize = userSize.add(userYield);
                 cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);

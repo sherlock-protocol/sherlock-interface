@@ -63,8 +63,8 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
             price.get_price(data["address"]) / data["divider"]
         pool["usd_numba_str"] = str(pool["usd_numba"])
     else:
-        pool["numba"] = 0
-        pool["numba_str"] = "0"
+        pool["numba"] = int(premium_per_block / 260)
+        pool["numba_str"] = str(pool["numba"])
         pool["usd_numba"] = 0
         pool["usd_numba_str"] = "0"
 
