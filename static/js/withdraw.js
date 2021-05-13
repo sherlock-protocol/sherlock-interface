@@ -1,5 +1,5 @@
 import Erc20 from "./ether/Erc20.js"
-import Insurance from "./ether/Insurance.js"
+import Sherlock from "./ether/Sherlock.js"
 
 var formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -78,7 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
       .then(balance => {
         let withdraw = _ethers.utils.parseUnits(value, data.stake.decimals);
         if(withdraw.lte(balance)) {
-          new Insurance(contract => {
+          new Sherlock(contract => {
             contract.activateCooldown(withdraw, data.token.address)
             .then(pending => {
               app.removeLoader(document.querySelector('#withdraw'));

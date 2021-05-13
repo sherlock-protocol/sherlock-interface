@@ -71,7 +71,6 @@ export default class Table {
     if (options.collapse) {
       let collapser = this.renderCollapse(options.collapse, template);
       this.tbody.insertBefore(collapser, this.tbody.children[position + 1]);
-
     }
 
     this.rows.push({
@@ -143,7 +142,9 @@ export default class Table {
       img.classList.add('loader-mini');
       cell.appendChild(img);
       new Erc20(cellData.stake.address, (erc) => {
-        cellData.insurance.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
+        
+        // @evert
+        cellData.sherlock.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
           .then(userSize => {
             let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
             if (!balanceInt) {
@@ -189,13 +190,12 @@ export default class Table {
     let template = data.template;
     expander.classList.add('expander');
     expander.classList.add('hidden');
-
     expander.innerHTML = `
     <td colspan="${this.headers.length}">
       ${template}
     </td>
     `;
-
+    
     row.addEventListener('click', e => {
       if (e.target.nodeName === "A") return;
       let state = expander.classList.contains('hidden');
@@ -204,13 +204,13 @@ export default class Table {
           expander.classList.add('hidden');
         });
       expander.classList.toggle('hidden');
+      if (data.collapseFunc) data.collapseFunc(expander, row);
       if (!state) {
         expander.classList.add('hidden');
       }
-      if (data.collapseFunc) data.collapseFunc(expander, row);
     })
 
-    if (data.func) data.func(expander);
+    if (data.func) data.func(expander, row);
     return expander;
   }
 

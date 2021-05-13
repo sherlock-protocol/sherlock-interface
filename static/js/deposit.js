@@ -1,5 +1,5 @@
 import Erc20 from "./ether/Erc20.js"
-import Insurance from "./ether/Insurance.js"
+import Sherlock from "./ether/Sherlock.js"
 
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
       .then(balance => {
         let deposit = _ethers.utils.parseUnits(value, data.token.decimals);
         if (deposit.lte(balance)) {
-          new Insurance(contract => {
+          new Sherlock(contract => {
             contract.stake(deposit, app.getCookie('wallet'), data.token.address)
               .then(pending => {
                 app.removeLoader(document.querySelector('#deposit'));

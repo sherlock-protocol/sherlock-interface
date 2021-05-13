@@ -27,58 +27,27 @@
   font-weight: 400;
 }
 
+.cooldown-block,
 .staking-pools {
   padding: 0;
 }
+.cooldown-block h2,
 .staking-pools h2 {
   margin-left: 20px;
 }
+.cooldown-block table .expander h2,
 .staking-pools table .expander h2 {
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;
   font-size: 24px;
 }
-.staking-pools table .expander .token-split .chart {
-  flex: 1;
-  background: #FFF;
-  max-height: calc(100% - 20px);
-}
-.staking-pools table .expander .token-split .chart * {
-  color: #8e44ad;
-}
-.staking-pools table .expander .token-split h4 {
-  margin-bottom: 0;
-}
-.staking-pools table .expander .token-split .flex.payout .fat {
-  font-weight: bold;
-}
-.staking-pools table .expander .token-split .flex.payout > div.expected {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  background: #FFF;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  padding: 5px 10px;
-}
-.staking-pools table .expander .token-split .flex.payout > div.expected:last-of-type {
-  margin-bottom: 0;
-}
-.staking-pools table .expander .token-split .flex.payout > div.expected > span {
-  flex: 1;
-}
-.staking-pools table .expander .token-split .flex.payout > div.expected > span:first-of-type {
-  margin-left: auto;
+.cooldown-block table .expander .actions a.button,
+.staking-pools table .expander .actions a.button {
   display: block;
-  margin-right: 20px;
-  flex: 2;
-  text-align: right;
-}
-.staking-pools table .expander .token-split .flex.payout > div.expected img {
-  margin-right: 50px;
-  height: 32px;
-  justify-self: flex-start;
+  width: 150px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 /*# sourceMappingURL=dashboard.css.map */

@@ -3,12 +3,12 @@
   <div class="hbox stats">
     <div id="poolsize" class="container purp smoking-kills flex centered">
         <h4>Total funds:</h4>
-        <h2>$0.00</h2>
+        <h2>${{ data.pool.usd_total_format }}</h2>
     </div>
 
     <div id="hacksize" class="container purp smoking-kills flex centered">
         <h4>Buffer for stakers:</h4>
-        <h2>${{ data.pool.usd_first_money_out_str }}</h2>
+        <h2>${{ data.pool.usd_buffer_format }}</h2>
     </div>
   </div>
 
@@ -19,7 +19,7 @@
         <thead>
           <tr>
             <th data-column="protocol" data-column-type="image" data-column-class="icon" width="40">Token</th>
-            <th data-column="name" data-column-class="fat"></th>
+            <th data-column="name"></th>
             <th data-column="poolsize" data-column-type="numba">Pool Size</th>
             <th data-column="apy" data-column-class="fat">APY</th>
           </tr>
@@ -29,8 +29,8 @@
     </div>
   </div>
 
-  <div id="withdrawals" class="container hidden">
-    <h2>Funds in Cooldown</h2>
+  <div id="withdrawals" class="cooldown-block container smoking-kills hidden">
+    <h2>FUNDS IN COOLDOWN</h2>
     <div class="scrollx">
       <table id="withdrawalsTable">
         <thead>

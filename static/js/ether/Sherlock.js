@@ -1,4 +1,4 @@
-export default class Insurance {
+export default class Sherlock {
   constructor(cb) {
     this.provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
 
