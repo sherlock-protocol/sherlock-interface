@@ -88,7 +88,9 @@ def withdraw(address):
                 data={
                     "token": entry["token"],
                     "stake": entry["stake"],
-                    "xrate": entry["xrate"]
+                    "xrate": entry["xrate"],
+                    "xrate_str": entry["xrate_str"],
+                    "usd": price.get_prices()[entry["token"]["address"]]
                 }
             )
     return "Not supported", 404

@@ -19,10 +19,11 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     try:
         xrate = settings.SHERLOCK_HTTP.functions.LockToTokenXRate(
             data["address"]).call()
-        xrate = xrate / data["divider"]
-        xrate = round(xrate, 2)
+        xrate = xrate
+        xrate_str = str(round(xrate / data["divider"], 2))
     except ValueError:
         xrate = "~"
+        xrate_str = "~"
 
     token = {
         "token": {
@@ -38,6 +39,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
             "decimals": STAKE.functions.decimals().call(),
         },
         "xrate": xrate,
+        "xrate_str": xrate_str,
         "pool": {}
     }
     pool = token["pool"]

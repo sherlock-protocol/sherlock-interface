@@ -1,6 +1,24 @@
 import Erc20 from "./ether/Erc20.js"
 import Insurance from "./ether/Insurance.js"
 
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+window.app.withdrawalUSD = (lockAmount) => {
+  let xRate = _ethers.BigNumber.from(window.data.xrate.toString())
+  lockAmount = _ethers.utils.parseUnits(lockAmount, data.stake.decimals);
+
+  // div by 10**18 because lock has 18 decimals
+  let tokenAmount = lockAmount.mul(xRate).div(_ethers.utils.parseEther("1"))
+  let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
+
+  let usd = tokenAmountFormatted * window.data.usd
+  usd = formatter.format(usd / 100000);
+  console.log(usd.toString());
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
 
@@ -54,7 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
       app.notify("In", "Our name is Sherlock. It is our business to know what other people do not know.");
       return;
     }
-    
+
     app.addLoader(document.querySelector('#withdraw'));
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
