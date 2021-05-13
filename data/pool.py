@@ -128,9 +128,9 @@ def get_staking_pool_data():
         "usd_total_numba_str": str(total_numba),
         "usd_buffer_numba": 0,
         "usd_buffer_numba_str": str(0),
-        "usd_buffer_out": total_fmo,
-        "usd_buffer_out_str": str(total_fmo),
-        "usd_buffer_out_format": '{:20,.2f}'.format(total_fmo/100000).strip(),
+        "usd_buffer": total_fmo,
+        "usd_buffer_str": str(total_fmo),
+        "usd_buffer_format": '{:20,.2f}'.format(total_fmo/100000).strip(),
         "usd_values": price.get_prices(),
         "block_timestamp": last_block_data["timestamp"] + TIMESTAMP_ERROR
     }
