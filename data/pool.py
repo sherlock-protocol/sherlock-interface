@@ -47,6 +47,12 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     # TVL
     pool["size"] = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(
         data["address"]).call()
+    if data["address"] == settings.SHERLOCK:
+        a = settings.SHERLOCK_HTTP.functions.getTotalUnmintedSherX(
+            data["address"]).call()
+        print(pool["size"], a)
+        pool["size"] = pool["size"] + a
+
     pool["size_str"] = str(pool["size"])
     pool["size_format"] = "%.2f" % round(pool["size"] / data["divider"], 2)
 

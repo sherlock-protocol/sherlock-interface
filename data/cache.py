@@ -5,6 +5,8 @@ import copy
 from cachetools import cached, TTLCache
 
 import indexer
+import settings
+
 from data.protocols import PROTOCOL_META
 
 CACHE_TIME = 10
@@ -20,13 +22,26 @@ class pool:
 
         diff_ms = diff * 1000
         data["usd_total"] += diff_ms / 50 * data["usd_total_numba"]
-        data["usd_total_str"] += str(data["usd_total"])
+        data["usd_total_str"] = str(data["usd_total"])
         data["usd_total_format"] = '{:20,.2f}'.format(
             data["usd_total"]/100000).strip()
 
         # TODO only do this for SHERX
-        # for token in data["tokens"]:
-        #     token["pool"]["size"] = += diff_ms / 50 * token["pool"]["usd_numba"]
+        for token in data["tokens"]:
+            divider = settings.TOKENS[token["token"]
+                                      ["symbol"].upper()]["divider"]
+
+            if token["token"]["address"] != settings.SHERLOCK:
+                continue
+            token["pool"]["size"] += int(diff_ms / 50 * token["pool"]["numba"])
+            token["pool"]["size_str"] = str(token["pool"]["size"])
+            token["pool"]["size_format"] = "%.2f" % round(
+                token["pool"]["size"] / divider, 2)
+
+            token["pool"]["usd_size"] = token["pool"]["size"] / \
+                divider * price.get_prices()[token["token"]["address"]]
+            token["pool"]["usd_size_str"] = "%.2f" % round(
+                token["pool"]["usd_size"], 2)
         return data
 
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))

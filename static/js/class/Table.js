@@ -162,7 +162,6 @@ export default class Table {
 
               (async() =>{
                 const unallocSherxPremium = await cellData.sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), cellData.token.address)
-
                 // calculate unharvested SHERX
                 const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(cellData.token.decimals.toString()))
                 const sherX = window.settings.pool_address
