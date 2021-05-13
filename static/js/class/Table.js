@@ -142,8 +142,6 @@ export default class Table {
       img.classList.add('loader-mini');
       cell.appendChild(img);
       new Erc20(cellData.stake.address, (erc) => {
-        
-        // @evert
         cellData.sherlock.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
           .then(userSize => {
             let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
@@ -162,10 +160,30 @@ export default class Table {
               let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
               userSize = userSize.mul(tokenPrice);
 
-              header.intervals[position] = setInterval(() => {
-                userSize = userSize.add(userYield);
-                cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
-              }, 50);
+              (async() =>{
+                const unallocSherxPremium = await cellData.sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), cellData.token.address)
+
+                // calculate unharvested SHERX
+                const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(cellData.token.decimals.toString()))
+                const sherX = window.settings.pool_address
+                const sherXUSD = _ethers.BigNumber.from(window.data.pool.usd_values[sherX].toString())
+                const unallocSherXUSD = unallocSherxPremium.mul(sherXUSD).div(_ethers.utils.parseEther("1"))
+                const unallocSherXUSDTokenFormat = unallocSherXUSD.mul(decimals)
+
+                // calculate diff in blocktime with useryield
+                let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
+                let curBlock = await provider.getBlockNumber();
+                let curBlockTimestamp = (await provider.getBlock(curBlock)).timestamp * 1000 - 67000;
+                let currentTimeStamp = Date.now();
+                let multiplier =  Math.round((currentTimeStamp - curBlockTimestamp) / 50)
+                let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
+
+                userSize = userSize.add(increment).add(unallocSherXUSDTokenFormat)
+                header.intervals[position] = setInterval(() => {
+                  userSize = userSize.add(userYield);
+                  cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
+                }, 50);
+              })()
             }
             cbs.forEach(cb => {
               cb(template);
@@ -195,7 +213,7 @@ export default class Table {
       ${template}
     </td>
     `;
-    
+
     row.addEventListener('click', e => {
       if (e.target.nodeName === "A") return;
       let state = expander.classList.contains('hidden');
