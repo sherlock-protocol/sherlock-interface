@@ -39,7 +39,7 @@ def dashboard():
     )
 
 
-@app.route('/deposit/<address>')
+@app.route('/stake/<address>')
 def deposit(address):
     e = env()
     if e["wallet"] == "None":
@@ -63,7 +63,7 @@ def deposit(address):
     return "Not supported", 404
 
 
-@app.route('/withdraw/<address>')
+@app.route('/cooldown/<address>')
 def withdraw(address):
     e = env()
     if e["wallet"] == "None":
