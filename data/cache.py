@@ -12,6 +12,13 @@ from data.protocols import PROTOCOL_META
 CACHE_TIME = 10
 
 
+class sherx:
+    @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
+    def get_underlying():
+        with open(indexer.SHERX, "r") as f:
+            return json.load(f)
+
+
 class pool:
     def get_staking_pool_data():
         data = copy.deepcopy(pool.get_staking_pool_data_stored())

@@ -7,6 +7,7 @@ def get_tokens():
         d[v["address"]] = {
             "name": v["name"],
             "symbol": k.lower(),
-            "decimals": v["decimals"]
+            "decimals": v["decimals"],
+            "divider": v["divider"]
         }
     return d
