@@ -33,7 +33,6 @@ class pool:
         data["usd_total_format"] = '{:20,.2f}'.format(
             data["usd_total"]/100000).strip()
 
-        # TODO only do this for SHERX
         for token in data["tokens"]:
             divider = settings.TOKENS[token["token"]
                                       ["symbol"].upper()]["divider"]

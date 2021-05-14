@@ -42,15 +42,24 @@ elif NETWORK == 'LOCALHOST':
 SHERLOCK_HTTP = INFURA_HTTP.eth.contract(
     address=SHERLOCK, abi=POOL_ABI)
 
+COINGECKO_IDS = {
+    "ALCX": "alchemix",
+    "WBTC": "wrapped-bitcoin",
+    "USDC": "usd-coin",
+    "BADGER": "badger-dao"
+}
+
 TOKENS = {}
 for token in SHERLOCK_HTTP.functions.getTokens().call():
     w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
     token_decimals = w.functions.decimals().call()
-    TOKENS[w.functions.symbol().call()] = {
+    symbol = w.functions.symbol().call()
+    TOKENS[symbol] = {
         "address": token,
         "name":  w.functions.name().call(),
         "decimals": token_decimals,
-        "divider": float("1" + "0" * token_decimals)
+        "divider": float("1" + "0" * token_decimals),
+        "coingecko": COINGECKO_IDS.get(symbol, symbol.lower())
     }
 
 BLOCKS_PER_DAY = 6484
