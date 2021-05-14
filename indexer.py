@@ -1,7 +1,7 @@
 import os
 import json
 
-from data import pool, tokens, price, protocols, sherlock
+from data import pool, tokens, price, protocols, sherlock, sherx
 
 INDENT = None
 SORT_KEYS = False
@@ -18,6 +18,7 @@ TOKENS = os.path.join(ROOT, "tokens.json")
 PREMIUM = os.path.join(ROOT, "premium.json")
 COVERED = os.path.join(ROOT, "covered.json")
 PRICES = os.path.join(ROOT, "prices.json")
+SHERX = os.path.join(ROOT, "sherx.json")
 
 
 def run():
@@ -47,6 +48,10 @@ def run():
 
     data = price.get_prices()
     with open(PRICES, "w") as f:
+        json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
+
+    data = sherx.get_underlying()
+    with open(SHERX, "w") as f:
         json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
 
 

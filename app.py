@@ -6,7 +6,7 @@ from web3 import Web3
 from flask import Flask, render_template, request, redirect, send_from_directory
 
 import settings
-from data.cache import pool, tokens, price, protocols, sherlock
+from data.cache import pool, tokens, price, protocols, sherlock, sherx
 from data.pool import TIMESTAMP_ERROR
 
 app = Flask(__name__, template_folder="templates")
@@ -40,6 +40,7 @@ def dashboard():
         currentPage="dashboard",
         env=env(),
         data={
+            "sherx": sherx.get_underlying(),
             "pool": pool.get_staking_pool_data(),
             "cooldown_period": sherlock.get_cooldown_period(),
             "unstake_window":  sherlock.get_unstake_window()

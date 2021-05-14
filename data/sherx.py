@@ -8,6 +8,8 @@ def get_underlying():
     all_prices = get_prices()
     data = {}
 
+    usd_total = 0
+
     ul = settings.SHERLOCK_HTTP.functions.calcUnderlying(10**18).call()
     tokens, amounts = ul
     for i in range(len(tokens)):
@@ -22,8 +24,12 @@ def get_underlying():
         x["amount_usd_format"] = '{:20,.2f}'.format(
             x["amount_usd"]/100000).strip()
 
-        x["percentage"] = round(
-            x["amount_usd"] / all_prices[settings.SHERLOCK] * 100, 2)
+        usd_total += x["amount_usd"]
+
+    for i in range(len(tokens)):
+        token = tokens[i]
+        x = data[token]
+        x["percentage"] = round(x["amount_usd"] / usd_total * 100, 2)
         x["percentage_str"] = str(x["percentage"])
 
     return data
