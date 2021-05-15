@@ -18,7 +18,7 @@ def get_prices():
     for k, v in TOKENS.items():
         if k == "SHERX":
             # TODO, calculate right price
-            prices[v["address"]] = 1.00 * 100000
+            prices[v["address"]] = int(1.00 * 100000)
         else:
             ids.append(v["coingecko"])
             ids_to_address[v["coingecko"]] = v["address"]
@@ -26,7 +26,8 @@ def get_prices():
     payload = {"ids": ",".join(ids), "vs_currencies": ["usd"]}
     url = requests.get(COINGECKO, params=payload)
     for k, v in url.json().items():
-        prices[ids_to_address[k]] = v["usd"] * 100000
+        print("here")
+        prices[ids_to_address[k]] = int(v["usd"] * 100000)
 
     return prices
 
