@@ -36,6 +36,18 @@ table {
         pointer-events: none;
       }
 
+      &.highlighted:not(.expander) {
+        background: tint($primary, 70%) !important;
+
+        * {
+          color: $black !important;
+          font-size: 110%;
+          font-weight: bold;
+        }
+      }
+
+      &.expander.highlighted {}
+
       td {
         padding: 10px 20px;
 

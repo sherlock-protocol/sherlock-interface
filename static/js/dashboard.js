@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
       total.innerHTML = formatter.format(totalAmount / 100000);
     }, 50);
   }
+  
   let populateTokens = (sherlock) => {
     let tokenTable = new Table({
       el: document.querySelector('#tokenTable'),
@@ -30,6 +31,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (app.getCookie('wallet') == 'None') {
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
+          position: item.token.symbol === "sherx" ? "-1" : null,
+          highlighted: item.token.symbol === "sherx" ? true : false,
           row: {
             apy: item.pool.apy + '%',
             protocol: {
@@ -40,12 +43,7 @@ window.addEventListener('DOMContentLoaded', () => {
               numba: item.pool.usd_size,
               yield: item.pool.usd_numba
             }
-          },
-          collapse: {
-            closeOther: true,
-            template: tokenCollapse.template(item),
-            collapseFunc: tokenCollapse.collapseFunc
-          },
+          }
         });
       });
     } else {
@@ -58,9 +56,47 @@ window.addEventListener('DOMContentLoaded', () => {
       }]);
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
+          position: item.token.symbol === "sherx" ? "0" : null,
+          highlighted: item.token.symbol === "sherx" ? true : false,
           collapse: {
             closeOther: true,
-            template: tokenCollapse.template(item),
+            template: `
+              <h2>${item.token.name}</h2>
+              <div class="hbox">
+                <div class="flex">
+                  <h4>Actions</h4>
+                  <div class="actions">
+                    <a class="button stake" href="/stake/${item.token.address}">Stake</a>
+                    <a class="button cooldown" href="/cooldown/${item.token.address}">Cooldown</a>
+                    <a class="button harvest" href="/harvest/${item.token.address}">Harvest</a>
+                  </div>
+                </div>
+                <div class="balance-breakdown flex">
+                  <table class="smoking-kills">
+                    <thead>
+                      <tr>
+                        <th>Balance Breakdown</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Balance</td>
+                        <td class="balance"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
+                      </tr>
+                      <tr>
+                        <td>Profit</td>
+                        <td class="profit"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
+                      </tr>
+                      <tr>
+                        <td class="fat">Total</td>
+                        <td class="total"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              `,
             collapseFunc: (expander, row) => {
               let cooldown = expander.querySelector('.cooldown');
               let harvest = expander.querySelector('.harvest');
@@ -75,15 +111,20 @@ window.addEventListener('DOMContentLoaded', () => {
                 cooldown.classList.add('disabled');
                 harvest.classList.add('disabled');
               }
-              sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
-                .then(userSize => {
-                  let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
-                  if (!balanceInt) {
-                    balance.innerHTML = '$0.00';
-                  } else {
-                    balance.innerHTML = app.bigNumberToUSD(userSize, item.token.decimals);
-                  }
-                })
+              
+              (async () => {
+                let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
+                let unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), item.token.address);
+                let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
+              
+                if (!balanceInt) {
+                  balance.innerHTML = '$0.00';
+                } else {
+                  let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
+                  userSize = userSize.mul(tokenPrice);
+                  balance.innerHTML = app.bigNumberToUSD(userSize, item.token.decimals);
+                }
+              })()
             }
           },
           row: {
@@ -130,47 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  let tokenCollapse = {
-    template: (item) => `
-      <h2>${item.token.name}</h2>
-      <div class="hbox">
-        <div class="flex">
-          <h4>Actions</h4>
-          <div class="actions">
-            <a class="button stake" href="/stake/${item.token.address}">Stake</a>
-            <a class="button cooldown" href="/cooldown/${item.token.address}">Cooldown</a>
-            <a class="button harvest" href="/harvest/${item.token.address}">Harvest</a>
-          </div>
-        </div>
-        <div class="balance-breakdown flex">
-          <table class="smoking-kills">
-            <thead>
-              <tr>
-                <th>Balance Breakdown</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Balance</td>
-                <td class="balance"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
-              </tr>
-              <tr>
-                <td>Profit</td>
-                <td class="profit"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
-              </tr>
-              <tr>
-                <td class="fat">Total</td>
-                <td class="total"><img class="loader-mini" src="static/img/mini-loader.svg"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      `
-  }
-
+  
   let renderWithdrawalRow = async (withdrawal, item, curBlock, sherlock, i, usd_values) => {
     if (!sherlock) return;
 

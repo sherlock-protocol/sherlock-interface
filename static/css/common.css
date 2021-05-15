@@ -1394,6 +1394,14 @@ table tbody tr.disabled {
   opacity: 0.5;
   pointer-events: none;
 }
+table tbody tr.highlighted:not(.expander) {
+  background: #ddc7e6 !important;
+}
+table tbody tr.highlighted:not(.expander) * {
+  color: #000 !important;
+  font-size: 110%;
+  font-weight: bold;
+}
 table tbody tr td {
   padding: 10px 20px;
 }

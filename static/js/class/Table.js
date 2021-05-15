@@ -37,6 +37,10 @@ export default class Table {
     let template = document.createElement("TR");
     let cbs = [];
 
+    if (options.highlighted) {
+      template.classList.add('highlighted');
+    }
+
     if (!position) {
       position = this.tbody.children.length;
     }
@@ -70,7 +74,11 @@ export default class Table {
 
     if (options.collapse) {
       let collapser = this.renderCollapse(options.collapse, template);
-      this.tbody.insertBefore(collapser, this.tbody.children[position + 1]);
+      template.style.cursor = 'pointer';
+      if (options.highlighted) {
+        collapser.classList.add('highlighted');
+      }
+      this.tbody.insertBefore(collapser, template.nextSibling);
     }
 
     this.rows.push({
@@ -152,7 +160,7 @@ export default class Table {
               let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
               let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
 
-              if(userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
+              if (userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
                 cell.innerHTML = app.bigNumberToUSD(userSize.mul(tokenPrice), cellData.token.decimals);
                 return;
               }
@@ -160,7 +168,7 @@ export default class Table {
               let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
               userSize = userSize.mul(tokenPrice);
 
-              (async() =>{
+              (async () => {
                 const unallocSherxPremium = await cellData.sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), cellData.token.address)
                 // calculate unharvested SHERX
                 const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(cellData.token.decimals.toString()))
@@ -174,7 +182,7 @@ export default class Table {
                 let curBlock = await provider.getBlockNumber();
                 let curBlockTimestamp = ((await provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000 ;
                 let currentTimeStamp = Date.now();
-                let multiplier =  Math.round((currentTimeStamp - curBlockTimestamp) / 50)
+                let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
                 let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
 
                 userSize = userSize.add(increment).add(unallocSherXUSDTokenFormat)
@@ -191,10 +199,11 @@ export default class Table {
       });
     } else if (header.type === "numba") {
       let amount = cellData.numba;
-      cell.innerHTML = cellData.numba;
+      cell.innerHTML = app.numberToUSD(amount);
+
       clearInterval(header.intervals[position]);
       header.intervals[position] = setInterval(() => {
-        amount += cellData.yield ;
+        amount += cellData.yield;
         cell.innerHTML = app.numberToUSD(amount);
       }, 50);
     }
