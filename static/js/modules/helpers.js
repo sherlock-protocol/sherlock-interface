@@ -198,3 +198,25 @@ window.app.timeSince = date => {
   }
   return Math.floor(seconds) + " seconds";
 }
+
+window.app.provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
+
+window.app.userExtra = async function(sherlock, token, userYield) {
+  const unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
+  // calculate unharvested SHERX
+  const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(token.decimals.toString()))
+  const sherX = window.settings.pool_address
+  const sherXUSD = _ethers.BigNumber.from(window.data.pool.usd_values[sherX].toString())
+  const unallocSherXUSD = unallocSherxPremium.mul(sherXUSD).div(_ethers.utils.parseEther("1"))
+  const unallocSherXUSDTokenFormat = unallocSherXUSD.mul(decimals)
+
+  // calculate diff in blocktime with useryield
+
+  let curBlock = await window.app.provider.getBlockNumber();
+  let curBlockTimestamp = ((await window.app.provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000 ;
+  let currentTimeStamp = Date.now();
+  let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
+  let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
+
+  return (increment).add(unallocSherXUSDTokenFormat)
+}

@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
       total.innerHTML = formatter.format(totalAmount / 100000);
     }, 50);
   }
-  
+
   let populateTokens = (sherlock) => {
     let tokenTable = new Table({
       el: document.querySelector('#tokenTable'),
@@ -111,18 +111,27 @@ window.addEventListener('DOMContentLoaded', () => {
                 cooldown.classList.add('disabled');
                 harvest.classList.add('disabled');
               }
-              
+
               (async () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
-                let unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), item.token.address);
                 let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
-              
+
                 if (!balanceInt) {
                   balance.innerHTML = '$0.00';
+                  profit.innerHTML = '$0.00';
+                  total.innerHTML = '$0.00';
                 } else {
                   let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
+                  let poolSize = _ethers.BigNumber.from(item.pool.size_str);
+                  let poolYield = _ethers.BigNumber.from(item.pool.numba_str);
+                  let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+                  // @todo vincent, do 50ms useryield increment on profit and total
                   userSize = userSize.mul(tokenPrice);
+                  let userProfit = await window.app.userExtra(sherlock, item.token, userYield)
+
                   balance.innerHTML = app.bigNumberToUSD(userSize, item.token.decimals);
+                  profit.innerHTML = app.bigNumberToUSD(userProfit, item.token.decimals);
+                  total.innerHTML = app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals);
                 }
               })()
             }
@@ -171,7 +180,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  
+
   let renderWithdrawalRow = async (withdrawal, item, curBlock, sherlock, i, usd_values) => {
     if (!sherlock) return;
 

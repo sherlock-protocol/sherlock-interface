@@ -26,7 +26,6 @@ def get_prices():
     payload = {"ids": ",".join(ids), "vs_currencies": ["usd"]}
     url = requests.get(COINGECKO, params=payload)
     for k, v in url.json().items():
-        print("here")
         prices[ids_to_address[k]] = int(v["usd"] * 100000)
 
     return prices
