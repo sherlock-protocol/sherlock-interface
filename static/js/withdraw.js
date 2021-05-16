@@ -16,7 +16,7 @@ window.app.withdrawalUSD = (lockAmount) => {
 
   let usd = tokenAmountFormatted * window.data.usd
   usd = formatter.format(usd / 100000);
-  console.log(usd.toString());
+  return usd.toString();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -64,11 +64,15 @@ window.addEventListener('DOMContentLoaded', () => {
         let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
         document.querySelector('#withdraw input').value = parseFloat(value);
       });
+    setTimeout(() => {
+      calculateEstimate();
+
+    }, 100)
   }
 
   let withdraw = () => {
     let value = document.querySelector('#withdraw input').value;
-    if(!value) {
+    if (!value) {
       app.notify("In", "Our name is Sherlock. It is our business to know what other people do not know.");
       return;
     }
@@ -77,21 +81,21 @@ window.addEventListener('DOMContentLoaded', () => {
     tokenErc.balanceOf(app.getCookie('wallet'))
       .then(balance => {
         let withdraw = _ethers.utils.parseUnits(value, data.stake.decimals);
-        if(withdraw.lte(balance)) {
+        if (withdraw.lte(balance)) {
           new Sherlock(contract => {
             contract.activateCooldown(withdraw, data.token.address)
-            .then(pending => {
-              app.removeLoader(document.querySelector('#withdraw'));
-              app.addLoader(document.querySelector('#withdraw'), 'We will redirect you automatically when the transaction is finished.');
-
-              pending.wait().then(response => {
+              .then(pending => {
                 app.removeLoader(document.querySelector('#withdraw'));
-                location.href = '/';
+                app.addLoader(document.querySelector('#withdraw'), 'We will redirect you automatically when the transaction is finished.');
+
+                pending.wait().then(response => {
+                  app.removeLoader(document.querySelector('#withdraw'));
+                  location.href = '/';
+                });
+              }).catch(err => {
+                app.catchAll(err);
+                app.removeLoader(document.querySelector('#withdraw'));
               });
-            }).catch(err => {
-              app.catchAll(err);
-              app.removeLoader(document.querySelector('#withdraw'));
-            });
           })
         } else {
           app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
@@ -99,6 +103,20 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
   }
+
+  let calculateEstimate = () => {
+    let amountEl = document.querySelector('[name="amount"]');
+    let value = amountEl.value;
+    let estimateEl = document.querySelector('#estimate');
+    if (!value) {
+      estimateEl.innerHTML = '$0,00';
+    } else {
+      estimateEl.innerHTML = window.app.withdrawalUSD("" + value);
+    }
+  }
+
+  //Calculate Estimate 
+  document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions
   document.querySelector('#approve #approveButton').addEventListener('click', approveClick);
