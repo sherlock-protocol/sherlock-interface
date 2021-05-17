@@ -98,6 +98,8 @@ window.addEventListener('DOMContentLoaded', () => {
               </div>
               `,
             collapseFunc: (expander, row) => {
+              if(expander.init === true) return;
+              expander.init = true;
               let cooldown = expander.querySelector('.cooldown');
               let harvest = expander.querySelector('.harvest');
               let value = row.querySelector('.userstake');
@@ -111,27 +113,42 @@ window.addEventListener('DOMContentLoaded', () => {
                 cooldown.classList.add('disabled');
                 harvest.classList.add('disabled');
               }
+              let showNumbers = (options) => {
+                balance.innerHTML = options && options.balance ? options.balance : '$0.00';
+                profit.innerHTML = options && options.profit ? options.profit : '$0.00';
+                total.innerHTML = options && options.total ? options.total : '$0.00';
+              }
 
               (async () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
                 let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
 
                 if (!balanceInt) {
-                  balance.innerHTML = '$0.00';
-                  profit.innerHTML = '$0.00';
-                  total.innerHTML = '$0.00';
+                  showNumbers();
                 } else {
                   let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
                   let poolSize = _ethers.BigNumber.from(item.pool.size_str);
                   let poolYield = _ethers.BigNumber.from(item.pool.numba_str);
+                  
+                  if (poolYield._hex === "0x00") {
+                    let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+                  } else {
+                    let userYield = userSize.mul(tokenPrice).div(poolSize);
+                  }
+                  
                   let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-                  // @todo vincent, do 50ms useryield increment on profit and total
-                  userSize = userSize.mul(tokenPrice);
                   let userProfit = await window.app.userExtra(sherlock, item.token, userYield)
-
-                  balance.innerHTML = app.bigNumberToUSD(userSize, item.token.decimals);
-                  profit.innerHTML = app.bigNumberToUSD(userProfit, item.token.decimals);
-                  total.innerHTML = app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals);
+                  userSize = userSize.mul(tokenPrice);
+                  
+                  setInterval(() => {
+                    userProfit = userProfit.add(userYield);
+                    userSize = userSize.add(userYield);
+                    showNumbers({
+                      balance: app.bigNumberToUSD(userSize, item.token.decimals),
+                      profit: app.bigNumberToUSD(userProfit, item.token.decimals),
+                      total: app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals)
+                    });
+                  }, 50);
                 }
               })()
             }

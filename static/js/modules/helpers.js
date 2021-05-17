@@ -201,7 +201,11 @@ window.app.timeSince = date => {
 
 window.app.provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
 
+let userExtraCache = {};
+
 window.app.userExtra = async function(sherlock, token, userYield) {
+  if(userExtraCache[token]) return userExtraCache[token];
+
   const unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
   // calculate unharvested SHERX
   const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(token.decimals.toString()))
@@ -217,6 +221,6 @@ window.app.userExtra = async function(sherlock, token, userYield) {
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
-
+  userExtraCache[token] = (increment).add(unallocSherXUSDTokenFormat);
   return (increment).add(unallocSherXUSDTokenFormat)
 }

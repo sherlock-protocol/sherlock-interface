@@ -99,6 +99,33 @@ def withdraw(address):
     return "Not supported", 404
 
 
+@app.route('/harvest/<address>')
+def harvest(address):
+    e = env()
+    if e["wallet"] == "None":
+        return redirect("/", code=302)
+
+    address = Web3.toChecksumAddress(address)
+    for entry in pool.get_staking_pool_data()["tokens"]:
+        if address == entry["token"]["address"]:
+            return render_template(
+                'harvest.html',
+                title='Harvest',
+                desc='harvest',
+                tags=["harvest"],
+                currentPage="harvest",
+                env=e,
+                data={
+                    "token": entry["token"],
+                    "stake": entry["stake"],
+                    "xrate": entry["xrate"],
+                    "xrate_str": entry["xrate_str"],
+                    "usd": price.get_prices()[entry["token"]["address"]]
+                }
+            )
+    return "Not supported", 404
+
+
 @app.route('/breakdown')
 def breakdown():
     covered, usd_total = protocols.get_protocols_covered()
