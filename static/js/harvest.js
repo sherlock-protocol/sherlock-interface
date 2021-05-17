@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let harvest = () => {
     console.log(window.app.sherlock);
-    window.app.sherlock["harvest(address)"](data.token.address)
+    window.app.sherlock["harvest(address)"](data.stake.address)
     .then(resp => {
       location.href = "/";
     });
