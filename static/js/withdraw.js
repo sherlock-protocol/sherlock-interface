@@ -43,6 +43,8 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+
+
   app.addLoader(document.body, "Checking approval");
   let token = new Erc20(data.stake.address, erc => {
     tokenErc = erc;
@@ -56,6 +58,13 @@ window.addEventListener('DOMContentLoaded', () => {
           enableApprove();
         }
       });
+
+    tokenErc.balanceOf(app.getCookie('wallet'))
+      .then(balance => {
+        let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
+        document.querySelector('#max-available').innerText = parseFloat(value);
+
+      });
   });
 
   let maxDeposit = () => {
@@ -66,7 +75,6 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     setTimeout(() => {
       calculateEstimate();
-
     }, 100)
   }
 

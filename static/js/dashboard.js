@@ -98,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
               </div>
               `,
             collapseFunc: (expander, row) => {
-              if(expander.init === true) return;
+              if (expander.init === true) return;
               expander.init = true;
               let cooldown = expander.querySelector('.cooldown');
               let harvest = expander.querySelector('.harvest');
@@ -114,7 +114,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 harvest.classList.add('disabled');
               }
               let showNumbers = (options) => {
-                balance.innerHTML = options && options.balance ? options.balance : '$0.00';
+                if(options && options.balance)
+                  balance.innerHTML = options && options.balance ? options.balance : '$0.00';
                 profit.innerHTML = options && options.profit ? options.profit : '$0.00';
                 total.innerHTML = options && options.total ? options.total : '$0.00';
               }
@@ -129,22 +130,21 @@ window.addEventListener('DOMContentLoaded', () => {
                   let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
                   let poolSize = _ethers.BigNumber.from(item.pool.size_str);
                   let poolYield = _ethers.BigNumber.from(item.pool.numba_str);
-                  
-                  if (poolYield._hex === "0x00") {
-                    let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-                  } else {
-                    let userYield = userSize.mul(tokenPrice).div(poolSize);
-                  }
-                  
-                  let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+                  let userYield = userSize.mul(tokenPrice).div(poolSize);
+
+                  userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
+
                   let userProfit = await window.app.userExtra(sherlock, item.token, userYield)
                   userSize = userSize.mul(tokenPrice);
-                  
+                  console.log('anu');
+                  console.log(app.bigNumberToUSD(userSize, item.token.decimals));
+                  showNumbers({
+                    balance: app.bigNumberToUSD(userSize, item.token.decimals),
+                  });
                   setInterval(() => {
                     userProfit = userProfit.add(userYield);
                     userSize = userSize.add(userYield);
                     showNumbers({
-                      balance: app.bigNumberToUSD(userSize, item.token.decimals),
                       profit: app.bigNumberToUSD(userProfit, item.token.decimals),
                       total: app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals)
                     });

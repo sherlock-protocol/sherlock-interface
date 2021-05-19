@@ -58,7 +58,7 @@
             </thead>
             <tbody>
               <tr>
-                {% for token in data.protocols_covered[protocol].tokens %}
+                {% for token in data.protocols_covered[protocol].sorted %}
                   <td>${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
                 {% endfor %}
                 <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>

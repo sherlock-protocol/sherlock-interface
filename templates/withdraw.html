@@ -9,7 +9,11 @@
   <div id="withdraw" class="modal-container hidden">
     <h1>Activate Cooldown</h1>
     <p>You need to approve our Insurance contract before you can activate the cooldown period.</p>
+    <br>
     <div class="input amount">
+      <div class="input-sub">
+        Available Funds: <b id="max-available">$123,00</b>
+      </div>
       <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg">
       <input type="number" name="amount" value="">
       <button type="button" name="button" id="maxButton">MAX</button>
