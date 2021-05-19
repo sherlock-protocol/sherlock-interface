@@ -5,6 +5,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
     app.notify("Error", "MetaMask is not installed");
   }
 
+  if (provider) {
+    (async () => {
+      let chainid = await provider.network;
+      provider.ready.then(resp => {
+        console.log(resp);
+        if (resp.chainId !== window.settings.chainid) {
+          app.notify("Network error", "Please connect metamask to the right network")
+        }
+      })
+    })()
+  } else {
+    console.log('Please install MetaMask!');
+  }
+
+
   let walletButtonEl = document.querySelector('a#walletConnect');
   let walletNameEl = document.querySelector('#walletName');
 
@@ -26,7 +41,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     if (accounts && accounts.length) {
       let wallet = accounts[0];
       window.app.setCookie('wallet', wallet, 60);
-      if(force) location.href = location.href;
+      if (force) location.href = location.href;
 
 
     } else {
@@ -36,9 +51,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let disableWallet = force => {
     window.app.setCookie('wallet', "None", 60);
-    if(force) location.href = location.href;
+    if (force) location.href = location.href;
   }
-  
+
   setTimeout(() => {
     ethereum.on('accountsChanged', function(accounts) {
       if (accounts && !accounts.length) {
@@ -46,10 +61,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
       } else {
         enableWallet(accounts, true);
       }
-    });  
+    });
   }, 1000);
-  
-  
+
+
   provider.listAccounts().then(accounts => {
     if (accounts && accounts.length) {
       enableWallet(accounts)

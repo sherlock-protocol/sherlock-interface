@@ -123,9 +123,12 @@ window.addEventListener('DOMContentLoaded', () => {
               (async () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
                 let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
-
                 if (!balanceInt) {
-                  showNumbers();
+                  showNumbers({
+                    balance: "$0,00",
+                    profit: null,
+                    total: null,
+                  });
                 } else {
                   let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
                   let poolSize = _ethers.BigNumber.from(item.pool.size_str);
@@ -136,8 +139,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                   let userProfit = await window.app.userExtra(sherlock, item.token, userYield)
                   userSize = userSize.mul(tokenPrice);
-                  console.log('anu');
-                  console.log(app.bigNumberToUSD(userSize, item.token.decimals));
+
                   showNumbers({
                     balance: app.bigNumberToUSD(userSize, item.token.decimals),
                   });
