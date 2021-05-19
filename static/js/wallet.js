@@ -77,6 +77,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
       }
     }
   });
+
+  window.ethereum.on('networkChanged', function(networkId) {
+    location.href = "";
+  });
+
   if (walletButtonEl)
     walletButtonEl.addEventListener('click', connectWallet)
 });
