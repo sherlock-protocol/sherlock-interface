@@ -23,10 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
     app.addLoader(document.querySelector('#approve'));
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
-        pending.wait().then(response => {
-          app.removeLoader(document.querySelector('#approve'));
-          enableDeposit();
-        });
+        window.location = "/";
       });
   }
 
