@@ -16,6 +16,14 @@
     padding: 20px;
     box-sizing: border-box;
     border: 6px solid $black;
+    
+    #estimate {
+      margin: 0;
+    }
+    
+    .input {
+      margin-top: 20px;
+    }
 
     h1 {
       margin-bottom: 0;

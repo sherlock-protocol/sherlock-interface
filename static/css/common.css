@@ -1167,6 +1167,12 @@ footer {
   box-sizing: border-box;
   border: 6px solid #000;
 }
+.modal-container #estimate {
+  margin: 0;
+}
+.modal-container .input {
+  margin-top: 20px;
+}
 .modal-container h1 {
   margin-bottom: 0;
   text-align: center;

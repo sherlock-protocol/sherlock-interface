@@ -39,6 +39,13 @@ window.addEventListener('DOMContentLoaded', () => {
           enableApprove();
         }
       });
+
+
+    tokenErc.balanceOf(app.getCookie('wallet'))
+      .then(balance => {
+        let value = _ethers.utils.formatUnits(balance, data.token.decimals);
+        document.querySelector('#max-available').innerText = parseFloat(value);
+      });
   });
 
   let maxDeposit = () => {
@@ -47,6 +54,10 @@ window.addEventListener('DOMContentLoaded', () => {
         let value = _ethers.utils.formatUnits(balance, data.token.decimals);
         document.querySelector('#deposit input').value = parseFloat(value);
       });
+    setTimeout(() => {
+      if (data.xrate !== "~")
+        calculateEstimate();
+    }, 100)
   }
 
   let deposit = () => {
@@ -63,13 +74,9 @@ window.addEventListener('DOMContentLoaded', () => {
           new Sherlock(contract => {
             contract.stake(deposit, app.getCookie('wallet'), data.token.address)
               .then(pending => {
-                app.removeLoader(document.querySelector('#deposit'));
-                app.addLoader(document.querySelector('#deposit'), 'We will redirect you automatically when the transaction is finished.');
 
-                pending.wait().then(response => {
-                  app.removeLoader(document.querySelector('#deposit'));
-                  location.href = '/';
-                });
+                app.removeLoader(document.querySelector('#deposit'));
+                location.href = '/';
               }).catch(err => {
                 app.catchAll(err);
                 app.removeLoader(document.querySelector('#deposit'));
@@ -81,6 +88,20 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
   }
+
+  let calculateEstimate = () => {
+    let amountEl = document.querySelector('[name="amount"]');
+    let value = amountEl.value;
+    let estimateEl = document.querySelector('#estimate');
+    if (!value) {
+      estimateEl.innerHTML = '$0,00';
+    } else {
+      estimateEl.innerHTML = window.app.withdrawalUSD("" + value);
+    }
+  }
+
+  if(data.xrate && data.xrate !== "~")
+    document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions
   document.querySelector('#approve #approveButton').addEventListener('click', approveClick);

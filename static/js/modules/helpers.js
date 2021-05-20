@@ -21,6 +21,25 @@ window.app.domify = (str) => {
   return dom.parseFromString(str, 'text/html').querySelector('body').firstChild;
 }
 
+
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+window.app.withdrawalUSD = (lockAmount) => {
+  let xRate = _ethers.BigNumber.from(window.data.xrate.toString())
+  lockAmount = _ethers.utils.parseUnits(lockAmount, data.stake.decimals);
+
+  // div by 10**18 because lock has 18 decimals
+  let tokenAmount = lockAmount.mul(xRate).div(_ethers.utils.parseEther("1"))
+  let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
+
+  let usd = tokenAmountFormatted * window.data.usd
+  usd = formatter.format(usd / 100000);
+  return usd.toString();
+}
+
+
 window.app.parse = (tmpl, ...vs) => {
   let result = '';
   for (let i = 0; i < vs.length; i++) {
@@ -204,7 +223,7 @@ window.app.provider = _ethers.getDefaultProvider('http://' + window.settings.net
 let userExtraCache = {};
 
 window.app.userExtra = async function(sherlock, token, userYield) {
-  if(userExtraCache[token]) return userExtraCache[token];
+  if (userExtraCache[token]) return userExtraCache[token];
 
   const unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
   // calculate unharvested SHERX
@@ -217,7 +236,7 @@ window.app.userExtra = async function(sherlock, token, userYield) {
   // calculate diff in blocktime with useryield
 
   let curBlock = await window.app.provider.getBlockNumber();
-  let curBlockTimestamp = ((await window.app.provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000 ;
+  let curBlockTimestamp = ((await window.app.provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000;
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);

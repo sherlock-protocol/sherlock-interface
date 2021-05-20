@@ -6,19 +6,6 @@ var formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-window.app.withdrawalUSD = (lockAmount) => {
-  let xRate = _ethers.BigNumber.from(window.data.xrate.toString())
-  lockAmount = _ethers.utils.parseUnits(lockAmount, data.stake.decimals);
-
-  // div by 10**18 because lock has 18 decimals
-  let tokenAmount = lockAmount.mul(xRate).div(_ethers.utils.parseEther("1"))
-  let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
-
-  let usd = tokenAmountFormatted * window.data.usd
-  usd = formatter.format(usd / 100000);
-  return usd.toString();
-}
-
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
 
@@ -43,8 +30,6 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-
-
   app.addLoader(document.body, "Checking approval");
   let token = new Erc20(data.stake.address, erc => {
     tokenErc = erc;
@@ -63,7 +48,6 @@ window.addEventListener('DOMContentLoaded', () => {
       .then(balance => {
         let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
         document.querySelector('#max-available').innerText = parseFloat(value);
-
       });
   });
 
@@ -74,7 +58,8 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#withdraw input').value = parseFloat(value);
       });
     setTimeout(() => {
-      calculateEstimate();
+      if (data.xrate !== "~")
+        calculateEstimate();
     }, 100)
   }
 
@@ -94,12 +79,8 @@ window.addEventListener('DOMContentLoaded', () => {
             contract.activateCooldown(withdraw, data.token.address)
               .then(pending => {
                 app.removeLoader(document.querySelector('#withdraw'));
-                app.addLoader(document.querySelector('#withdraw'), 'We will redirect you automatically when the transaction is finished.');
 
-                pending.wait().then(response => {
-                  app.removeLoader(document.querySelector('#withdraw'));
-                  location.href = '/';
-                });
+                location.href = '/';
               }).catch(err => {
                 app.catchAll(err);
                 app.removeLoader(document.querySelector('#withdraw'));
@@ -124,7 +105,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   //Calculate Estimate 
-  document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
+  if (data.xrate !== "~")
+    document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions
   document.querySelector('#approve #approveButton').addEventListener('click', approveClick);
