@@ -256,7 +256,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (el.getAttribute('action') === "claim") {
                   app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-                  sherlock.unstake(i, item.token.address, app.getCookie('wallet'))
+                  sherlock.unstake(i, app.getCookie('wallet'), item.token.address)
                     .then(resp => {
                       app.removeLoader(document.querySelector('#withdrawals'));
                       rowEl.classList.add('disabled');

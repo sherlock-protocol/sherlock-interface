@@ -21,13 +21,13 @@ window.app.domify = (str) => {
   return dom.parseFromString(str, 'text/html').querySelector('body').firstChild;
 }
 
-
 var formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
+
 window.app.withdrawalUSD = (lockAmount) => {
-  let xRate = _ethers.BigNumber.from(window.data.xrate.toString())
+  let xRate = _ethers.BigNumber.from(parseInt(window.data.xrate).toString())
   lockAmount = _ethers.utils.parseUnits(lockAmount, data.stake.decimals);
 
   // div by 10**18 because lock has 18 decimals
@@ -120,32 +120,24 @@ window.app.bigNumberToUSD = (bigNumber, decimals) => {
 
 window.app.numberToUSD = (value) => {
   value = value / 100000
-  value = Math.floor(value);
   return '$' + window.app.abbreviateNumber(value);
 }
 
 window.app.abbreviateNumber = value => {
-  if (!value) return value;
-  let newValue = parseInt(value);
-  const suffixes = ["", "K", "M", "B", "T"];
-  let suffixNum = 0;
-  while (newValue >= 1000) {
-    newValue /= 1000;
-    suffixNum++;
+  let decPlaces = Math.pow(10, 2)
+  for (var i = ['k', 'm', 'b', 't'].length - 1; i >= 0; i--) {
+    var size = Math.pow(10, (i + 1) * 3)
+    if (size <= value) {
+      value = Math.round(value * decPlaces / size) / decPlaces
+      if ((value === 1000) && (i < ['k', 'm', 'b', 't'].length - 1)) {
+        value = 1
+        i++
+      }
+      value += ['k', 'm', 'b', 't'][i]
+      break
+    }
   }
-
-  newValue = newValue.toPrecision(3);
-
-  newValue += suffixes[suffixNum];
-  // let split = newValue.split('.');
-  // console.log(split);
-  // if (split[1].length !== 2) {
-  //   for (var i = 0; 2 - split[1].length; i++) {
-  //     split[1] += '0';
-  //   }
-  // }
-  // newValue = split[0] + '.' + split[1];
-  return newValue;
+  return value
 }
 
 window.app.validateForm = form => {
