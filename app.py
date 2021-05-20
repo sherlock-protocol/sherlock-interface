@@ -165,8 +165,18 @@ def do_indexer():
     return False
 
 
+def do_indexer_loop():
+    import time
+    while True:
+        if do_indexer():
+            indexer.run()
+        time.sleep(10)
+
+
 if __name__ == '__main__':
-    if os.environ.get("FLASK_ENV") == "development" and do_indexer():
-        indexer.run()
+    if os.environ.get("FLASK_ENV") == "development":
+        import threading
+        x = threading.Thread(target=do_indexer_loop, args=())
+        x.start()
 
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)
