@@ -1,0 +1,23 @@
+[data-docs] {
+  position: relative;
+  a.docs {
+    content: "?";
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: $primary;
+    color: $white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      background: tint($primary, 10%);
+    }
+  }
+}

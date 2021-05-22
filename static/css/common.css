@@ -1485,4 +1485,27 @@ table tbody tr:not(.expander):hover {
   border: 1px solid #8e44ad;
 }
 
+[data-docs] {
+  position: relative;
+}
+[data-docs] a.docs {
+  content: "?";
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #8e44ad;
+  color: #FFF;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+[data-docs] a.docs:hover {
+  background: #9957b5;
+}
+
 /*# sourceMappingURL=common.css.map */

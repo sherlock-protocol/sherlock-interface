@@ -1,7 +1,7 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
   <div class="hbox stats">
-    <div id="poolsize" class="container purp smoking-kills flex centered">
+    <div id="poolsize" class="container purp smoking-kills flex centered" data-docs="bla">
         <h4>Total funds:</h4>
         <h2>${{ data.pool.usd_total_format }}</h2>
     </div>
@@ -20,7 +20,7 @@
           <tr>
             <th data-column="protocol" data-column-type="image" data-column-class="icon" width="40">Token</th>
             <th data-column="name"></th>
-            <th data-column="poolsize" data-column-type="numba">Pool Size</th>
+            <th data-column="poolsize" data-column-type="numba" data-docs="bla">Pool Size</th>
             <th data-column="apy" data-column-class="fat">APY</th>
           </tr>
         </thead>
