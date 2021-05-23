@@ -153,7 +153,8 @@ export default class Table {
         cellData.sherlock.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
           .then(userSize => {
             let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
-            if (!balanceInt) {
+            console.log(userSize);
+            if (userSize._hex === "0x00") {
               cell.innerHTML = '$0.00';
             } else {
               let tokenPrice = _ethers.BigNumber.from(cellData.token_price);

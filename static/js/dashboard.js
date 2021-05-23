@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', () => {
               (async () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
                 let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
-                if (!balanceInt) {
+                if (userSize._hex == "0x00") {
                   showNumbers({
                     balance: "$0,00",
                     profit: null,
