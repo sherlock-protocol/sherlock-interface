@@ -17,6 +17,7 @@ def get_underlying():
         divider = all_tokens[token]["divider"]
         x = data[token] = {}
 
+        x["token"] = all_tokens[token]
         x["amount"] = amounts[i]
         x["amount_str"] = str(x["amount"])
         x["amount_usd"] = x["amount"] / divider * all_prices[token]
