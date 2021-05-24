@@ -167,13 +167,12 @@ export default class Table {
               }
 
               let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-              userSize = userSize.mul(tokenPrice);
+              let originalUserSize = userSize.mul(tokenPrice);
 
               (async () => {
-                let v = await window.app.userExtra(cellData.sherlock, cellData.token, userYield)
-                userSize = userSize.add(v)
+                await window.app.userExtraAsync(cellData.sherlock, cellData.token, originalUserSize, userYield);
                 header.intervals[position] = setInterval(() => {
-                  userSize = userSize.add(userYield);
+                  userSize = originalUserSize.add(window.app.userExtra(cellData.token));
                   cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
                 }, 50);
               })()

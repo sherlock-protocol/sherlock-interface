@@ -130,20 +130,13 @@ window.addEventListener('DOMContentLoaded', () => {
                   });
                 } else {
                   let tokenPrice = _ethers.BigNumber.from(data.pool.usd_values[item.token.address]);
-                  let poolSize = _ethers.BigNumber.from(item.pool.size_str);
-                  let poolYield = _ethers.BigNumber.from(item.pool.numba_str);
-                  let userYield = userSize.mul(tokenPrice).div(poolSize);
-
-                  userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-
-                  let userProfit = await window.app.userExtra(sherlock, item.token, userYield)
                   userSize = userSize.mul(tokenPrice);
 
                   showNumbers({
                     balance: app.bigNumberToUSD(userSize, item.token.decimals),
                   });
                   setInterval(() => {
-                    userProfit = userProfit.add(userYield);
+                    let userProfit = window.app.userExtra(item.token);
                     showNumbers({
                       profit: app.bigNumberToUSD(userProfit, item.token.decimals),
                       total: app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals)

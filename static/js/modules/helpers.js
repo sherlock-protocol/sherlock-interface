@@ -214,8 +214,21 @@ window.app.provider = _ethers.getDefaultProvider('http://' + window.settings.net
 
 let userExtraCache = {};
 
-window.app.userExtra = async function(sherlock, token, userYield) {
-  if (userExtraCache[token]) return userExtraCache[token];
+window.app.userExtra = function(token) {
+  if (userExtraCache[token]) {
+    const entry = userExtraCache[token];
+    const diff = _ethers.BigNumber.from(((Date.now() - entry.time ) * 1000 / 50).toString())
+
+    return entry.value.add(diff.mul(entry.userYield).div(1000));
+  }
+  return false
+}
+
+window.app.userExtraAsync = async function(sherlock, token, userSize, userYield) {
+  const cache = window.app.userExtra(sherlock, token, userSize, userYield);
+  if(cache){
+    return cache;
+  }
 
   const unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
   // calculate unharvested SHERX
@@ -232,6 +245,10 @@ window.app.userExtra = async function(sherlock, token, userYield) {
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
-  userExtraCache[token] = (increment).add(unallocSherXUSDTokenFormat);
+  userExtraCache[token] = {
+    value: userSize.add(increment).add(unallocSherXUSDTokenFormat),
+    time: Date.now(),
+    userYield: userYield
+  }
   return (increment).add(unallocSherXUSDTokenFormat)
 }
