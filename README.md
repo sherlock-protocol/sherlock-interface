@@ -14,6 +14,7 @@ NETWORK=KOVAN
 CHAINID=42
 INFURA_TOKEN=
 DOCS_BASEURL=
+CONTRACTS=
 ```
 
 Run `python app.py` (inside you virtualenv) to start the web server.
