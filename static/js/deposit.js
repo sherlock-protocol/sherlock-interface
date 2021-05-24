@@ -3,6 +3,7 @@ import Sherlock from "./ether/Sherlock.js"
 
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
+  let approved = true;
 
   let enableApprove = () => {
     document.querySelector('#approve').classList.remove('hidden');
@@ -18,8 +19,35 @@ window.addEventListener('DOMContentLoaded', () => {
     app.addLoader(document.querySelector('#approve'));
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
-        window.location = "/";
+        app.removeLoader(document.querySelector('#approve'));
+        toggleApproveLoader(true);
+        enableDeposit();
+        approved = false;
+        pending.wait().then(response => {
+            approved = true;
+            toggleApproveLoader(false);
+            app.notify("Succesful", data.token.name + " is now approved.", "success");
+          })
+          .catch(resp => {
+            app.removeLoader(document.querySelector('#approve'));
+            console.log(resp);
+            app.catchAll(resp);
+          });
+      })
+      .catch(resp => {
+        app.removeLoader(document.querySelector('#approve'));
+        console.log(resp);
+        app.catchAll(resp);
       });
+  }
+
+  let toggleApproveLoader = state => {
+    let loader = document.querySelector("#approval-loader")
+    if (state) {
+      loader.classList.remove("hidden");
+    } else {
+      loader.classList.add("hidden");
+    }
   }
 
   app.addLoader(document.body, "Checking approval");
@@ -59,7 +87,11 @@ window.addEventListener('DOMContentLoaded', () => {
   let deposit = () => {
     let value = document.querySelector('#deposit input').value;
     if (!value) {
-      app.notify("Fill in a number idiot.", "L2P");
+      app.notify("Please provide a number.", "");
+      return;
+    }
+    if (!approved) {
+      app.notify("The approval is not finished yet.", "");
       return;
     }
     app.addLoader(document.querySelector('#deposit'));
@@ -79,7 +111,7 @@ window.addEventListener('DOMContentLoaded', () => {
               });
           })
         } else {
-          app.notify('Insufficient funds', 'Our name is Sherlock. It is our business to know what other people do not know.');
+          app.notify('Insufficient funds', 'Please make sure you have the required funds.');
           app.removeLoader(document.querySelector('#deposit'));
         }
       });
@@ -96,7 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if(data.xrate && data.xrate !== "~")
+  if (data.xrate && data.xrate !== "~")
     document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions

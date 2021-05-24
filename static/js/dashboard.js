@@ -96,6 +96,26 @@ window.addEventListener('DOMContentLoaded', () => {
                   </table>
                 </div>
               </div>
+              ${item.token.symbol === "sherx" ? `
+                <div>
+                  <h4>SherX Breakdown</h4>
+                  <table>
+                    <thead>
+                      <tr>
+                        ${Object.keys(data.sherx).map(sherx => app.parse`
+                          <th><img height="25px" title="${data.sherx[sherx].token.name}" src="/static/svg/crypto/color/${data.sherx[sherx].token.symbol}.svg"></th>
+                          `).join("")}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        ${Object.keys(data.sherx).map(sherx => app.parse`
+                          <td>$${data.sherx[sherx].amount_usd_format}</td>
+                          `).join("")}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>` : ""}
               `,
             collapseFunc: (expander, row) => {
               if (expander.init === true) return;

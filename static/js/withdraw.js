@@ -8,6 +8,7 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
+  let approved = true;
 
   let enableApprove = () => {
     document.querySelector('#approve').classList.remove('hidden');
@@ -23,9 +24,36 @@ window.addEventListener('DOMContentLoaded', () => {
     app.addLoader(document.querySelector('#approve'));
     tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
       .then(pending => {
-        window.location = "/";
+        app.removeLoader(document.querySelector('#approve'));
+        toggleApproveLoader(true);
+        enableDeposit();
+        approved = false;
+        pending.wait().then(response => {
+            approved = true;
+            toggleApproveLoader(false);
+            app.notify("Succesful", data.token.name + " is now approved.", "success");
+          })
+          .catch(resp => {
+            app.removeLoader(document.querySelector('#approve'));
+            console.log(resp);
+            app.catchAll(resp);
+          });
+      })
+      .catch(resp => {
+        app.removeLoader(document.querySelector('#approve'));
+        console.log(resp);
+        app.catchAll(resp);
       });
   }
+  let toggleApproveLoader = state => {
+    let loader = document.querySelector("#approval-loader")
+    if (state) {
+      loader.classList.remove("hidden");
+    } else {
+      loader.classList.add("hidden");
+    }
+  }
+
 
   app.addLoader(document.body, "Checking approval");
   let token = new Erc20(data.stake.address, erc => {
@@ -63,7 +91,11 @@ window.addEventListener('DOMContentLoaded', () => {
   let withdraw = () => {
     let value = document.querySelector('#withdraw input').value;
     if (!value) {
-      app.notify("In", "Our name is Sherlock. It is our business to know what other people do not know.");
+      app.notify('Please provide a number.', '');
+      return;
+    }
+    if (!approved) {
+      app.notify('The approval is not finished yet.', '');
       return;
     }
 
@@ -84,7 +116,7 @@ window.addEventListener('DOMContentLoaded', () => {
               });
           })
         } else {
-          app.notify('Insufficient funds', 'You a broke person bro, go hard or go home.');
+          app.notify('Insufficient funds', 'Please make sure you have the required funds.');
           app.removeLoader(document.querySelector('#withdraw'));
         }
       });

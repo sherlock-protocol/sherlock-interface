@@ -1,12 +1,16 @@
 {% include 'partials/header.html' %}
-<div class="modal">
-  <div id="approve" class="modal-container hidden">
+<div class="modal vbox">
+  <div id="approval-loader" class="approval-loader smoking-kills container hidden">
+    <p>Waiting for approval</p>
+    <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
+  </div>
+  <div id="approve" class="modal-container smoking-kills hidden">
     <h1>Approve {{ data.stake.name}}</h1>
     <p>You need to approve our Insurance contract to activate the cooldown period for {{ data.stake.symbol }}.</p>
     <br>
     <button type="button" name="button" id="approveButton">Approve</button>
   </div>
-  <div id="withdraw" class="modal-container hidden">
+  <div id="withdraw" class="modal-container smoking-kills hidden">
     <h1>Activate Cooldown</h1>
     <p>You need to approve our Insurance contract before you can activate the cooldown period.</p>
     <br>

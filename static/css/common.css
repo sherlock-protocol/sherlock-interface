@@ -1321,7 +1321,6 @@ footer {
   flex-direction: column;
   padding: 20px;
   box-sizing: border-box;
-  border: 6px solid #000;
 }
 .modal-container #estimate {
   margin: 0;
@@ -1335,6 +1334,17 @@ footer {
 }
 .modal-container p {
   text-align: center;
+}
+.modal .approval-loader {
+  width: 400px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal .approval-loader img {
+  margin-bottom: 20px;
 }
 
 .hbox {
