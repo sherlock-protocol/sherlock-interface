@@ -88,7 +88,10 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     # Apy
     premium_per_year = premium_per_block * settings.BLOCKS_PER_YEAR
     if pool["size"] == 0:
-        pool["apy"] = str(99999999.99)
+        if sherx_per_block > 0.0:
+            pool["apy"] = str(99999999.99)
+        else:
+            pool["apy"] = "0"
     else:
         pool["apy"] = "%.2f" % round(float(premium_per_year) / pool["size"], 2)
 
