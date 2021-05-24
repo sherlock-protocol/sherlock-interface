@@ -122,7 +122,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
               (async () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
-                let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, item.token.decimals));
                 if (userSize._hex == "0x00") {
                   showNumbers({
                     balance: "$0,00",
@@ -145,7 +144,6 @@ window.addEventListener('DOMContentLoaded', () => {
                   });
                   setInterval(() => {
                     userProfit = userProfit.add(userYield);
-                    userSize = userSize.add(userYield);
                     showNumbers({
                       profit: app.bigNumberToUSD(userProfit, item.token.decimals),
                       total: app.bigNumberToUSD(userSize.add(userProfit), item.token.decimals)
