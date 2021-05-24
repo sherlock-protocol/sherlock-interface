@@ -13,6 +13,7 @@ Put the following data in `.env` file
 NETWORK=KOVAN
 CHAINID=42
 INFURA_TOKEN=
+DOCS_BASEURL=
 ```
 
 Run `python app.py` (inside you virtualenv) to start the web server.

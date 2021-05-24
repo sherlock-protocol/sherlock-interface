@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (app.getCookie('wallet') == 'None') {
       window.data.pool.tokens.forEach((item, i) => {
         tokenTable.addRow({
-          position: item.token.symbol === "sherx" ? "-1" : null,
+          position: item.token.symbol === "sherx" ? "0" : null,
           highlighted: item.token.symbol === "sherx" ? true : false,
           row: {
             apy: item.pool.apy + '%',

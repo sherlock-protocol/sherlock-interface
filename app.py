@@ -25,6 +25,7 @@ def env():
         "infura": settings.INFURA_TOKEN,
         "pool_address": settings.SHERLOCK,
         "git_hash": settings.GIT_HASH,
+        "docsBaseUrl": settings.DOCS_BASEURL,
         "wallet": request.cookies.get('wallet', 'None'),
         "time_error": TIMESTAMP_ERROR
     }
