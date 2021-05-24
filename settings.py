@@ -15,7 +15,7 @@ CHAINID = config('CHAINID', cast=int)
 INFURA_TOKEN = config('INFURA_TOKEN')
 DOCS_BASEURL = config('DOCS_BASEURL')
 
-with open(os.path.join(CONTRACTS, "artifacts", "contracts", "interfaces", "ISherlock.sol", "ISherlock.json")) as json_data:
+with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "ISherlock.sol", "ISherlock.json")) as json_data:
     POOL_ABI = json.load(json_data)["abi"]
     with open(os.path.join("static", "json", "abi", "Sherlock.json"), "w+") as static:
         static.write(json.dumps(POOL_ABI))
@@ -38,7 +38,7 @@ else:
 if NETWORK == 'KOVAN':
     raise ValueError("Kovan not supported")
 elif NETWORK == 'LOCALHOST':
-    SHERLOCK = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
+    SHERLOCK = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788"
 
 SHERLOCK_HTTP = INFURA_HTTP.eth.contract(
     address=SHERLOCK, abi=POOL_ABI)
@@ -51,11 +51,15 @@ COINGECKO_IDS = {
 }
 
 TOKENS = {}
-for token in SHERLOCK_HTTP.functions.getTokens().call():
-    w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
-    token_decimals = w.functions.decimals().call()
-    symbol = w.functions.symbol().call()
-    TOKENS[symbol] = {
+tokens = SHERLOCK_HTTP.functions.getTokensStaker().call()
+sherx = SHERLOCK_HTTP.functions.getTokensSherX().call()
+tokens.extend(x for x in sherx if x not in tokens)
+
+for token in tokens:
+    w=INFURA_HTTP.eth.contract(address = token, abi = ERC20_ABI)
+    token_decimals=w.functions.decimals().call()
+    symbol=w.functions.symbol().call()
+    TOKENS[symbol]={
         "address": token,
         "name":  w.functions.name().call(),
         "decimals": token_decimals,
