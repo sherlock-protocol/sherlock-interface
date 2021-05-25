@@ -24,19 +24,19 @@ with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contract
 with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "token", "ERC20", "ERC20.sol", "ERC20.json")) as json_data:
     ERC20_ABI = json.load(json_data)["abi"]
 
-if NETWORK == 'KOVAN':
+if NETWORK == 'GOERLI':
     INFURA_HTTP = Web3(HTTPProvider(
-        "https://kovan.infura.io/v3/%s" % INFURA_TOKEN))
+        "https://goerli.infura.io/v3/%s" % INFURA_TOKEN))
     INFURA_WSS = Web3(WebsocketProvider(
-        "wss://kovan.infura.io/ws/v3/%s" % INFURA_TOKEN))
+        "wss://goerli.infura.io/ws/v3/%s" % INFURA_TOKEN))
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     INFURA_WSS = Web3(WebsocketProvider("wss://127.0.0.1:8545"))
 else:
     raise ValueError("Unknown network in .env")
 
-if NETWORK == 'KOVAN':
-    raise ValueError("Kovan not supported")
+if NETWORK == 'GOERLI':
+    SHERLOCK = "0x0B148319ed3540626E69e12d1f223A20509B64A3"
 elif NETWORK == 'LOCALHOST':
     SHERLOCK = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788"
 
@@ -56,10 +56,10 @@ sherx = SHERLOCK_HTTP.functions.getTokensSherX().call()
 tokens.extend(x for x in sherx if x not in tokens)
 
 for token in tokens:
-    w=INFURA_HTTP.eth.contract(address = token, abi = ERC20_ABI)
-    token_decimals=w.functions.decimals().call()
-    symbol=w.functions.symbol().call()
-    TOKENS[symbol]={
+    w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
+    token_decimals = w.functions.decimals().call()
+    symbol = w.functions.symbol().call()
+    TOKENS[symbol] = {
         "address": token,
         "name":  w.functions.name().call(),
         "decimals": token_decimals,
