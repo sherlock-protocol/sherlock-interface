@@ -14,6 +14,7 @@ NETWORK = config('NETWORK')
 CHAINID = config('CHAINID', cast=int)
 INFURA_TOKEN = config('INFURA_TOKEN')
 DOCS_BASEURL = config('DOCS_BASEURL')
+PORT = config('PORT', cast=int)
 
 with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "ISherlock.sol", "ISherlock.json")) as json_data:
     POOL_ABI = json.load(json_data)["abi"]

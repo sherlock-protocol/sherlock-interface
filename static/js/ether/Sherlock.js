@@ -1,6 +1,7 @@
 export default class Sherlock {
   constructor(cb) {
-    this.provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase() + ':8545');
+    let provider = _ethers.getDefaultProvider(window.settings.network.toLowerCase() + (settings.port !== 0 ? ":" + settings.port : ""));
+
 
     this.abi = fetch('/static/json/abi/Sherlock.json')
       .then(response => response.json())

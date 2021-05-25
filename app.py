@@ -23,6 +23,7 @@ def env():
         "network": settings.NETWORK,
         "chainid": settings.CHAINID,
         "infura": settings.INFURA_TOKEN,
+        "port": settings.PORT,
         "pool_address": settings.SHERLOCK,
         "git_hash": settings.GIT_HASH,
         "docsBaseUrl": settings.DOCS_BASEURL,
