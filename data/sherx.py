@@ -27,10 +27,11 @@ def get_underlying():
 
         usd_total += x["amount_usd"]
 
-    for i in range(len(tokens)):
-        token = tokens[i]
-        x = data[token]
-        x["percentage"] = round(x["amount_usd"] / usd_total * 100, 2)
-        x["percentage_str"] = str(x["percentage"])
+    if usd_total > 0:
+        for i in range(len(tokens)):
+            token = tokens[i]
+            x = data[token]
+            x["percentage"] = round(x["amount_usd"] / usd_total * 100, 2)
+            x["percentage_str"] = str(x["percentage"])
 
     return data

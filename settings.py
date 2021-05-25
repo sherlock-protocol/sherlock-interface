@@ -4,6 +4,7 @@ import subprocess
 
 from decouple import config
 from web3 import Web3, HTTPProvider, WebsocketProvider
+from web3.middleware import geth_poa_middleware
 
 CONTRACTS = config('CONTRACTS')
 
@@ -30,6 +31,8 @@ if NETWORK == 'GOERLI':
         "https://goerli.infura.io/v3/%s" % INFURA_TOKEN))
     INFURA_WSS = Web3(WebsocketProvider(
         "wss://goerli.infura.io/ws/v3/%s" % INFURA_TOKEN))
+
+    INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     INFURA_WSS = Web3(WebsocketProvider("wss://127.0.0.1:8545"))
