@@ -6,7 +6,7 @@ import SafeString from "./modules/helpers.js";
 const blockTimeMS = 13325;
 
 window.addEventListener('DOMContentLoaded', () => {
-  let provider = _ethers.getDefaultProvider(window.settings.network.toLowerCase() + (settings.port !== 0 ? ":" + settings.port : ""));
+  let provider = _ethers.getDefaultProvider(window.settings.endpoint);
 
   let totalPoolInterval = null;
   let totalAmount = data.pool.usd_total;

@@ -15,7 +15,6 @@ NETWORK = config('NETWORK')
 CHAINID = config('CHAINID', cast=int)
 INFURA_TOKEN = config('INFURA_TOKEN')
 DOCS_BASEURL = config('DOCS_BASEURL')
-PORT = config('PORT', cast=int)
 
 with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "ISherlock.sol", "ISherlock.json")) as json_data:
     POOL_ABI = json.load(json_data)["abi"]
@@ -33,9 +32,11 @@ if NETWORK == 'GOERLI':
         "wss://goerli.infura.io/ws/v3/%s" % INFURA_TOKEN))
 
     INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
+    ENDPOINT = "https://goerli.infura.io/v3/%s" % INFURA_TOKEN
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     INFURA_WSS = Web3(WebsocketProvider("wss://127.0.0.1:8545"))
+    ENDPOINT = "http://127.0.0.1:8545"
 else:
     raise ValueError("Unknown network in .env")
 

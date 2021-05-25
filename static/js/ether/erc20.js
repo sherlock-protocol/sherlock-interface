@@ -1,6 +1,6 @@
 export default class Erc20 {
   constructor(token, cb) {
-    let provider = _ethers.getDefaultProvider(window.settings.network.toLowerCase() + (settings.port !== 0 ? ":" + settings.port : ""));
+    let provider = _ethers.getDefaultProvider(window.settings.endpoint);
 
 
     this.abi = fetch('/static/json/abi/erc20.json')

@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-  let provider = _ethers.getDefaultProvider('http://' + window.settings.network.toLowerCase());
+  let provider = _ethers.getDefaultProvider(window.settings.endpoint);
 
   window.stakeHelpers = {
     fetchContract: (cb) => {

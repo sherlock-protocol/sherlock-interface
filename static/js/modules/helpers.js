@@ -210,7 +210,7 @@ window.app.timeSince = date => {
   return Math.floor(seconds) + " seconds";
 }
 
-let provider = _ethers.getDefaultProvider(window.settings.network.toLowerCase() + (settings.port !== 0 ? ":" + settings.port : ""));
+window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
 
 let userExtraCache = {};
 
