@@ -246,7 +246,7 @@ window.app.userExtraAsync = async function(sherlock, token, userSize, userYield)
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
   userExtraCache[token] = {
-    value: userSize.add(increment).add(unallocSherXUSDTokenFormat),
+    value: increment.add(unallocSherXUSDTokenFormat),
     time: Date.now(),
     userYield: userYield
   }
