@@ -39,6 +39,15 @@ window.app.withdrawalUSD = (lockAmount) => {
   return usd.toString();
 }
 
+window.app.depositUSD = (deposit) => {
+  let tokenAmount = _ethers.utils.parseUnits(deposit, data.token.decimals);
+  let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
+
+  let usd = tokenAmountFormatted * window.data.usd
+  usd = formatter.format(usd / 100000);
+  return usd.toString();
+}
+
 
 window.app.parse = (tmpl, ...vs) => {
   let result = '';

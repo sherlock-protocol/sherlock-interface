@@ -124,7 +124,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!value) {
       estimateEl.innerHTML = '$0,00';
     } else {
-      estimateEl.innerHTML = window.app.withdrawalUSD("" + value);
+      estimateEl.innerHTML = window.app.depositUSD("" + value);
     }
   }
 
