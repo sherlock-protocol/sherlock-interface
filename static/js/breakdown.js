@@ -5,8 +5,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let formatTokenData = tokenData => {
     let formatted = {
-      series: [],
-      labels: [],
+      series: [1],
+      labels: [{name: "", image: null}],
     }
     Object.entries(tokenData).forEach(entry => {
       let address = entry[0];
@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let label = data.labels[context.index];
         if (context.type === 'label') {
           let group = new Chartist.Svg('g');
-
+          if(label.image)
           group.append(
             new Chartist.Svg('image', {
               'xlink:href': `/static/svg/crypto/color/${label.image.toLowerCase()}.svg`,
