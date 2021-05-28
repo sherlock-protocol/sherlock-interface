@@ -128,8 +128,8 @@ window.app.bigNumberToUSD = (bigNumber, decimals) => {
 }
 
 window.app.numberToUSD = (value) => {
-  value = value / 100000
-  return '$' + window.app.abbreviateNumber(value);
+  value = value / 100000;
+  return window.app.abbreviateNumber(value);
 }
 
 window.app.abbreviateNumber = value => {
@@ -146,7 +146,10 @@ window.app.abbreviateNumber = value => {
       break
     }
   }
-  return value
+  if (value < 1000) {
+    return formatter.format(value);
+  }
+  return '$' + value
 }
 
 window.app.validateForm = form => {
@@ -226,7 +229,7 @@ let userExtraCache = {};
 window.app.userExtra = function(token) {
   if (userExtraCache[token]) {
     const entry = userExtraCache[token];
-    const diff = _ethers.BigNumber.from(((Date.now() - entry.time ) * 1000 / 50).toString())
+    const diff = _ethers.BigNumber.from(((Date.now() - entry.time) * 1000 / 50).toString())
 
     return entry.value.add(diff.mul(entry.userYield).div(1000));
   }
@@ -235,7 +238,7 @@ window.app.userExtra = function(token) {
 
 window.app.userExtraAsync = async function(sherlock, token, userSize, userYield) {
   const cache = window.app.userExtra(sherlock, token, userSize, userYield);
-  if(cache){
+  if (cache) {
     return cache;
   }
 
