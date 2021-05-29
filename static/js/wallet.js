@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
       provider.ready.then(resp => {
         console.log(resp);
         if (resp.chainId !== window.settings.chainid) {
-          app.notify("Network error", "Please connect metamask to the right network")
+          app.notify("Network error", `Please connect metamask to the ${window.settings.network} network`)
         }
       })
     })()

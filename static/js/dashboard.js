@@ -36,6 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
           highlighted: item.token.symbol === "sherx" ? true : false,
           row: {
             apy: item.pool.apy + '%',
+            name: item.token.name,
             protocol: {
               file: item.token.symbol.toLowerCase() + '.svg',
               name: item.token.name
@@ -135,7 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 harvest.classList.add('disabled');
               }
               let showNumbers = (options) => {
-                if(options && options.balance)
+                if (options && options.balance)
                   balance.innerHTML = options && options.balance ? options.balance : '$0.00';
                 profit.innerHTML = options && options.profit ? options.profit : '$0.00';
                 total.innerHTML = options && options.total ? options.total : '$0.00';
