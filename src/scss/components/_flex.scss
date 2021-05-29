@@ -1,11 +1,21 @@
 .hbox {
   display: flex;
   flex-direction: row;
+  
+  &-center {
+    @extend .hbox;
+    align-items: center;
+  }
 }
 
 .vbox {
   display: flex;
   flex-direction: column;
+  
+  &-center {
+    @extend .vbox;
+    align-items: center;
+  }
 }
 
 .flex {

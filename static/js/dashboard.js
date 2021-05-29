@@ -105,14 +105,14 @@ window.addEventListener('DOMContentLoaded', () => {
                     <thead>
                       <tr>
                         ${Object.keys(data.sherx).map(sherx => app.parse`
-                          <th><img height="25px" title="${data.sherx[sherx].token.name}" src="/static/svg/crypto/color/${data.sherx[sherx].token.symbol}.svg"></th>
+                          <th><img height="25px" title="${data.sherx[sherx].token.symbol}" src="/static/svg/crypto/color/${data.sherx[sherx].token.symbol}.svg"></th>
                           `).join("")}
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         ${Object.keys(data.sherx).map(sherx => app.parse`
-                          <td>$${data.sherx[sherx].amount_usd_format}</td>
+                          <td>${data.sherx[sherx].amount_usd_format === "0.00" ? "-" : "$" + data.sherx[sherx].amount_usd_format}</td>
                           `).join("")}
                       </tr>
                     </tbody>
