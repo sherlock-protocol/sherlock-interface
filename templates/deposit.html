@@ -6,17 +6,17 @@
   </div>
   <div id="approve" class="modal-container smoking-kills hidden">
     <h1>Approve {{ data.token.name }}</h1>
-    <p>You need to approve our Insurance contract before you can stake {{ data.token.symbol }}.</p>
+    <p>You need to approve our smart contracts before you can stake {{ data.token.symbol }}.</p>
     <br>
     <button type="button" name="button" id="approveButton">Approve</button>
   </div>
   <div id="deposit" class="modal-container smoking-kills hidden">
     <h1>Stake {{ data.token.name }}</h1>
-    <p>You need to approve our Insurance contract before you can stake {{ data.token.name }}.</p>
+    <p>Enter the amount of {{ data.token.name }} you'd like to stake into the Sherlock pool.</p>
     <br>
     <div class="input amount">
       <div class="input-sub">
-        Available: <b id="max-available">$0,00</b>
+        Available: <b id="max-available">$0.00</b>
       </div>
       <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg">
       <input type="number" name="amount">
@@ -24,7 +24,7 @@
     </div>
     <br>
     <p>Estimated:</p>
-    <h2 id="estimate">$0,00</h2>
+    <h2 id="estimate">$0.00</h2>
     <p>{{ data.xrate_str }} {{ data.token.symbol }} = 1 {{ data.stake.symbol }}</p>
     <button type="button" name="button" id="depositButton">Stake</button>
   </div>

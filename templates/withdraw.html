@@ -6,17 +6,18 @@
   </div>
   <div id="approve" class="modal-container smoking-kills hidden">
     <h1>Approve {{ data.stake.name}}</h1>
-    <p>You need to approve our Insurance contract to activate the cooldown period for {{ data.stake.symbol }}.</p>
+    <p>You need to approve our smart contract to activate the cooldown period for {{ data.stake.symbol }}.</p>
     <br>
     <button type="button" name="button" id="approveButton">Approve</button>
   </div>
   <div id="withdraw" class="modal-container smoking-kills hidden">
     <h1>Activate Cooldown</h1>
-    <p>You need to approve our Insurance contract before you can activate the cooldown period.</p>
+    <p>Enter the amount of {{ data.stake.symbol }} to begin the cooldown.</p>
+    <p>Note: Activating the cooldown will transfer your {{ data.stake.symbol }} to the Sherlock contract.</p>
     <br>
     <div class="input amount">
       <div class="input-sub">
-        Available: <b id="max-available">$0,00</b>
+        Available: <b id="max-available">$0.00</b>
       </div>
       <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg">
       <input type="number" name="amount" value="">
@@ -24,7 +25,7 @@
     </div>
     <br>
     <p>Estimated:</p>
-    <h2 id="estimate">$0,00</h2>
+    <h2 id="estimate">$0.00</h2>
     <p>1 {{ data.stake.symbol }} = {{ data.xrate_str }} {{ data.token.symbol }}</p>
     <button type="button" name="button" id="withdrawButton">Activate Cooldown</button>
   </div>

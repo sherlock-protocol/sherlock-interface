@@ -146,7 +146,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 let userSize = await sherlock.getStakerPoolBalance(app.getCookie('wallet'), item.token.address)
                 if (userSize._hex == "0x00") {
                   showNumbers({
-                    balance: "$0,00",
+                    balance: "$0.00",
                     profit: null,
                     total: null,
                   });

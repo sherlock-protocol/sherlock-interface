@@ -122,7 +122,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let value = amountEl.value;
     let estimateEl = document.querySelector('#estimate');
     if (!value) {
-      estimateEl.innerHTML = '$0,00';
+      estimateEl.innerHTML = '$0.00';
     } else {
       estimateEl.innerHTML = window.app.depositUSD("" + value);
     }

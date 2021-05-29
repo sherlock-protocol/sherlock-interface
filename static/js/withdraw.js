@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       if (data.xrate !== "~")
         calculateEstimate();
-    }, 100)
+    }, 300);
   }
 
   let withdraw = () => {
@@ -126,8 +126,9 @@ window.addEventListener('DOMContentLoaded', () => {
     let amountEl = document.querySelector('[name="amount"]');
     let value = amountEl.value;
     let estimateEl = document.querySelector('#estimate');
+
     if (!value) {
-      estimateEl.innerHTML = '$0,00';
+      estimateEl.innerHTML = '$0.00';
     } else {
       estimateEl.innerHTML = window.app.withdrawalUSD("" + value);
     }
