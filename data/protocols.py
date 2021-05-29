@@ -35,7 +35,7 @@ PROTOCOL_META = {
         "website": "https://www.tokensets.com/",
         "twitter": "https://twitter.com/SetProtocol",
         "logo": "setprotocol",
-        "desc": "The asset management protocol.",
+        "desc": "Set Protocol is a non-custodial protocol built on Ethereum that allows for the creation, management, and trading of Sets, ERC20 tokens that represent a portfolio or basket of underlying assets. Each Set operates and periodically rebalances its portfolio according to a strategy coded into its smart contract.",
     },
 }
 
