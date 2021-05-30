@@ -13,18 +13,18 @@
       window.settings = {{ env|tojson }};
       window.data = {{ data|tojson }};
     </script>
-    <script src="/static/json/abi/pool.json" type="application/json" charset="utf-8"></script>
-    <script src="/static/js/ext/ethers.min.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/ext/chartist.min.js" type="module"></script>
-    <script src="/static/js/ext/moment.js" type="module"></script>
-    <script src="/static/js/modules/helpers.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/loader.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/transactions.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/notifications.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/ether/Sherlock.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/ether/Erc20.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/wallet.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/{{ currentPage }}.js" type="module" charset="utf-8"></script>
-    <script src="/static/js/docs.js" type="module" charset="utf-8"></script>
+    <script src="/static/json/abi/pool.json?{{ env.git_hash }}" type="application/json" charset="utf-8"></script>
+    <script src="/static/js/ext/ethers.min.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ext/chartist.min.js?{{ env.git_hash }}" type="module"></script>
+    <script src="/static/js/ext/moment.js?{{ env.git_hash }}" type="module"></script>
+    <script src="/static/js/modules/helpers.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/loader.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/transactions.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/notifications.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Sherlock.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Erc20.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/wallet.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/{{ currentPage }}.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/docs.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
   </body>
 </html>

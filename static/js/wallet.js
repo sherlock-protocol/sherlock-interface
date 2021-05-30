@@ -9,7 +9,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     (async () => {
       let chainid = await provider.network;
       provider.ready.then(resp => {
-        console.log(resp);
         if (resp.chainId !== window.settings.chainid) {
           app.notify("Network error", `Please connect metamask to the ${window.settings.network} network`)
         }
