@@ -42,15 +42,23 @@
             </tr>
             {% if env.wallet != "None" %}          
               <tr id="expander-{{ protocol.token.symbol }}" class="expander hidden">
-                <td colspan="5">
-                  <h2>{{ protocol.token.name }}</h2>
+                <td colspan="5" {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}>
+                  <h2 {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}>
+                    {{ protocol.token.name }}
+                  </h2>
                   <div class="hbox">
                     <div class="flex">
                       <h4>Actions</h4>
                       <div class="actions">
-                        <a class="button stake" href="/stake/{{ protocol.token.address }}">Stake</a>
-                        <a class="button cooldown disabled" href="/cooldown/{{ protocol.token.address }}">Cooldown</a>
-                        <a class="button harvest disabled" href="/harvest/{{ protocol.token.address }}">Harvest</a>
+                        <div data-docs="glossary#staking">
+                          <a class="button stake" href="/stake/{{ protocol.token.address }}">Stake</a>
+                        </div>
+                        <div data-docs="glossary#cooldown">
+                          <a class="button cooldown disabled" href="/cooldown/{{ protocol.token.address }}">Cooldown</a>
+                        </div>
+                        <div data-docs="glossary#harvesting">
+                          <a class="button harvest disabled" href="/harvest/{{ protocol.token.address }}">Harvest</a>
+                        </div>
                       </div>
                     </div>
                     <div class="balance-breakdown flex">

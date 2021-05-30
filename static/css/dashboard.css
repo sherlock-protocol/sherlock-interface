@@ -42,6 +42,18 @@
   margin-left: 0;
   font-size: 24px;
 }
+.cooldown-block table .expander .actions div[data-docs],
+.staking-pools table .expander .actions div[data-docs] {
+  display: flex;
+}
+.cooldown-block table .expander .actions div[data-docs] a.docs,
+.staking-pools table .expander .actions div[data-docs] a.docs {
+  position: relative;
+  top: 0;
+  height: 28px;
+  width: 28px;
+  margin-left: 20px;
+}
 .cooldown-block table .expander .actions a.button,
 .staking-pools table .expander .actions a.button {
   display: block;

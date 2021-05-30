@@ -52,6 +52,18 @@
       }
 
       .actions {
+        div[data-docs] {
+          display: flex;
+
+          a.docs {
+            position: relative;
+            top: 0;
+            height: 28px;
+            width: 28px;
+            margin-left: 20px;
+          }
+        }
+
         a.button {
           display: block;
           width: 150px;
