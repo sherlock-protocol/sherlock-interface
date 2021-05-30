@@ -1,7 +1,7 @@
 def human_format(num):
+    num = float('{:.3g}'.format(num))
     magnitude = 0
     while abs(num) >= 1000:
         magnitude += 1
         num /= 1000.0
-    # add more suffixes if you need them
-    return ('%.2f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])).strip()
+    return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])

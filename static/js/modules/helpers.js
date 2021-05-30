@@ -1,6 +1,13 @@
-import moment from '../ext/moment.js';
+import moment from "../ext/moment.js";
+import Sherlock from "../ether/Sherlock.js"
 
 window.app = {};
+
+new Sherlock(sherlock => {
+  window.app.sherlock = sherlock;
+});
+
+window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
 
 window.app.escape = (str = "") => {
   let r = /[&<>"'\/]/g;
@@ -21,7 +28,7 @@ window.app.domify = (str) => {
   return dom.parseFromString(str, 'text/html').querySelector('body').firstChild;
 }
 
-var formatter = new Intl.NumberFormat('en-US', {
+window.app.formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
@@ -35,7 +42,7 @@ window.app.withdrawalUSD = (lockAmount) => {
   let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
 
   let usd = tokenAmountFormatted * window.data.usd
-  usd = formatter.format(usd / 100000);
+  usd = window.app.formatter.format(usd / 100000);
   return usd.toString();
 }
 
@@ -44,7 +51,7 @@ window.app.depositUSD = (deposit) => {
   let tokenAmountFormatted = _ethers.utils.formatUnits(tokenAmount, data.token.decimals)
 
   let usd = tokenAmountFormatted * window.data.usd
-  usd = formatter.format(usd / 100000);
+  usd = window.app.formatter.format(usd / 100000);
   return usd.toString();
 }
 
@@ -118,13 +125,8 @@ window.app.currency = (value, abbreviate) => {
 
 window.app.bigNumberToUSD = (bigNumber, decimals) => {
   let value = _ethers.utils.formatUnits(bigNumber, decimals);
-  value = value / 100000
-  var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
-
-  return formatter.format(value);
+  value = value / 100000;
+  return window.app.formatter.format(value);
 }
 
 window.app.numberToUSD = (value) => {
@@ -147,7 +149,7 @@ window.app.abbreviateNumber = value => {
     }
   }
   if (value < 1000) {
-    return formatter.format(value);
+    return window.app.formatter.format(value);
   }
   return '$' + value
 }

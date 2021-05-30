@@ -144,43 +144,6 @@ export default class Table {
       if (cellData.disabled) {
         a.classList.add('disabled');
       }
-    } else if (header.type === "stake") {
-      let img = document.createElement("img");
-      img.setAttribute("src", "static/img/mini-loader.svg");
-      img.classList.add('loader-mini');
-      cell.appendChild(img);
-      new Erc20(cellData.stake.address, (erc) => {
-        cellData.sherlock.getStakerPoolBalance(app.getCookie('wallet'), cellData.token.address)
-          .then(userSize => {
-            let balanceInt = parseInt(_ethers.utils.formatUnits(userSize, cellData.token.decimals));
-            if (userSize._hex === "0x00") {
-              cell.innerHTML = '$0.00';
-            } else {
-              let tokenPrice = _ethers.BigNumber.from(cellData.token_price);
-              let poolSize = _ethers.BigNumber.from(cellData.pool.size_str);
-              let poolYield = _ethers.BigNumber.from(cellData.pool.numba_str);
-
-              if (userSize._hex === "0x00" || poolYield._hex === "0x00" || tokenPrice._hex === "0x00" || poolSize._hex === "0x00") {
-                cell.innerHTML = app.bigNumberToUSD(userSize.mul(tokenPrice), cellData.token.decimals);
-                return;
-              }
-
-              let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
-              let originalUserSize = userSize.mul(tokenPrice);
-
-              (async () => {
-                await window.app.userExtraAsync(cellData.sherlock, cellData.token, originalUserSize, userYield);
-                header.intervals[position] = setInterval(() => {
-                  userSize = originalUserSize.add(window.app.userExtra(cellData.token));
-                  cell.innerHTML = app.bigNumberToUSD(userSize, cellData.token.decimals);
-                }, 50);
-              })()
-            }
-            cbs.forEach(cb => {
-              cb(template);
-            });
-          });
-      });
     } else if (header.type === "numba") {
       let amount = cellData.numba;
       cell.innerHTML = app.numberToUSD(amount);
@@ -193,35 +156,6 @@ export default class Table {
     }
 
     return cell;
-  }
-
-  renderCollapse(data, row) {
-    let expander = document.createElement("tr");
-    let template = data.template;
-    expander.classList.add('expander');
-    expander.classList.add('hidden');
-    expander.innerHTML = `
-    <td colspan="${this.headers.length}">
-      ${template}
-    </td>
-    `;
-
-    row.addEventListener('click', e => {
-      if (e.target.nodeName === "A") return;
-      let state = expander.classList.contains('hidden');
-      if (data.closeOther)
-        this.el.querySelectorAll('.expander').forEach(expander => {
-          expander.classList.add('hidden');
-        });
-      expander.classList.toggle('hidden');
-      if (data.collapseFunc) data.collapseFunc(expander, row);
-      if (!state) {
-        expander.classList.add('hidden');
-      }
-    })
-
-    if (data.func) data.func(expander, row);
-    return expander;
   }
 
   addColumns(columns) {

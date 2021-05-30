@@ -9,7 +9,8 @@ export default class Sherlock {
         let contract = new _ethers.Contract(window.settings.pool_address, abi, this.provider);
         let signer = new _ethers.providers.Web3Provider(window.ethereum).getSigner();
         let signedContract = contract.connect(signer);
-        cb(signedContract);
+        if (cb)
+          cb(signedContract);
       });
   }
 }

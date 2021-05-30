@@ -2,13 +2,13 @@
 <div class="dashboard">
   <div class="hbox stats">
     <div id="poolsize" class="container purp smoking-kills flex centered">
-        <h4>Total funds:</h4>
-        <h2>${{ data.pool.usd_total_format }}</h2>
+      <h4>Total funds:</h4>
+      <h2>${{ data.pool.usd_total_format }}</h2>
     </div>
 
     <div id="hacksize" class="container purp smoking-kills flex centered" data-docs="glossary#buffer-for-stakers">
-        <h4>Buffer for stakers:</h4>
-        <h2>${{ data.pool.usd_buffer_format }}</h2>
+      <h4>Buffer for stakers:</h4>
+      <h2>${{ data.pool.usd_buffer_format }}</h2>
     </div>
   </div>
 
@@ -22,9 +22,93 @@
             <th data-column="name"></th>
             <th data-column="poolsize" data-column-type="numba">Pool Size</th>
             <th data-column="apy" data-column-class="fat">APY</th>
+            {% if env.wallet != "None" %}
+            <th data-column="balance" data-column-class="fat">Balance</th>
+            {% endif %}
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {% for protocol in data.pool.tokens %}
+            <tr id="token-{{protocol.token.symbol}}" class="token {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}">
+              <td class="icon">
+                <img src="/static/svg/crypto/color/{{ protocol.token.symbol }}.svg" title="{{ protocol.token.symbol }}">
+              </td>
+              <td>{{ protocol.token.name }}</td>
+              <td>${{ protocol.pool.usd_size_str }}</td>
+              <td>{{ protocol.pool.apy }}%</td>
+              {% if env.wallet != "None" %}
+              <td class="balance"><img class="loader-mini" src="/static/img/mini-loader.svg" alt=""></td>
+              {% endif %}
+            </tr>
+            {% if env.wallet != "None" %}          
+              <tr id="expander-{{ protocol.token.symbol }}" class="expander hidden">
+                <td colspan="5">
+                  <h2>{{ protocol.token.name }}</h2>
+                  <div class="hbox">
+                    <div class="flex">
+                      <h4>Actions</h4>
+                      <div class="actions">
+                        <a class="button stake" href="/stake/{{ protocol.token.address }}">Stake</a>
+                        <a class="button cooldown disabled" href="/cooldown/{{ protocol.token.address }}">Cooldown</a>
+                        <a class="button harvest disabled" href="/harvest/{{ protocol.token.address }}">Harvest</a>
+                      </div>
+                    </div>
+                    <div class="balance-breakdown flex">
+                      <table class="smoking-kills">
+                        <thead>
+                          <tr>
+                            <th>Balance Breakdown</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Stake</td>
+                            <td class="userstake">$0,00</td>
+                          </tr>
+                          <tr>
+                            <td>Profit</td>
+                            <td class="profit">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td class="fat">Total</td>
+                            <td class="total">$0.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  {% if protocol.token.symbol == "sherx" %} 
+                    <table>
+                      <thead>
+                        <tr>
+                          {% for underlying in data.sherx %}
+                          <th>
+                            <img height="25px" title="{{ data.sherx[underlying].token.name }}" src="/static/svg/crypto/color/{{ data.sherx[underlying].token.symbol }}.svg" alt="{{ data.sherx[underlying].token.symbol }}">
+                          </th>
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          {% for underlying in data.sherx %}
+                          <td>
+                              {% if data.sherx[underlying].amount_usd_format == "0.00" %}
+                                -
+                              {% else %}
+                                ${{ data.sherx[underlying].amount_usd_format }}
+                              {% endif %}
+                          </td>
+                          {% endfor %}
+                        </tr>
+                      </tbody>
+                    </table>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
