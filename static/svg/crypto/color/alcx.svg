@@ -1,0 +1,19 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #252736;
+        stroke-miterlimit: 10;
+      }
+      .cls-1,
+      .cls-2 {
+        stroke: #f5c09a;
+        stroke-width: 9.87px;
+      }
+      .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs><circle class="cls-1" cx="160" cy="160" r="150.53"/><line class="cls-2" x1="160" y1="203.56" x2="160" y2="310.53"/><line class="cls-2" x1="160" y1="9.47" x2="160" y2="41.17"/><polyline class="cls-2" points="160 203.56 57.42 122.36 160 41.17 262.58 122.36 216.77 158.62"/><polyline class="cls-2" points="246.82 210.67 262.58 198.2 262.58 122.36"/><polyline class="cls-2" points="57.42 122.36 57.42 198.2 160 279.39 206.28 242.76"/><polyline class="cls-2" points="75.41 212.44 57.91 242.76 113.72 242.76"/><polyline class="cls-2" points="160 242.76 262.1 242.76 160 65.93 106.63 158.36"/></svg>
