@@ -74,7 +74,31 @@ h2 sup {
 }
 @font-face {
   font-family: "courier";
-  src: url("/static/font/courier/courier.woff2") format("woff2"), url("/static/font/courier/courier.woff") format("woff");
+  src: url("CourierNewPS-BoldMT.eot");
+  src: local("Courier New Bold"), local("CourierNewPS-BoldMT"), url("/static/font/courier-new/CourierNewPS-BoldMT.eot?#iefix") format("embedded-opentype"), url("/static/font/courier-new/CourierNewPS-BoldMT.woff2") format("woff2"), url("/static/font/courier-new/CourierNewPS-BoldMT.woff") format("woff"), url("/static/font/courier-new/CourierNewPS-BoldMT.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "courier";
+  src: url("CourierNewPS-BoldItalicMT.eot");
+  src: local("Courier New Bold Italic"), local("CourierNewPS-BoldItalicMT"), url("/static/font/courier-new/CourierNewPS-BoldItalicMT.eot?#iefix") format("embedded-opentype"), url("/static/font/courier-new/CourierNewPS-BoldItalicMT.woff2") format("woff2"), url("/static/font/courier-new/CourierNewPS-BoldItalicMT.woff") format("woff"), url("/static/font/courier-new/CourierNewPS-BoldItalicMT.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "courier";
+  src: url("CourierNewPS-ItalicMT.eot");
+  src: local("Courier New Italic"), local("CourierNewPS-ItalicMT"), url("/static/font/courier-new/CourierNewPS-ItalicMT.eot?#iefix") format("embedded-opentype"), url("/static/font/courier-new/CourierNewPS-ItalicMT.woff2") format("woff2"), url("/static/font/courier-new/CourierNewPS-ItalicMT.woff") format("woff"), url("/static/font/courier-new/CourierNewPS-ItalicMT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "courier";
+  src: url("CourierNewPSMT.eot");
+  src: local("Courier New"), local("CourierNewPSMT"), url("/static/font/courier-new/CourierNewPSMT.eot?#iefix") format("embedded-opentype"), url("/static/font/courier-new/CourierNewPSMT.woff2") format("woff2"), url("/static/font/courier-new/CourierNewPSMT.woff") format("woff"), url("/static/font/courier-new/CourierNewPSMT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 /** =================== MONTSERRAT =================== **/
 /** Montserrat Thin **/
@@ -1595,7 +1619,7 @@ table tbody tr.highlighted:not(.expander) {
 }
 table tbody tr.highlighted:not(.expander) * {
   color: #000 !important;
-  font-size: 110%;
+  font-size: 102%;
   font-weight: bold;
 }
 table tbody tr td {
