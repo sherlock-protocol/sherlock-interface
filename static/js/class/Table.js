@@ -1,9 +1,6 @@
-import SafeString from "../modules/helpers.js"
 import Erc20 from "../ether/Erc20.js"
 
-
 export default class Table {
-
   constructor(options) {
     this.el = options.el;
     this.imagePrefix = options.imagePrefix;
@@ -60,9 +57,7 @@ export default class Table {
           if (cellData && cellData.cb)
             cbs.push(cellData.cb);
 
-
           template.appendChild(cell);
-
         }
       });
       if (!found) {
@@ -154,7 +149,6 @@ export default class Table {
         cell.innerHTML = app.numberToUSD(amount);
       }, 50);
     }
-
     return cell;
   }
 

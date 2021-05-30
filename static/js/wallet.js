@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
   if (ethereum) {
-    var provider = new _ethers.providers.Web3Provider(web3.currentProvider);
+    var provider = new _ethers.providers.Web3Provider(window.ethereum);
   } else {
     app.notify("Error", "MetaMask is not installed");
   }
@@ -10,12 +10,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
       let chainid = await provider.network;
       provider.ready.then(resp => {
         if (resp.chainId !== window.settings.chainid) {
-          app.notify("Network error", `Please connect metamask to the ${window.settings.network} network`)
+          app.notify("Network error", `Please connect metamask to the ${window.settings.network} network`);
         }
       })
     })()
   } else {
-    console.log('Please install MetaMask!');
+    app.notify("Please install MetaMask", "If you want to interact with the app, please install metamask and connect your wallet.");
   }
 
 
@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 
-  window.ethereum.on('networkChanged', function(networkId) {
+  window.ethereum.on('chainChanged', function(networkId) {
     location.href = "";
   });
 

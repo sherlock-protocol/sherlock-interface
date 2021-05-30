@@ -125,7 +125,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let rowEl = el.parentNode.parentNode;
 
     if (el.getAttribute('action') === "claim") {
-      app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+      window.app.addLoader(document.querySelector('#withdrawals'), "", 'small');
       window.app.sherlock.unstake(options.index, app.getCookie('wallet'), options.pool.token.address)
         .then(resp => {
           app.removeLoader(document.querySelector('#withdrawals'));
@@ -136,7 +136,7 @@ window.addEventListener('DOMContentLoaded', () => {
           app.catchAll(err);
         });
     } else if (el.getAttribute('action') === "cancel") {
-      app.addLoader(document.querySelector('#withdrawals'), "", 'small');
+      window.app.addLoader(document.querySelector('#withdrawals'), "", 'small');
       window.app.sherlock.cancelCooldown(options.index, options.pool.token.address)
         .then(resp => {
           rowEl.classList.add('disabled');
