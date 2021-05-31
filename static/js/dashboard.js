@@ -35,12 +35,12 @@ window.addEventListener('DOMContentLoaded', () => {
     window.data.pool.tokens.forEach(pool => {
       (async () => {
         let userSize = await window.app.sherlock.getStakerPoolBalance(app.getCookie('wallet'), pool.token.address)
-        let tokenPrice = _ethers.BigNumber.from(window.data.pool.usd_values[pool.token.address], );
-        if (userSize._hex === "0x00") {
+        let poolSize = _ethers.BigNumber.from(pool.pool.size_str);
+        if (userSize._hex === "0x00" || poolSize._hex === "0x00") {
           updateUserBalance(null, pool);
         } else {
+          let tokenPrice = _ethers.BigNumber.from(window.data.pool.usd_values[pool.token.address], );
           let balance = userSize.mul(tokenPrice);
-          let poolSize = _ethers.BigNumber.from(pool.pool.size_str);
           let poolYield = _ethers.BigNumber.from(pool.pool.numba_str);
           let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
           let originalUserSize = userSize.mul(tokenPrice);
