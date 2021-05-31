@@ -6,3 +6,6 @@ sass:
 sass-watch:
 	@echo Started watching styles
 	sass --watch src/scss/:static/css/
+
+app:
+	git rev-parse HEAD > .hash

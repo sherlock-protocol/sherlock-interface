@@ -75,5 +75,8 @@ for token in tokens:
 BLOCKS_PER_DAY = 6484
 BLOCKS_PER_YEAR = BLOCKS_PER_DAY * 365
 
-call = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
-GIT_HASH = call.stdout.strip().decode()
+try:
+    with open(".hash", "r") as f:
+        GIT_HASH = f.read().strip()
+except FileNotFoundError:
+    GIT_HASH = "call-make-app"
