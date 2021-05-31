@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
     window.data.pool.tokens.forEach(pool => {
       (async () => {
         let userSize = await window.app.sherlock.getStakerPoolBalance(app.getCookie('wallet'), pool.token.address)
-        let poolSize = _ethers.BigNumber.from(pool.pool.size_str);
+        let poolSize = _ethers.BigNumber.from(pool.pool.staker_size_str);
         if (userSize._hex === "0x00" || poolSize._hex === "0x00") {
           updateUserBalance(null, pool);
         } else {
@@ -48,11 +48,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
           setInterval(() => {
             let userProfit = window.app.userExtra(pool.token);
-            userSize = originalUserSize.add(window.app.userExtra(pool.token));
             updateUserBalance({
               stake: app.bigNumberToUSD(balance, pool.token.decimals),
               profit: app.bigNumberToUSD(userProfit, pool.token.decimals),
-              total: app.bigNumberToUSD(userSize, pool.token.decimals)
+              total: app.bigNumberToUSD(originalUserSize.add(userProfit), pool.token.decimals)
             }, pool);
           }, 50);
         }

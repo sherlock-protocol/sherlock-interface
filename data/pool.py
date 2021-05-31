@@ -45,8 +45,11 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool = token["pool"]
 
     # TVL
-    pool["size"] = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(
+    pool["size"] = pool["staker_size"] = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(
         data["address"]).call()
+
+    pool["staker_size_str"] = str(pool["staker_size"])
+
     if data["address"] == settings.SHERLOCK:
         # TODO deduct unminted for buffer
         a = settings.SHERLOCK_HTTP.functions.getTotalUnmintedSherX(
@@ -60,7 +63,8 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         data["divider"] * price.get_price(data["address"])
 
     pool["usd_size_str"] = "%.2f" % round(pool["usd_size"], 2)
-    pool["usd_size_str_format"] = helper.human_format(pool["usd_size"] / 100000)
+    pool["usd_size_str_format"] = helper.human_format(
+        pool["usd_size"] / 100000)
 
     # Premium
     sherx_weight = settings.SHERLOCK_HTTP.functions.getSherXWeight(
