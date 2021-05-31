@@ -50,11 +50,11 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
     pool["staker_size_str"] = str(pool["staker_size"])
 
-    if data["address"] == settings.SHERLOCK:
-        # TODO deduct unminted for buffer
-        a = settings.SHERLOCK_HTTP.functions.getTotalUnmintedSherX(
-            data["address"]).call()
-        pool["size"] = pool["size"] + a
+    # if data["address"] == settings.SHERLOCK:
+    #     # TODO deduct unminted for buffer
+    #     a = settings.SHERLOCK_HTTP.functions.getTotalUnmintedSherX(
+    #         data["address"]).call()
+    #     pool["size"] = pool["size"] + a
 
     pool["size_str"] = str(pool["size"])
     pool["size_format"] = "%.2f" % round(pool["size"] / data["divider"], 2)
