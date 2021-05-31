@@ -80,3 +80,5 @@ try:
         GIT_HASH = f.read().strip()
 except FileNotFoundError:
     GIT_HASH = "call-make-app"
+
+INDEXER_TIMEOUT = config('INDEXER_TIMEOUT', cast=int, default=60)

@@ -1,6 +1,8 @@
+import time
 import os
 import json
 
+from settings import INDEXER_TIMEOUT
 from data import pool, tokens, price, protocols, sherlock, sherx
 
 INDENT = None
@@ -56,4 +58,6 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    while True:
+        run()
+        time.sleep(INDEXER_TIMEOUT)
