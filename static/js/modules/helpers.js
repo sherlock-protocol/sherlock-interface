@@ -229,8 +229,8 @@ window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
 let userExtraCache = {};
 
 window.app.userExtra = function(token) {
-  if (userExtraCache[token]) {
-    const entry = userExtraCache[token];
+  if (userExtraCache[token.symbol]) {
+    const entry = userExtraCache[token.symbol];
     const diff = _ethers.BigNumber.from(((Date.now() - entry.time) * 1000 / 50).toString())
 
     return entry.value.add(diff.mul(entry.userYield).div(1000));
@@ -239,7 +239,7 @@ window.app.userExtra = function(token) {
 }
 
 window.app.userExtraAsync = async function(sherlock, token, userSize, userYield) {
-  const cache = window.app.userExtra(sherlock, token, userSize, userYield);
+  const cache = window.app.userExtra(token);
   if (cache) {
     return cache;
   }
@@ -259,12 +259,13 @@ window.app.userExtraAsync = async function(sherlock, token, userSize, userYield)
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
-  userExtraCache[token] = {
-    value: increment.add(unallocSherXUSDTokenFormat),
+  let value = increment.add(unallocSherXUSDTokenFormat);
+  userExtraCache[token.symbol] = {
+    value,
     time: Date.now(),
-    userYield: userYield
+    userYield
   }
-  return (increment).add(unallocSherXUSDTokenFormat)
+  return value
 }
 
 window.app.addLoader = (el, msg, size) => {
