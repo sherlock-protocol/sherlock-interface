@@ -34,13 +34,13 @@
                 <img src="/static/svg/crypto/color/{{ protocol.token.symbol }}.svg" title="{{ protocol.token.symbol }}">
               </td>
               <td>{{ protocol.token.name }}</td>
-              <td>${{ protocol.pool.usd_size_str }}</td>
+              <td>${{ protocol.pool.usd_size_str_format }}</td>
               <td>{{ protocol.pool.apy }}%</td>
               {% if env.wallet != "None" %}
               <td class="balance"><img class="loader-mini" src="/static/img/mini-loader.svg" alt=""></td>
               {% endif %}
             </tr>
-            {% if env.wallet != "None" %}          
+            {% if env.wallet != "None" %}
               <tr id="expander-{{ protocol.token.symbol }}" class="expander hidden">
                 <td colspan="5" {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}>
                   <h2 {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}>
@@ -86,7 +86,7 @@
                       </table>
                     </div>
                   </div>
-                  {% if protocol.token.symbol == "sherx" %} 
+                  {% if protocol.token.symbol == "sherx" %}
                     <table>
                       <thead>
                         <tr>
