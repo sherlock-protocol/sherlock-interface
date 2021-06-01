@@ -1,12 +1,10 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-  let provider = _ethers.getDefaultProvider(window.settings.endpoint);
-
   window.stakeHelpers = {
     fetchContract: (cb) => {
       let abi = fetch('/static/json/abi/Stake.json')
         .then(response => response.json())
         .then(abi => {
-          let stake = new _ethers.Contract(window.settings.stake_token, abi, provider);
+          let stake = new _ethers.Contract(window.settings.stake_token, abi, window.app.provider);
           let signer = new _ethers.providers.Web3Provider(window.ethereum).getSigner();
 
           window.signedStake = stake.connect(signer);

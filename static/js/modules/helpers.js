@@ -7,7 +7,11 @@ new Sherlock(sherlock => {
   window.app.sherlock = sherlock;
 });
 
-window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
+if(window.settings.network == "GOERLI") {
+  window.app.provider = new _ethers.providers.AlchemyProvider("goerli", window.settings.infura);
+} else {
+  window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
+}
 
 window.app.escape = (str = "") => {
   let r = /[&<>"'\/]/g;
@@ -224,8 +228,6 @@ window.app.timeSince = date => {
   return Math.floor(seconds) + " seconds";
 }
 
-window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
-
 let userExtraCache = {};
 
 window.app.userExtra = function(token) {
@@ -254,8 +256,7 @@ window.app.userExtraAsync = async function(sherlock, token, userSize, userYield)
 
   // calculate diff in blocktime with useryield
 
-  let curBlock = await window.app.provider.getBlockNumber();
-  let curBlockTimestamp = ((await window.app.provider.getBlock(curBlock)).timestamp + window.settings.time_error) * 1000;
+  let curBlockTimestamp = ((await window.app.provider.getBlock("latest")).timestamp + window.settings.time_error) * 1000;
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);

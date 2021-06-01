@@ -1,11 +1,6 @@
 import Erc20 from "./ether/Erc20.js"
 import Sherlock from "./ether/Sherlock.js"
 
-var formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
 window.addEventListener('DOMContentLoaded', () => {
   let tokenErc = null;
   let approved = true;
@@ -134,7 +129,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  //Calculate Estimate 
+  //Calculate Estimate
   if (data.xrate !== "~")
     document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 

@@ -1,11 +1,6 @@
 import Erc20 from "./ether/Erc20.js"
 import Sherlock from "./ether/Sherlock.js"
 
-var formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
 window.addEventListener('DOMContentLoaded', () => {
 
   let main = sherlock => {
@@ -14,7 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let harvest = () => {
     app.addLoader(document.querySelector('#harvest'));
-    
+
     window.app.sherlock["harvest(address)"](data.stake.address)
     .then(resp => {
       location.href = "/";
