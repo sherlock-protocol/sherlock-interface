@@ -5,26 +5,26 @@
       <div class="hbox-center">
           <p>&copy;2021 Sherlock. All rights reserved</p>
           <div class="flex"></div>
-          <a href="https://sherlock.xyz/" target="_blank"><img src="/static/svg/logos/globe.svg" height="25px" alt="Website"></a>
-          <a href="https://twitter.com/Sherlock_DeFi" target="_blank"><img src="/static/svg/logos/twitter.svg" height="25px" alt="Twitter"></a>
-          <a href="https://github.com/sherlock-protocol/" target="_blank"><img src="/static/svg/logos/github.svg" height="25px" alt="Github"></a>
+          <a href="https://sherlock.xyz/" target="_blank"><img src="/static/svg/logos/globe.svg?v={{ env.git_hash }}" height="25px" alt="Website"></a>
+          <a href="https://twitter.com/Sherlock_DeFi" target="_blank"><img src="/static/svg/logos/twitter.svg?v={{ env.git_hash }}" height="25px" alt="Twitter"></a>
+          <a href="https://github.com/sherlock-protocol/" target="_blank"><img src="/static/svg/logos/github.svg?v={{ env.git_hash }}" height="25px" alt="Github"></a>
       </div>
     </footer>
     <script type="text/javascript">
       window.settings = {{ env|tojson }};
       window.data = {{ data|tojson }};
     </script>
-    <script src="/static/json/abi/pool.json?{{ env.git_hash }}" type="application/json" charset="utf-8"></script>
-    <script src="/static/js/ext/ethers.min.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/ext/chartist.min.js?{{ env.git_hash }}" type="module"></script>
-    <script src="/static/js/ext/moment.js?{{ env.git_hash }}" type="module"></script>
-    <script src="/static/js/modules/helpers.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/transactions.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/modules/notifications.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/ether/Sherlock.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/ether/Erc20.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/wallet.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/{{ currentPage }}.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
-    <script src="/static/js/docs.js?{{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/json/abi/pool.json?v={{ env.git_hash }}" type="application/json" charset="utf-8"></script>
+    <script src="/static/js/ext/ethers.min.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ext/chartist.min.js?v={{ env.git_hash }}" type="module"></script>
+    <script src="/static/js/ext/moment.js?v={{ env.git_hash }}" type="module"></script>
+    <script src="/static/js/modules/helpers.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/transactions.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/modules/notifications.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Sherlock.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/ether/Erc20.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/wallet.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/{{ currentPage }}.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
+    <script src="/static/js/docs.js?v={{ env.git_hash }}" type="module" charset="utf-8"></script>
   </body>
 </html>

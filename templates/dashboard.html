@@ -31,7 +31,7 @@
           {% for protocol in data.pool.tokens %}
             <tr id="token-{{protocol.token.symbol}}" class="token {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}">
               <td class="icon">
-                <img src="/static/svg/crypto/color/{{ protocol.token.symbol }}.svg" title="{{ protocol.token.symbol }}">
+                <img src="/static/svg/crypto/color/{{ protocol.token.symbol }}.svg?v={{ env.git_hash }}" title="{{ protocol.token.symbol }}">
               </td>
               <td>{{ protocol.token.name }}</td>
               <td>${{ protocol.pool.usd_size_str_format }}</td>
@@ -92,7 +92,7 @@
                         <tr>
                           {% for underlying in data.sherx %}
                           <th>
-                            <img height="25px" title="{{ data.sherx[underlying].token.name }}" src="/static/svg/crypto/color/{{ data.sherx[underlying].token.symbol }}.svg" alt="{{ data.sherx[underlying].token.symbol }}">
+                            <img height="25px" title="{{ data.sherx[underlying].token.name }}" src="/static/svg/crypto/color/{{ data.sherx[underlying].token.symbol }}.svg?v={{ env.git_hash }}" alt="{{ data.sherx[underlying].token.symbol }}">
                           </th>
                           {% endfor %}
                         </tr>

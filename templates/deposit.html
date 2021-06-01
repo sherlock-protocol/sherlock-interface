@@ -2,7 +2,7 @@
 <div class="modal vbox">
   <div id="approval-loader" class="approval-loader smoking-kills container hidden">
     <p>Waiting for approval</p>
-    <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
+    <img class="loader-mini" src="/static/img/mini-loader.svg?v={{ env.git_hash }}" alt="">
   </div>
   <div id="approve" class="modal-container smoking-kills hidden">
     <h1>Approve {{ data.token.name }}</h1>
@@ -18,7 +18,7 @@
       <div class="input-sub">
         Available: <b id="max-available">$0.00</b>
       </div>
-      <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg">
+      <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg?v={{ env.git_hash }}">
       <input type="number" name="amount">
       <button type="button" name="button" id="maxButton">MAX</button>
     </div>

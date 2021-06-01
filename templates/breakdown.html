@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for protocol in data.protocols_covered %} 
+        {% for protocol in data.protocols_covered %}
           <tr>
             <td>
               {{ data.protocol_meta[protocol].name }}
@@ -48,11 +48,11 @@
               <tr>
                 {% for token in data.protocols_covered[protocol].tokens %}
                 <th style="width:100px;" title="{{ data.tokens[token].name }}">
-                  <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg" alt="{{ data.tokens[token].name }}">
+                  <img height="25" src="/static/svg/crypto/color/{{ data.tokens[token].symbol }}.svg?v={{ env.git_hash }}" alt="{{ data.tokens[token].name }}">
                 </th>
                 {% endfor %}
                 <th class="flex">
-                  <img height="25" src="/static/svg/crypto/color/usd.svg" alt="USD">
+                  <img height="25" src="/static/svg/crypto/color/usd.svg?v={{ env.git_hash }}" alt="USD">
                 </th>
               </tr>
             </thead>

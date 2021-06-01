@@ -3,24 +3,24 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon.png?v={{ env.git_hash }}" sizes="32x32" />
 
   <title>Sherlock - {{ title }}</title>
-  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/common.css?v={{ env.git_hash }}">
   {% if currentPage == "landing" %}
-  <link rel="stylesheet" href="/static/css/landing.css">{% endif %}
+  <link rel="stylesheet" href="/static/css/landing.css?v={{ env.git_hash }}">{% endif %}
   {% if currentPage == "dashboard" %}
-  <link rel="stylesheet" href="/static/css/dashboard.css">{% endif %}
+  <link rel="stylesheet" href="/static/css/dashboard.css?v={{ env.git_hash }}">{% endif %}
   {% if currentPage == "breakdown" %}
-  <link rel="stylesheet" href="/static/css/breakdown.css">{% endif %}
+  <link rel="stylesheet" href="/static/css/breakdown.css?v={{ env.git_hash }}">{% endif %}
   {% if currentPage == "withdraw" %}
-  <link rel="stylesheet" href="/static/css/withdraw.css">{% endif %}
+  <link rel="stylesheet" href="/static/css/withdraw.css?v={{ env.git_hash }}">{% endif %}
 </head>
 
 <body>
   <header>
     <a class="logo" href="/">
-      <img src="/static/img/logo-white.svg" alt="">
+      <img src="/static/img/logo-white.svg?v={{ env.git_hash }}" alt="">
     </a>
     <div class="side">
       <div class="meta">
