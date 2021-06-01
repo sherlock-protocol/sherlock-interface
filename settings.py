@@ -26,16 +26,11 @@ with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "to
     ERC20_ABI = json.load(json_data)["abi"]
 
 if NETWORK == 'GOERLI':
-    INFURA_HTTP = Web3(HTTPProvider(
-        "https://goerli.infura.io/v3/%s" % INFURA_TOKEN))
-    INFURA_WSS = Web3(WebsocketProvider(
-        "wss://goerli.infura.io/ws/v3/%s" % INFURA_TOKEN))
-
+    INFURA_HTTP = Web3(HTTPProvider("https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN))
     INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
-    ENDPOINT = "https://goerli.infura.io/v3/%s" % INFURA_TOKEN
+    ENDPOINT = "https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
-    INFURA_WSS = Web3(WebsocketProvider("wss://127.0.0.1:8545"))
     ENDPOINT = "http://127.0.0.1:8545"
 else:
     raise ValueError("Unknown network in .env")
