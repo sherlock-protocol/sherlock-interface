@@ -256,7 +256,7 @@ window.app.userExtraAsync = async function(sherlock, token, userSize, userYield)
 
   // calculate diff in blocktime with useryield
 
-  let curBlockTimestamp = ((await window.app.provider.getBlock("latest")).timestamp + window.settings.time_error) * 1000;
+  let curBlockTimestamp = (window.settings.state.timestamp + window.settings.time_error) * 1000;
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);

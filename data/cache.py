@@ -94,3 +94,9 @@ class sherlock:
     def get_unstake_window():
         with open(indexer.UNSTAKE_WINDOW, "r") as f:
             return json.load(f)
+
+class state:
+    @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
+    def get_state():
+        with open(indexer.STATE, "r") as f:
+            return json.load(f)

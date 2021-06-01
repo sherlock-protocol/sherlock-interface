@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   let fetchWithdrawals = async (sherlock) => {
-    let curBlock = await window.app.provider.getBlockNumber();
+    let curBlock = window.settings.state.block
     data.pool.tokens.forEach(async (item, i) => {
       let index = await window.app.sherlock.getInitialUnstakeEntry(app.getCookie('wallet'), item.token.address);
       let size = await window.app.sherlock.getUnstakeEntrySize(app.getCookie('wallet'), item.token.address);

@@ -3,7 +3,7 @@ import os
 import json
 
 from settings import INDEXER_TIMEOUT
-from data import pool, tokens, price, protocols, sherlock, sherx
+from data import pool, tokens, price, protocols, sherlock, sherx, state
 
 INDENT = None
 SORT_KEYS = False
@@ -21,6 +21,7 @@ PREMIUM = os.path.join(ROOT, "premium.json")
 COVERED = os.path.join(ROOT, "covered.json")
 PRICES = os.path.join(ROOT, "prices.json")
 SHERX = os.path.join(ROOT, "sherx.json")
+STATE = os.path.join(ROOT, "state.json")
 
 
 def run():
@@ -54,6 +55,10 @@ def run():
 
     data = sherx.get_underlying()
     with open(SHERX, "w") as f:
+        json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
+
+    data = state.get_state()
+    with open(STATE, "w") as f:
         json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
 
 
