@@ -2,7 +2,7 @@ import os
 
 from web3 import Web3
 
-import settings
+from settings import DATA, INFURA_HTTP, ERC20_ABI, SHERLOCK_HTTP, SHERLOCK, BLOCKS_PER_YEAR, TOKENS
 from data import price, helper
 
 TIMESTAMP_ERROR = 0
@@ -11,14 +11,8 @@ if os.environ.get("FLASK_ENV") == 'development':
 
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
-    stake = settings.SHERLOCK_HTTP.functions.getLockToken(
-        data["address"]).call()
-    STAKE = settings.INFURA_HTTP.eth.contract(
-        address=stake, abi=settings.ERC20_ABI)
-
     try:
-        xrate = settings.SHERLOCK_HTTP.functions.LockToTokenXRate(
-            data["address"]).call()
+        xrate = SHERLOCK_HTTP.functions.LockToTokenXRate(data["address"]).call()
         xrate = xrate
         xrate_str = str(round(xrate / data["divider"], 2))
     except ValueError:
@@ -32,12 +26,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
             "symbol": symbol.lower(),
             "decimals": data["decimals"],
         },
-        "stake": {
-            "address": stake,
-            "name": STAKE.functions.name().call(),
-            "symbol": STAKE.functions.symbol().call().lower(),
-            "decimals": STAKE.functions.decimals().call(),
-        },
+        "stake": DATA["lock"][data["address"]],
         "xrate": xrate,
         "xrate_str": xrate_str,
         "pool": {}
@@ -45,16 +34,10 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool = token["pool"]
 
     # TVL
-    pool["size"] = pool["staker_size"] = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(
+    pool["size"] = pool["staker_size"] = SHERLOCK_HTTP.functions.getStakersPoolBalance(
         data["address"]).call()
 
     pool["staker_size_str"] = str(pool["staker_size"])
-
-    # if data["address"] == settings.SHERLOCK:
-    #     # TODO deduct unminted for buffer
-    #     a = settings.SHERLOCK_HTTP.functions.getTotalUnmintedSherX(
-    #         data["address"]).call()
-    #     pool["size"] = pool["size"] + a
 
     pool["size_str"] = str(pool["size"])
     pool["size_format"] = "%.2f" % round(pool["size"] / data["divider"], 2)
@@ -67,19 +50,18 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         pool["usd_size"] / 100000)
 
     # Premium
-    sherx_weight = settings.SHERLOCK_HTTP.functions.getSherXWeight(
-        data["address"]).call()
+    sherx_weight = SHERLOCK_HTTP.functions.getSherXWeight(data["address"]).call()
     pool["sherx_percentage"] = "%.2f" % round(float(sherx_weight / 10**16), 2)
 
     # Numba
-    sherx_per_block = settings.SHERLOCK_HTTP.functions.getTotalSherXPerBlock(
+    sherx_per_block = SHERLOCK_HTTP.functions.getTotalSherXPerBlock(
         data["address"]).call()
-    premium_per_block = price.get_price(settings.SHERLOCK) * sherx_per_block * \
+    premium_per_block = price.get_price(SHERLOCK) * sherx_per_block * \
         data["divider"] / price.get_price(data["address"]) / 10**18
 
     # TODO int to float? to keep precision
     # 1 block = 13 seconds. So 260 of these increments per block
-    if data["address"] == settings.SHERLOCK:
+    if data["address"] == SHERLOCK:
         pool["numba"] = int(premium_per_block / 260)
         pool["numba_str"] = str(pool["numba"])
         pool["usd_numba"] = pool["numba"] * \
@@ -92,7 +74,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         pool["usd_numba_str"] = "0"
 
     # Apy
-    premium_per_year = premium_per_block * settings.BLOCKS_PER_YEAR
+    premium_per_year = premium_per_block * BLOCKS_PER_YEAR
     if pool["size"] == 0:
         if sherx_per_block > 0.0:
             pool["apy"] = str(99999999.99)
@@ -102,7 +84,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         pool["apy"] = "%.2f" % round(float(premium_per_year) / pool["size"], 2)
 
     # First money out
-    pool["first_money_out"] = settings.SHERLOCK_HTTP.functions.getFirstMoneyOut(
+    pool["first_money_out"] = SHERLOCK_HTTP.functions.getFirstMoneyOut(
         data["address"]).call()
     pool["first_money_out_str"] = str(pool["first_money_out"])
     pool["first_money_out_usd"] = pool["first_money_out"] / \
@@ -111,9 +93,9 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     pool["first_money_out_usd_format"] = helper.human_format(
         pool["first_money_out_usd"])
 
-    unalloc = settings.SHERLOCK_HTTP.functions.getUnallocatedSherXTotal(
+    unalloc = SHERLOCK_HTTP.functions.getUnallocatedSherXTotal(
         data["address"]).call()
-    total += unalloc * price.get_price(settings.SHERLOCK) / 10**18
+    total += unalloc * price.get_price(SHERLOCK) / 10**18
     total += pool["usd_size"]
     total_fmo += pool["first_money_out_usd"]
 
@@ -121,10 +103,10 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
 
 def get_total_numba():
-    sherx_total = settings.SHERLOCK_HTTP.functions.getSherXPerBlock().call()
+    sherx_total = SHERLOCK_HTTP.functions.getSherXPerBlock().call()
     # 1 block = 13 seconds. So 260 of these increments per block
     sherx_total_50ms = int(sherx_total / 260)
-    return sherx_total_50ms / 10**18 * price.get_price(settings.SHERLOCK)
+    return sherx_total_50ms / 10**18 * price.get_price(SHERLOCK)
 
 
 def get_staking_pool_data():
@@ -132,8 +114,8 @@ def get_staking_pool_data():
     total_fmo = 0
     tokens = []
 
-    for symbol, data in settings.TOKENS.items():
-        if not settings.SHERLOCK_HTTP.functions.isStake(data["address"]).call():
+    for symbol, data in TOKENS.items():
+        if not SHERLOCK_HTTP.functions.isStake(data["address"]).call():
             continue
 
         total, total_fmo, token = _get_staking_pool_token_data(
@@ -141,9 +123,7 @@ def get_staking_pool_data():
         tokens.append(token)
 
     total_numba = get_total_numba()
-
-    last_block = settings.INFURA_HTTP.eth.get_block_number()
-    last_block_data = settings.INFURA_HTTP.eth.get_block(last_block)
+    last_block_data = INFURA_HTTP.eth.get_block("latest")
 
     return {
         "tokens": tokens,

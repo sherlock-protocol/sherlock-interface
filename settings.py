@@ -6,6 +6,8 @@ from decouple import config
 from web3 import Web3, HTTPProvider, WebsocketProvider
 from web3.middleware import geth_poa_middleware
 
+WORKER_ROOT = "indexer"
+
 CONTRACTS = config('CONTRACTS')
 
 SERVER_HOST = config('SERVER_HOST', default="localhost")
@@ -40,8 +42,7 @@ if NETWORK == 'GOERLI':
 elif NETWORK == 'LOCALHOST':
     SHERLOCK = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788"
 
-SHERLOCK_HTTP = INFURA_HTTP.eth.contract(
-    address=SHERLOCK, abi=POOL_ABI)
+SHERLOCK_HTTP = INFURA_HTTP.eth.contract(address=SHERLOCK, abi=POOL_ABI)
 
 COINGECKO_IDS = {
     "ALCX": "alchemix",
@@ -50,22 +51,14 @@ COINGECKO_IDS = {
     "BADGER": "badger-dao"
 }
 
-TOKENS = {}
-tokens = SHERLOCK_HTTP.functions.getTokensStaker().call()
-sherx = SHERLOCK_HTTP.functions.getTokensSherX().call()
-tokens.extend(x for x in sherx if x not in tokens)
+try:
+    path = os.path.join(WORKER_ROOT, "%s.json" % NETWORK)
+    with open(path, "r") as f:
+        DATA = json.load(f)
+        TOKENS = DATA["token"]
+except FileNotFoundError:
+    print("!! CONFIG NOT FOUND")
 
-for token in tokens:
-    w = INFURA_HTTP.eth.contract(address=token, abi=ERC20_ABI)
-    token_decimals = w.functions.decimals().call()
-    symbol = w.functions.symbol().call()
-    TOKENS[symbol] = {
-        "address": token,
-        "name":  w.functions.name().call(),
-        "decimals": token_decimals,
-        "divider": float("1" + "0" * token_decimals),
-        "coingecko": COINGECKO_IDS.get(symbol, symbol.lower())
-    }
 
 BLOCKS_PER_DAY = 6484
 BLOCKS_PER_YEAR = BLOCKS_PER_DAY * 365

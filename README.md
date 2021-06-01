@@ -15,6 +15,12 @@ CHAINID=42
 INFURA_TOKEN=
 DOCS_BASEURL=
 CONTRACTS=
+INDEXER_TIMEOUT=60
 ```
 
+Run `python worker_initial.py` to index data that is not updated as much.
+
+Worker runs periodically in another thread if `export FLASK_ENV=development`, run in different process in production.
+
 Run `python app.py` (inside you virtualenv) to start the web server.
+

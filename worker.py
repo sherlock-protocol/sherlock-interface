@@ -2,7 +2,7 @@ import time
 import os
 import json
 
-from settings import INDEXER_TIMEOUT
+from settings import INDEXER_TIMEOUT, WORKER_ROOT
 from data import pool, tokens, price, protocols, sherlock, sherx, state
 
 INDENT = None
@@ -11,17 +11,15 @@ if os.environ.get("FLASK_ENV") == "development":
     INDENT = 4
     SORT_KEYS = True
 
-ROOT = "indexer"
-
-COOLDOWN_PERIOD = os.path.join(ROOT, "cooldown.json")
-UNSTAKE_WINDOW = os.path.join(ROOT, "unstake.json")
-POOL = os.path.join(ROOT, "pool.json")
-TOKENS = os.path.join(ROOT, "tokens.json")
-PREMIUM = os.path.join(ROOT, "premium.json")
-COVERED = os.path.join(ROOT, "covered.json")
-PRICES = os.path.join(ROOT, "prices.json")
-SHERX = os.path.join(ROOT, "sherx.json")
-STATE = os.path.join(ROOT, "state.json")
+COOLDOWN_PERIOD = os.path.join(WORKER_ROOT, "cooldown.json")
+UNSTAKE_WINDOW = os.path.join(WORKER_ROOT, "unstake.json")
+POOL = os.path.join(WORKER_ROOT, "pool.json")
+TOKENS = os.path.join(WORKER_ROOT, "tokens.json")
+PREMIUM = os.path.join(WORKER_ROOT, "premium.json")
+COVERED = os.path.join(WORKER_ROOT, "covered.json")
+PRICES = os.path.join(WORKER_ROOT, "prices.json")
+SHERX = os.path.join(WORKER_ROOT, "sherx.json")
+STATE = os.path.join(WORKER_ROOT, "state.json")
 
 
 def run():

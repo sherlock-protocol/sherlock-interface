@@ -1,4 +1,4 @@
-import indexer
+import worker
 import os
 import datetime
 
@@ -157,7 +157,7 @@ def breakdown():
 
 def do_indexer():
     import pathlib
-    fname = pathlib.Path(indexer.COVERED)
+    fname = pathlib.Path(worker.COVERED)
     if not fname.exists():
         return True
 
@@ -172,7 +172,7 @@ def do_indexer_loop():
     import time
     while True:
         if do_indexer():
-            indexer.run()
+            worker.run()
         time.sleep(10)
 
 

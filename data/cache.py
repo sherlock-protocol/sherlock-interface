@@ -4,7 +4,7 @@ import copy
 
 from cachetools import cached, TTLCache
 
-import indexer
+import worker
 import settings
 
 from data.protocols import PROTOCOL_META
@@ -15,7 +15,7 @@ CACHE_TIME = 10
 class sherx:
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_underlying():
-        with open(indexer.SHERX, "r") as f:
+        with open(worker.SHERX, "r") as f:
             return json.load(f)
 
 
@@ -52,21 +52,21 @@ class pool:
 
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_staking_pool_data_stored():
-        with open(indexer.POOL, "r") as f:
+        with open(worker.POOL, "r") as f:
             return json.load(f)
 
 
 class tokens:
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_tokens():
-        with open(indexer.TOKENS, "r") as f:
+        with open(worker.TOKENS, "r") as f:
             return json.load(f)
 
 
 class price:
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_prices():
-        with open(indexer.PRICES, "r") as f:
+        with open(worker.PRICES, "r") as f:
             return json.load(f)
 
 
@@ -75,28 +75,28 @@ class protocols:
 
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_protocols_premium():
-        with open(indexer.PREMIUM, "r") as f:
+        with open(worker.PREMIUM, "r") as f:
             return json.load(f)
 
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_protocols_covered():
-        with open(indexer.COVERED, "r") as f:
+        with open(worker.COVERED, "r") as f:
             return json.load(f)
 
 
 class sherlock:
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_cooldown_period():
-        with open(indexer.COOLDOWN_PERIOD, "r") as f:
+        with open(worker.COOLDOWN_PERIOD, "r") as f:
             return json.load(f)
 
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_unstake_window():
-        with open(indexer.UNSTAKE_WINDOW, "r") as f:
+        with open(worker.UNSTAKE_WINDOW, "r") as f:
             return json.load(f)
 
 class state:
     @cached(cache=TTLCache(maxsize=1, ttl=CACHE_TIME))
     def get_state():
-        with open(indexer.STATE, "r") as f:
+        with open(worker.STATE, "r") as f:
             return json.load(f)
