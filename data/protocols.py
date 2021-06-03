@@ -94,7 +94,7 @@ def get_protocols_covered():
 
         total_covered_usd += usd
         protocols_covered[k]["usd"] = usd
-        protocols_covered[k]["usd_str"] = '{:20,.2f}'.format(
+        protocols_covered[k]["usd_str"] = '{:20,.0f}'.format(
             usd / 100000).strip()
 
     for k, v in protocols_covered.items():

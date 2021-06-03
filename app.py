@@ -135,7 +135,7 @@ def harvest(address):
 @app.route('/breakdown')
 def breakdown():
     covered, usd_total = protocols.get_protocols_covered()
-    usd_total_format = '{:20,.2f}'.format(usd_total / 100000).strip()
+    usd_total_format = '{:20,.0f}'.format(usd_total / 100000).strip()
     return render_template(
         'breakdown.html',
         title='Breakdown',
