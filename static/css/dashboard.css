@@ -35,6 +35,10 @@
 .staking-pools h2 {
   margin-left: 20px;
 }
+.cooldown-block table .balance,
+.staking-pools table .balance {
+  width: 200px;
+}
 .cooldown-block table .expander h2,
 .staking-pools table .expander h2 {
   margin-top: 0;

@@ -196,9 +196,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   let main = () => {
-    // Global handlers
-    totalFundsNumba();
-
     // Wallet connected specific handlers
     if (app.getCookie('wallet') != 'None') {
 
@@ -212,7 +209,7 @@ window.addEventListener('DOMContentLoaded', () => {
       // Calculate balance in token row
       calculateUserBalance();
 
-      // Fetch user withdrawals
+      // Fetch wallet withdrawals
       fetchWithdrawals();
     }
   };
@@ -227,5 +224,8 @@ window.addEventListener('DOMContentLoaded', () => {
       main();
     }
   }
+
+  // Global handlers
+  totalFundsNumba();
   contractPolling();
 });

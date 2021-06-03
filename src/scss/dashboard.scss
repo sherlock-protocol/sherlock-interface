@@ -43,6 +43,11 @@
   }
 
   table {
+  
+  .balance {
+    width: 200px;
+  }
+
     .expander {
       h2 {
         margin-top: 0;
@@ -50,7 +55,6 @@
         margin-left: 0;
         font-size: 24px;
       }
-
       .actions {
         div[data-docs] {
           display: flex;

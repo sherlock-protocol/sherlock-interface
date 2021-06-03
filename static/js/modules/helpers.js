@@ -3,11 +3,14 @@ import Sherlock from "../ether/Sherlock.js"
 
 window.app = {};
 
-new Sherlock(sherlock => {
-  window.app.sherlock = sherlock;
-});
+if (typeof web3 != 'undefined') {
+  new Sherlock(sherlock => {
+    window.app.sherlock = sherlock;
+  });
+}
 
-if(window.settings.network == "GOERLI") {
+
+if (window.settings.network == "GOERLI") {
   window.app.provider = new _ethers.providers.AlchemyProvider("goerli", window.settings.infura);
 } else {
   window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);

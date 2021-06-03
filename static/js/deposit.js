@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
         pending.wait().then(response => {
             approved = true;
             toggleApproveLoader(false);
-            app.notify("Succesful", data.token.name + " is now approved.", "success");
+            app.notify("Successful", data.token.name + " is now approved.", "success");
           })
           .catch(resp => {
             app.removeLoader(document.querySelector('#approve'));
