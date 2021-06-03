@@ -29,7 +29,11 @@
       <nav>
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/breakdown" class="{% if currentPage == "breakdown" %}active{% endif %}">Breakdown</a>
-        <a href="#" class="cta {% if env.wallet != "None" %} hidden {% endif %}" id="walletConnect">Connect Wallet</a>
+        {% if env.wallet != "None" %} 
+          <a href="/faucet" class="{% if currentPage == "faucet" %}active{% endif %}">Faucet</a>
+        {% else %}
+          <a href="#" class="cta" id="walletConnect">Connect Wallet</a>
+        {% endif %}
       </nav>
     </div>
   </header>
