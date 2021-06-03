@@ -1,5 +1,24 @@
+form {
+  width: 100%;
+}
+
 .input {
   position: relative;
+  width: 100%;
+
+  input {
+    padding: 10px 20px;
+    background: none;
+    border-radius: 0;
+    border: 4px solid $primary;
+    font-size: 18px;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none!important;
+    color: $primary;
+    font-weight: bold;
+    width: 100%;
+  }
 
   &-sub {
     position: absolute;
