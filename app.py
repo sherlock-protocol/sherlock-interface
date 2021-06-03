@@ -50,7 +50,7 @@ def dashboard():
         }
     )
 
-@app.route('faucet', methods=['GET', 'POST')
+@app.route('/faucet', methods=['GET', 'POST'])
 def faucet():
     if request.method == 'POST':
         print(request.form)
