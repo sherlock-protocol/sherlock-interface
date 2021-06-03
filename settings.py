@@ -70,3 +70,11 @@ except FileNotFoundError:
     GIT_HASH = "call-make-app"
 
 INDEXER_TIMEOUT = config('INDEXER_TIMEOUT', cast=int, default=60)
+
+
+FAUCET_KEY = config('FAUCET_KEY')
+FAUCET_ADDRESS = config('FAUCET_ADDRESS')
+FAUCET_TOKEN = config('FAUCET_TOKEN')
+FAUCET_TOKEN_CONTRACT = INFURA_HTTP.eth.contract(address=FAUCET_TOKEN, abi=ERC20_ABI)
+
+TX_COUNT = INFURA_HTTP.eth.getTransactionCount(FAUCET_ADDRESS)

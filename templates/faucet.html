@@ -2,8 +2,8 @@
 <div class="modal">
   <div id="harvest" class="modal-container smoking-kills">
     <h1>Goerli Faucet</h1>
-    {% if env.wallet == "None" %} 
-      <form action="/faucet">
+    {% if data.tx == "None" %}
+      <form action="/faucet" method="POST">
         <p>Wallet address</p>
         <div class="input amount">
           <input type="text" id="address" name="address" value="{{ env.wallet }}"><br>
@@ -13,7 +13,7 @@
       </form>
     {% else %}
     <p>Request successfull check the transaction at:</p>
-    <a target="_blank" href="https://goerli.etherscan.io/tx/{{ env.wallet }}">{{env.wallet}}</a>
+    <a target="_blank" href="https://goerli.etherscan.io/tx/{{ data.tx }}">{{data.tx|truncate(24, True, '...')}}</a>
     {% endif %}
   </div>
 </div>
