@@ -12,7 +12,7 @@
         <input class="button button-centered" type="submit" value="Submit">
       </form>
     {% else %}
-    <p>Request successfull check the transaction at:</p>
+    <p>Request successful check the transaction at:</p>
     <a target="_blank" href="https://goerli.etherscan.io/tx/{{ data.tx }}">{{data.tx|truncate(24, True, '...')}}</a>
     {% endif %}
   </div>
