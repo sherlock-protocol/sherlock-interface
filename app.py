@@ -54,19 +54,22 @@ def dashboard():
 def faucet():
     tx = "None"
     if request.method == 'POST':
-        receiver = "0x34EDB6fD102578De64CaEbe82f540fB3E47a05EA"
-        data = {
-            'chainId': 5,
-            'gas': Web3.toHex(400000),
-            'gasPrice': Web3.toWei('750', 'gwei'),
-            'nonce': settings.TX_COUNT,
-        }
-        settings.TX_COUNT += 1
-        tx = settings.FAUCET_TOKEN_CONTRACT.functions.transfer(receiver, Web3.toWei('100000', 'mwei')).buildTransaction(data)
-        signed_tx = settings.INFURA_HTTP.eth.account.signTransaction(tx, private_key=settings.FAUCET_KEY)
+        try:
+            receiver = Web3.toChecksumAddress(request.form["address"])
+            data = {
+                'chainId': 5,
+                'gas': Web3.toHex(400000),
+                'gasPrice': Web3.toWei('750', 'gwei'),
+                'nonce': settings.TX_COUNT,
+            }
+            settings.TX_COUNT += 1
+            tx = settings.FAUCET_TOKEN_CONTRACT.functions.transfer(receiver, Web3.toWei('100000', 'mwei')).buildTransaction(data)
+            signed_tx = settings.INFURA_HTTP.eth.account.signTransaction(tx, private_key=settings.FAUCET_KEY)
 
-        settings.INFURA_HTTP.eth.sendRawTransaction(signed_tx.rawTransaction)
-        tx = Web3.toHex(signed_tx["hash"])
+            settings.INFURA_HTTP.eth.sendRawTransaction(signed_tx.rawTransaction)
+            tx = Web3.toHex(signed_tx["hash"])
+        except ValueError:
+            pass
 
     return render_template('faucet.html',
         title='Faucet',
