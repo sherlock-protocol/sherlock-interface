@@ -1,0 +1,10 @@
+{% include 'partials/header.html' %}
+<h2>Goerli Faucet</h2>
+
+<form action="/faucet">
+  <label for="address">Wallet address:</label><br>
+  <input type="text" id="address" name="address"><br>
+  <input type="submit" value="Submit">
+</form>
+
+{% include 'partials/footer.html' %}

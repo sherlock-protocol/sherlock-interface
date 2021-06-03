@@ -54,7 +54,14 @@ def dashboard():
 def faucet():
     if request.method == 'POST':
         print(request.form)
-    return render_template('faucet.html')
+    return render_template('faucet.html',
+        title='Dashboard',
+        desc='dashboard',
+        tags=["dashboard"],
+        currentPage="dashboard",
+        env=env(),
+        data={}
+    )
 
 @app.route('/stake/<address>')
 def deposit(address):
