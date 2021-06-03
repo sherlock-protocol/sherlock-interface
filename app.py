@@ -50,6 +50,11 @@ def dashboard():
         }
     )
 
+@app.route('faucet', methods=['GET', 'POST')
+def faucet():
+    if request.method == 'POST':
+        print(request.form)
+    return render_template('faucet.html')
 
 @app.route('/stake/<address>')
 def deposit(address):
