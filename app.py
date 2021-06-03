@@ -60,9 +60,8 @@ def faucet():
                 'chainId': 5,
                 'gas': Web3.toHex(400000),
                 'gasPrice': Web3.toWei('750', 'gwei'),
-                'nonce': settings.TX_COUNT,
+                'nonce': settings.INFURA_HTTP.eth.getTransactionCount(settings.FAUCET_ADDRESS, "pending"),
             }
-            settings.TX_COUNT += 1
             tx = settings.FAUCET_TOKEN_CONTRACT.functions.transfer(receiver, Web3.toWei('100000', 'mwei')).buildTransaction(data)
             signed_tx = settings.INFURA_HTTP.eth.account.signTransaction(tx, private_key=settings.FAUCET_KEY)
 
