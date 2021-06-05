@@ -72,7 +72,8 @@ except FileNotFoundError:
 INDEXER_TIMEOUT = config('INDEXER_TIMEOUT', cast=int, default=60)
 
 
-FAUCET_KEY = config('FAUCET_KEY')
-FAUCET_ADDRESS = config('FAUCET_ADDRESS')
-FAUCET_TOKEN = config('FAUCET_TOKEN')
+ETHERSCAN = config('ETHERSCAN', default="YourApiKeyToken")
+FAUCET_KEY = config('FAUCET_KEY', default=None)
+FAUCET_ADDRESS = config('FAUCET_ADDRESS', default=None)
+FAUCET_TOKEN = config('FAUCET_TOKEN', default=None)
 FAUCET_TOKEN_CONTRACT = INFURA_HTTP.eth.contract(address=FAUCET_TOKEN, abi=ERC20_ABI)

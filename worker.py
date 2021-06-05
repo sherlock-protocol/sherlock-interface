@@ -1,8 +1,9 @@
 import time
 import os
 import json
+import requests
 
-from settings import INDEXER_TIMEOUT, WORKER_ROOT
+from settings import INDEXER_TIMEOUT, WORKER_ROOT, NETWORK, SHERLOCK, ETHERSCAN
 from data import pool, tokens, price, protocols, sherlock, sherx, state
 
 INDENT = None
@@ -60,7 +61,42 @@ def run():
         json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
 
 
+_prev_number = 0
+
+def verify_run():
+    global _prev_number
+
+    if NETWORK == "LOCALHOST":
+        return True
+    if NETWORK == "GOERLI":
+        url = "https://api-goerli.etherscan.io/api"
+
+    payload = {
+        "module": "account",
+        "action": "txlist",
+        "address": SHERLOCK,
+        "startblock": 0,
+        "endblock":99999999,
+        "page": 1,
+        "offset": 1,
+        "sort": "desc",
+        "apikey": ETHERSCAN
+    }
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+    try:
+        r = requests.get(url, params=payload, headers=headers)
+        b = int(r.json()["result"][0]["blockNumber"])
+        if b > _prev_number:
+            _prev_number = b
+            return True
+        return False
+    except Exception as e:
+        print(e)
+    return True
+
+
 if __name__ == "__main__":
     while True:
-        run()
+        if verify_run():
+            run()
         time.sleep(INDEXER_TIMEOUT)
