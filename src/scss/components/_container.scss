@@ -16,6 +16,15 @@
     }
   }
 
+  &.yell {
+    background: tint($yellow, 40%);
+    // color: $white;
+    // 
+    h2 {
+      font-weight: bolder;
+    }
+  }
+
   &:first-child {
     margin-top: 20px;
   }

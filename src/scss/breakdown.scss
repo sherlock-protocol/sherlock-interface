@@ -4,6 +4,15 @@
   table {
     thead {
       th {
+        &[data-docs="glossary#coverage"]{
+          .docs {
+            margin-right: auto;
+            position: relative;
+            display: inline-flex;
+            margin-left: 20px;
+            top:0;
+          }
+        }
         img {
           height: 60px;
           display: block;

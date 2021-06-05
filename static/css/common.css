@@ -1695,6 +1695,12 @@ table tbody tr:not(.expander):hover {
 .container.purp h2 {
   font-weight: bolder;
 }
+.container.yell {
+  background: #f7dc6f;
+}
+.container.yell h2 {
+  font-weight: bolder;
+}
 .container:first-child {
   margin-top: 20px;
 }
