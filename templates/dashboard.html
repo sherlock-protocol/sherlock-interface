@@ -28,6 +28,7 @@
             {% if env.wallet != "None" %}
             <th data-column="balance" data-column-class="fat">Balance</th>
             {% endif %}
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -40,12 +41,15 @@
               <td>${{ protocol.pool.usd_size_str_format }}</td>
               <td>{{ protocol.pool.apy }}%</td>
               {% if env.wallet != "None" %}
-              <td class="balance"><img class="loader-mini" src="/static/img/mini-loader.svg" alt=""></td>
+              <td class="balance">
+                <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
+              </td>
               {% endif %}
+              <td {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}></td>
             </tr>
             {% if env.wallet != "None" %}
               <tr id="expander-{{ protocol.token.symbol }}" class="expander hidden">
-                <td colspan="5" {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}>
+                <td colspan="5">
                   <h2 {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}>
                     {{ protocol.token.name }}
                   </h2>

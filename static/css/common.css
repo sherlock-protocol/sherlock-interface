@@ -1637,7 +1637,7 @@ table tbody tr.highlighted:not(.expander) {
   background: #ddc7e6 !important;
 }
 table tbody tr.highlighted:not(.expander) * {
-  color: #000 !important;
+  color: #000;
   font-size: 102%;
   font-weight: bold;
 }
@@ -1719,6 +1719,7 @@ table tbody tr:not(.expander):hover {
   position: absolute;
   right: 10px;
   top: 10px;
+  font-weight: bold;
   background: #8e44ad;
   color: #FFF;
   font-size: 20px;

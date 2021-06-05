@@ -40,7 +40,7 @@ table {
         background: tint($primary, 70%) !important;
 
         * {
-          color: $black !important;
+          color: $black;
           font-size: 102%;
           font-weight: bold;
         }
