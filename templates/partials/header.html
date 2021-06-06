@@ -29,8 +29,10 @@
       <nav>
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/breakdown" class="{% if currentPage == "breakdown" %}active{% endif %}">Breakdown</a>
-        {% if env.wallet != "None" %} 
-          <a href="/faucet" class="{% if currentPage == "faucet" %}active{% endif %}">Faucet</a>
+        {% if env.wallet != "None" %}
+          {% if env.network == "GOERLI" %}
+            <a href="/faucet" class="{% if currentPage == "faucet" %}active{% endif %}">Faucet</a>
+          {% endif %}
         {% else %}
           <a href="#" class="cta" id="walletConnect">Connect Wallet</a>
         {% endif %}

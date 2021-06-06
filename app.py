@@ -3,7 +3,7 @@ import os
 import datetime
 
 from web3 import Web3
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, abort
 
 import settings
 from data.cache import pool, tokens, price, protocols, sherlock, sherx, state
@@ -52,6 +52,9 @@ def dashboard():
 
 @app.route('/faucet', methods=['GET', 'POST'])
 def faucet():
+    if settings.NETWORK != "GOERLI":
+        abort(404)
+
     tx = "None"
     if request.method == 'POST':
         try:
@@ -59,11 +62,14 @@ def faucet():
             data = {
                 'chainId': 5,
                 'gas': Web3.toHex(400000),
-                'gasPrice': Web3.toWei('750', 'gwei'),
+                'gasPrice': settings.FAUCET_GAS_PRICE,
                 'nonce': settings.INFURA_HTTP.eth.getTransactionCount(settings.FAUCET_ADDRESS, "pending"),
             }
-            tx = settings.FAUCET_TOKEN_CONTRACT.functions.transfer(receiver, Web3.toWei('100000', 'mwei')).buildTransaction(data)
-            signed_tx = settings.INFURA_HTTP.eth.account.signTransaction(tx, private_key=settings.FAUCET_KEY)
+            tx = settings.FAUCET_TOKEN_CONTRACT.functions.\
+                transfer(receiver, settings.FAUCET_AMOUNT).buildTransaction(data)
+
+            signed_tx = settings.INFURA_HTTP.eth.account.\
+                signTransaction(tx, private_key=settings.FAUCET_KEY)
 
             settings.INFURA_HTTP.eth.sendRawTransaction(signed_tx.rawTransaction)
             tx = Web3.toHex(signed_tx["hash"])

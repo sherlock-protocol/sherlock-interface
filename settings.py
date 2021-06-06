@@ -73,7 +73,10 @@ INDEXER_TIMEOUT = config('INDEXER_TIMEOUT', cast=int, default=60)
 
 
 ETHERSCAN = config('ETHERSCAN', default="YourApiKeyToken")
+
 FAUCET_KEY = config('FAUCET_KEY', default=None)
 FAUCET_ADDRESS = config('FAUCET_ADDRESS', default=None)
 FAUCET_TOKEN = config('FAUCET_TOKEN', default=None)
 FAUCET_TOKEN_CONTRACT = INFURA_HTTP.eth.contract(address=FAUCET_TOKEN, abi=ERC20_ABI)
+FAUCET_GAS_PRICE = config('FAUCET_GAS_PRICE', default=Web3.toWei('750', 'gwei'))
+FAUCET_AMOUNT = config('FAUCET_AMOUNT', default=Web3.toWei('100000', 'mwei'))
