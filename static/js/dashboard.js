@@ -87,6 +87,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
+      if (index <= 3) {
+        index = 0;
+      } else {
+        index -= 3;
+      }
       for (var ii = index; ii < size; ii++) {
         let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         fetchWithdrawal(withdrawal, item, curBlock, ii);
@@ -152,47 +157,56 @@ window.addEventListener('DOMContentLoaded', () => {
   let renderWithdrawalRow = async (options) => {
     let estimate = await window.app.sherlock.LockToToken(options.withdrawal.lock, options.pool.token.address);
     let claimable = false;
+    let expired = false;
+    console.log(options);
     if (options.timeToAvailable <= 0 && options.timeToExpire > 0) {
-      claimable = true
+      claimable = true;
     }
     if (options.timeToExpire > 0) {
-      document.querySelector('#withdrawals').classList.remove('hidden');
-      withdrawalsTable.addRow({
-        row: {
-          icon: {
-            name: options.pool.token.name,
-            file: options.pool.token.symbol.toLowerCase() + '.svg'
-          },
-          protocol: options.pool.token.name,
-          estimate: app.bigNumberToUSD(estimate.mul(window.data.pool.usd_values[options.pool.token.address]), options.pool.token.decimals),
-          stake: options.stake,
-          availableFrom: {
-            ms: options.timeToAvailable >= 0 ? options.timeToAvailable : null,
-            doneText: "Unstake Available",
-            func: (row) => {
+      expired = true;
+    }
+    console.log(expired);
+    document.querySelector('#withdrawals').classList.remove('hidden');
+    withdrawalsTable.addRow({
+      position: -options.index,
+      row: {
+        icon: {
+          name: options.pool.token.name,
+          file: options.pool.token.symbol.toLowerCase() + '.svg'
+        },
+        protocol: options.pool.token.name,
+        estimate: app.bigNumberToUSD(estimate.mul(window.data.pool.usd_values[options.pool.token.address]), options.pool.token.decimals),
+        stake: options.stake,
+        action: {
+          label: claimable ? "Unstake" : "Cancel",
+          action: claimable ? "claim" : "cancel",
+          func: (el) => {
+            withdrawalAction(el, options)
+          }
+        },
+        availableFrom: {
+          ms: options.timeToAvailable >= 0 ? options.timeToAvailable : null,
+          doneText: "Unstake Available",
+          func: (row) => {
+            setTimeout(() => {
               row.querySelector('td.action button').innerHTML = "Unstake";
               row.querySelector('td.action button').setAttribute('action', 'claim');
-            }
-          },
-          availableTill: {
-            ms: options.timeToExpire >= 0 ? options.timeToExpire : null,
-            doneText: "Expired",
-            func: (row) => {
+            }, 10);
+          }
+        },
+        availableTill: {
+          ms: options.timeToExpire >= 0 ? options.timeToExpire : null,
+          doneText: "Expired",
+          func: (row) => {
+            setTimeout(() => {
               row.classList.add('disabled');
               row.querySelector('td.availableFrom').innerHTML = 'Expired';
               row.querySelector('td.action button').disabled = true;
-            }
-          },
-          action: {
-            label: claimable ? "Unstake" : "Cancel",
-            action: claimable ? "claim" : "cancel",
-            func: (el) => {
-              withdrawalAction(el, options)
-            }
+            }, 10);
           }
         }
-      });
-    }
+      }
+    });
   }
 
   let main = () => {

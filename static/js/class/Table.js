@@ -41,7 +41,7 @@ export default class Table {
     if (!position) {
       position = this.tbody.children.length;
     }
-    template.setAttribute('data-id', position);
+    template.setAttribute('data-id', this.tbody.children.length + position);
 
     this.headers.forEach(header => {
       let found = false;
@@ -50,7 +50,6 @@ export default class Table {
           found = true;
           let cellData = entry[1];
           let cell = this.renderCell(cellData, header, position, cbs, template);
-
           if (cellData && cellData.class)
             cell.classList.add(cellData.class);
 
@@ -65,7 +64,7 @@ export default class Table {
       }
     });
 
-    this.tbody.insertBefore(template, this.tbody.children[position]);
+    this.tbody.insertBefore(template, this.tbody.children[this.tbody.children.length + position]);
 
     if (options.collapse) {
       let collapser = this.renderCollapse(options.collapse, template);
@@ -100,27 +99,6 @@ export default class Table {
           cell.innerHTML += app.parse `<img src="${this.imagePrefix}${app.parse`${item.file}`}" title="${item.name}">`;
         });
       }
-    } else if (header.type === "countdown") {
-      if (cellData && cellData.ms) {
-        clearInterval(header.intervals[position]);
-        let amount = cellData.ms;
-        cell.innerHTML = window.app.timeConversion(cellData.ms);
-        header.intervals[position] = setInterval((i) => {
-          amount -= 1000;
-          if (amount <= 0 && cellData && cellData.func) {
-            cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
-
-            cellData.func(template);
-            clearInterval(header.intervals[position]);
-          } else {
-            cell.innerHTML = window.app.timeConversion(amount);
-
-          }
-        }, 1000);
-      } else {
-        cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
-      }
-
     } else if (header.type === "button") {
       let button = document.createElement("button");
       button.innerHTML = app.parse `${cellData.label}`;
@@ -148,6 +126,27 @@ export default class Table {
         amount += cellData.yield;
         cell.innerHTML = app.numberToUSD(amount);
       }, 50);
+    } else if (header.type === "countdown") {
+      if (cellData && cellData.ms) {
+        clearInterval(header.intervals[position]);
+        let amount = cellData.ms;
+        cell.innerHTML = window.app.timeConversion(cellData.ms);
+        header.intervals[position] = setInterval((i) => {
+          amount -= 1000;
+          if (amount <= 0 && cellData && cellData.func) {
+            cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+
+            cellData.func(template);
+            clearInterval(header.intervals[position]);
+          } else {
+            cell.innerHTML = window.app.timeConversion(amount);
+
+          }
+        }, 1000);
+      } else {
+        cell.innerHTML = cellData.doneText ? cellData.doneText : '-';
+        cellData.func(template);
+      }
     }
     return cell;
   }
