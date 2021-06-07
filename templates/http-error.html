@@ -1,0 +1,9 @@
+{% include 'partials/header.html' %}
+<div class="modal">
+  <div class="modal-container smoking-kills">
+    <h1>{{ data.error }}</h1>
+    <p>Please enjoy this picture of a doge.</p>
+    <img src="https://httpstatusdogs.com/img/{{ data.status }}.jpg" width="100%" alt="">
+  </div>
+</div>
+{% include 'partials/footer.html' %}

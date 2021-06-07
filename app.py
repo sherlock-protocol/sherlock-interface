@@ -17,6 +17,25 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.png', mimetype='image/png')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('http-error.html',
+        env=env(),
+        data={
+            "error": "404 - Page not found",
+            "status": "404"
+        }
+    ), 404
+    
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('http-error.html',
+        env=env(),
+        data={
+            "error": "500 - Internal server error",
+            "status": "500"
+        }
+    ), 500
 
 def env():
     return {
