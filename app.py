@@ -26,7 +26,7 @@ def page_not_found(e):
             "status": "404"
         }
     ), 404
-    
+
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template('http-error.html',
