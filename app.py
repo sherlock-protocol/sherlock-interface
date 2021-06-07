@@ -188,32 +188,10 @@ def breakdown():
         }
     )
 
-
-def do_indexer():
-    import pathlib
-    fname = pathlib.Path(worker.COVERED)
-    if not fname.exists():
-        return True
-
-    mtime = datetime.datetime.fromtimestamp(fname.stat().st_mtime)
-    diff = datetime.datetime.now() - mtime
-    if diff.total_seconds() > 1:
-        return True
-    return False
-
-
-def do_indexer_loop():
-    import time
-    while True:
-        if do_indexer():
-            worker.run()
-        time.sleep(10)
-
-
 if __name__ == '__main__':
     if os.environ.get("FLASK_ENV") == "development":
         import threading
-        x = threading.Thread(target=do_indexer_loop, args=())
+        x = threading.Thread(target=worker.loop, args=())
         x.start()
 
     app.run(host=settings.SERVER_HOST, port=settings.SERVER_PORT)

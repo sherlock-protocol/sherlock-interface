@@ -94,9 +94,11 @@ def verify_run():
         print(e)
     return True
 
-
-if __name__ == "__main__":
+def loop():
     while True:
         if verify_run():
             run()
         time.sleep(INDEXER_TIMEOUT)
+
+if __name__ == "__main__":
+    loop()
