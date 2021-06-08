@@ -87,12 +87,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-      if (index <= 3) {
-        index = 0;
-      } else {
-        index -= 3;
-      }
+
       for (var ii = index; ii < size; ii++) {
+        let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
+        fetchWithdrawal(withdrawal, item, curBlock, ii);
+      }
+
+      let expiredStart = (index <= 3 ? 0 : index-3)
+      for (var ii = expiredStart; ii < index; ii++) {
         let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         fetchWithdrawal(withdrawal, item, curBlock, ii);
       }
@@ -158,17 +160,16 @@ window.addEventListener('DOMContentLoaded', () => {
     let estimate = await window.app.sherlock.LockToToken(options.withdrawal.lock, options.pool.token.address);
     let claimable = false;
     let expired = false;
-    console.log(options);
+
     if (options.timeToAvailable <= 0 && options.timeToExpire > 0) {
       claimable = true;
     }
     if (options.timeToExpire > 0) {
       expired = true;
     }
-    console.log(expired);
+
     document.querySelector('#withdrawals').classList.remove('hidden');
     withdrawalsTable.addRow({
-      position: -options.index,
       row: {
         icon: {
           name: options.pool.token.name,
