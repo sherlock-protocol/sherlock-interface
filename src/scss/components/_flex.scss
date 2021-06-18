@@ -1,7 +1,12 @@
 .hbox {
   display: flex;
   flex-direction: row;
-  
+
+  &-between {
+    @extend .hbox;
+    justify-content: space-between;
+  }
+
   &-center {
     @extend .hbox;
     align-items: center;
@@ -11,7 +16,12 @@
 .vbox {
   display: flex;
   flex-direction: column;
-  
+
+  &-between {
+    @extend .vbox;
+    justify-content: space-between;
+  }
+
   &-center {
     @extend .vbox;
     align-items: center;

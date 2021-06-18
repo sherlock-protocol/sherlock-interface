@@ -4,20 +4,22 @@
     <p>Waiting for approval</p>
     <img class="loader-mini" src="/static/img/mini-loader.svg?v={{ env.git_hash }}" alt="">
   </div>
-  <div id="approve" class="modal-container smoking-kills hidden">
-    <h1>Approve {{ data.token.name }}</h1>
-    <p>You need to approve our smart contracts before you can stake {{ data.token.symbol }}.</p>
-    <br>
-    <button type="button" name="button" id="approveButton">Approve</button>
-  </div>
-  <div id="deposit" class="modal-container smoking-kills hidden">
-    <h1>Stake {{ data.token.name }}</h1>
+  <div id="deposit" class="modal-container smoking-kills">
+    <h1><span id="type">Stake</span> {{ data.token.name }}</h1>
     <p>Enter the amount of {{ data.token.name }} you'd like to stake into the Sherlock pool.</p>
     <br>
+    
+    <div class="hbox stretch">
+      Available: 
+      <div class="flex"></div>
+      <b id="max-available">$0.00</b>
+    </div>
+    <div class="hbox stretch">
+      Approved: 
+      <div class="flex"></div>
+      <b id="approved">$0.00</b>
+    </div>
     <div class="input amount">
-      <div class="input-sub">
-        Available: <b id="max-available">$0.00</b>
-      </div>
       <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg?v={{ env.git_hash }}">
       <input type="number" name="amount">
       <button type="button" name="button" id="maxButton">MAX</button>
@@ -26,7 +28,11 @@
     <p>Estimated:</p>
     <h2 id="estimate">$0.00</h2>
     <p>{{ data.xrate_str }} {{ data.token.symbol }} = 1 {{ data.stake.symbol }}</p>
-    <button type="button" name="button" id="depositButton">Stake</button>
+    <button class="hidden" type="button" name="button" id="depositButton">Stake</button>
+    <div class="hbox-between stretch">
+      <button class="hidden" type="button" name="button" id="approveButton">Approve</button>
+      <button class="hidden" type="button" name="button" id="approveButtonMax">Approve Unlimited</button>  
+    </div>
   </div>
 </div>
 {% include 'partials/footer.html' %}

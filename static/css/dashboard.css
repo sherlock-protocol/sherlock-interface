@@ -62,8 +62,7 @@
 .cooldown-block table .expander .actions div[data-docs] a.docs,
 .staking-pools table .expander .actions div[data-docs] a.docs {
   position: relative;
-  margin-top: -9px;
-  top: 0;
+  top: -8px;
   height: 28px;
   width: 28px;
   margin-left: 20px;

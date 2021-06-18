@@ -20,6 +20,10 @@ body {
   color: #8e44ad;
 }
 
+.stretch {
+  width: 100%;
+}
+
 h1,
 h2 {
   color: #000;
@@ -1375,17 +1379,23 @@ footer a {
   margin-bottom: 20px;
 }
 
-.hbox, .hbox-center {
+.hbox, .hbox-center, .hbox-between {
   display: flex;
   flex-direction: row;
+}
+.hbox-between {
+  justify-content: space-between;
 }
 .hbox-center {
   align-items: center;
 }
 
-.vbox, .vbox-center {
+.vbox, .vbox-center, .vbox-between {
   display: flex;
   flex-direction: column;
+}
+.vbox-between {
+  justify-content: space-between;
 }
 .vbox-center {
   align-items: center;
