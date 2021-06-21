@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
             approved = true;
             toggleApproveLoader(false);
             checkAllowance();
-            app.notify("Successful", data.token.name + " is now approved.", "success");
+            app.notify("Successful", "Approval ready!", "success");
           })
           .catch(resp => {
             app.removeLoader(document.querySelector('#approve'));
@@ -76,8 +76,8 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#deposit input').value = parseFloat(value);
       });
     setTimeout(() => {
-      if (data.xrate !== "~")
-        calculateEstimate();
+      calculateEstimate();
+      checkAllowance();
     }, 100)
   }
 
@@ -135,7 +135,6 @@ window.addEventListener('DOMContentLoaded', () => {
             return;
           }
           let approvedAmount = _ethers.utils.formatUnits(resp, data.token.decimals);
-          console.log(approvedAmount);
           document.querySelector('#approved').innerHTML = window.app.depositUSD("" + parseFloat(approvedAmount));
           
           if (resp._hex == '0x00' || value.gt(resp)) {
@@ -157,8 +156,6 @@ window.addEventListener('DOMContentLoaded', () => {
     let amountEl = document.querySelector('[name="amount"]');
     let value = amountEl.value;
     let estimateEl = document.querySelector('#estimate');
-    
-    console.log(value);
     
     if (!value) {
       estimateEl.innerHTML = '$0.00';
