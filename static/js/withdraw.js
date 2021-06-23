@@ -6,40 +6,36 @@ window.addEventListener('DOMContentLoaded', () => {
   let approved = true;
 
   let enableApprove = () => {
-    document.querySelector('#approve').classList.remove('hidden');
-    document.querySelector('#withdraw').classList.add('hidden');
+    document.querySelector('#withdraw #type').innerHTML = "Approve";
+    document.querySelector('#withdraw #approveButton').classList.remove('hidden');
+    document.querySelector('#withdraw #approveButtonMax').classList.remove('hidden');
+    document.querySelector('#withdraw #withdrawButton').classList.add('hidden');
   };
 
-  let enableDeposit = () => {
-    document.querySelector('#withdraw').classList.remove('hidden');
-    document.querySelector('#approve').classList.add('hidden');
+  let enableWithdraw = () => {
+    document.querySelector('#withdraw #type').innerHTML = "Stake";
+    document.querySelector('#withdraw #withdrawButton').classList.remove('hidden');
+    document.querySelector('#withdraw #approveButton').classList.add('hidden');
+    document.querySelector('#withdraw #approveButtonMax').classList.add('hidden');
   };
 
   let approveClick = () => {
-    app.addLoader(document.querySelector('#approve'));
-    tokenErc.approve(window.settings.pool_address, _ethers.constants.MaxUint256)
-      .then(pending => {
-        app.removeLoader(document.querySelector('#approve'));
-        toggleApproveLoader(true);
-        enableDeposit();
-        approved = false;
-        pending.wait().then(response => {
-            approved = true;
-            toggleApproveLoader(false);
-            app.notify("Succesful", data.token.name + " is now approved.", "success");
-          })
-          .catch(resp => {
-            app.removeLoader(document.querySelector('#approve'));
-            console.log(resp);
-            app.catchAll(resp);
-          });
-      })
-      .catch(resp => {
-        app.removeLoader(document.querySelector('#approve'));
-        console.log(resp);
-        app.catchAll(resp);
-      });
+    let amount = document.querySelector('[name="amount"]').value
+    let numb;
+
+    if (amount) {
+      numb = _ethers.utils.parseUnits(amount.toString(), data.token.decimals);
+
+    } else {
+      return;
+    }
+    approve(numb);
   }
+
+  let approveClickMax = () => {
+    approve(_ethers.constants.MaxUint256);
+  }
+
   let toggleApproveLoader = state => {
     let loader = document.querySelector("#approval-loader")
     if (state) {
@@ -58,7 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
       .then(resp => {
         app.removeLoader(document.body);
         if (resp._hex !== '0x00') {
-          enableDeposit();
+          enableWithdraw();
         } else {
           enableApprove();
         }
@@ -117,6 +113,69 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+
+  let approve = value => {
+    tokenErc.approve(window.settings.pool_address, value)
+      .then(pending => {
+        app.removeLoader(document.querySelector('#approve'));
+        toggleApproveLoader(true);
+        enableWithdraw();
+        approved = false;
+        pending.wait().then(response => {
+            approved = true;
+            toggleApproveLoader(false);
+            checkAllowance();
+            app.notify("Successful", "Approval ready!", "success");
+          })
+          .catch(resp => {
+            app.removeLoader(document.querySelector('#approve'));
+            app.catchAll(resp);
+          });
+      })
+      .catch(resp => {
+        app.removeLoader(document.querySelector('#approve'));
+        app.catchAll(resp);
+      });
+  }
+  
+  let checkAllowance = () => {
+    let token = new Erc20(data.stake.address, erc => {
+      tokenErc = erc;
+      erc.allowance(app.getCookie('wallet'), settings.pool_address)
+        .then(resp => {
+          let value = _ethers.BigNumber.from(0);
+          let amount = document.querySelector('[name="amount"]').value;
+          if (amount) {
+            let decimals = 0;
+            if (amount.split(/[,.]/)[1])
+              decimals = amount.split(/[,.]/)[1].length;
+
+            value = _ethers.utils.parseUnits(amount.toString(), data.token.decimals);
+          }
+
+          if (resp.gt(_ethers.constants.MaxUint256.div(_ethers.BigNumber.from("2")))) {
+            enableWithdraw();
+            document.querySelector('#approved').innerHTML = "Unlimited";
+            return;
+          }
+          let approvedAmount = _ethers.utils.formatUnits(resp, data.token.decimals);
+          document.querySelector('#approved').innerHTML = parseFloat(approvedAmount);
+
+          if (resp._hex == '0x00' || value.gt(resp)) {
+            enableApprove();
+          } else {
+            enableWithdraw();
+          }
+        });
+
+      tokenErc.balanceOf(app.getCookie('wallet'))
+        .then(balance => {
+          let value = _ethers.utils.formatUnits(balance, data.token.decimals);
+          document.querySelector('#max-available').innerText = parseFloat(value);
+        });
+    });
+  }
+
   let calculateEstimate = () => {
     let amountEl = document.querySelector('[name="amount"]');
     let value = amountEl.value;
@@ -127,14 +186,17 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
       estimateEl.innerHTML = window.app.withdrawalUSD("" + value);
     }
+    checkAllowance();
+
   }
 
-  //Calculate Estimate
-  if (data.xrate !== "~")
-    document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
+  checkAllowance();
+
+  document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions
-  document.querySelector('#approve #approveButton').addEventListener('click', approveClick);
+  document.querySelector('#withdraw #approveButton').addEventListener('click', approveClick);
+  document.querySelector('#withdraw #approveButtonMax').addEventListener('click', approveClickMax);
 
   //Deposit actions
   document.querySelector('#withdraw #maxButton').addEventListener('click', maxDeposit);

@@ -128,15 +128,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
             value = _ethers.utils.parseUnits(amount.toString(), data.token.decimals);
           }
-          
-          if(resp.gt(_ethers.constants.MaxUint256.div(_ethers.BigNumber.from("2")))) {
+
+          if (resp.gt(_ethers.constants.MaxUint256.div(_ethers.BigNumber.from("2")))) {
             enableDeposit();
             document.querySelector('#approved').innerHTML = "Unlimited";
             return;
           }
           let approvedAmount = _ethers.utils.formatUnits(resp, data.token.decimals);
-          document.querySelector('#approved').innerHTML = window.app.depositUSD("" + parseFloat(approvedAmount));
-          
+          document.querySelector('#approved').innerHTML = parseFloat(approvedAmount);
+
           if (resp._hex == '0x00' || value.gt(resp)) {
             enableApprove();
           } else {
@@ -147,7 +147,7 @@ window.addEventListener('DOMContentLoaded', () => {
       tokenErc.balanceOf(app.getCookie('wallet'))
         .then(balance => {
           let value = _ethers.utils.formatUnits(balance, data.token.decimals);
-          document.querySelector('#max-available').innerText = window.app.depositUSD("" + parseFloat(value));
+          document.querySelector('#max-available').innerText = parseFloat(value);
         });
     });
   }
@@ -156,7 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let amountEl = document.querySelector('[name="amount"]');
     let value = amountEl.value;
     let estimateEl = document.querySelector('#estimate');
-    
+
     if (!value) {
       estimateEl.innerHTML = '$0.00';
     } else {
@@ -167,8 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   checkAllowance();
 
-  // if (data.xrate && data.xrate !== "~")
-    document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
+  document.querySelector('[name="amount"]').addEventListener('keyup', calculateEstimate);
 
   // Approve actions
   document.querySelector('#deposit #approveButton').addEventListener('click', approveClick);
