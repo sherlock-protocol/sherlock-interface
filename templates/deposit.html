@@ -1,4 +1,5 @@
 {% include 'partials/header.html' %}
+
 <div class="modal vbox">
   <div id="approval-loader" class="approval-loader smoking-kills container hidden">
     <p>Waiting for approval</p>
@@ -23,15 +24,18 @@
       <img src="/static/svg/crypto/color/{{ data.token.symbol }}.svg?v={{ env.git_hash }}">
       <input type="number" name="amount">
       <button type="button" name="button" id="maxButton">MAX</button>
+    </div> 
+    <div class="estimate-block smoking-kills">
+      <p>Estimated:</p>
+      <h2 id="estimate">$0.00</h2>
+      <p>{{ data.xrate_str }} {{ data.token.symbol }} = 1 {{ data.stake.symbol }}</p>
     </div>
-    <br>
-    <p>Estimated:</p>
-    <h2 id="estimate">$0.00</h2>
-    <p>{{ data.xrate_str }} {{ data.token.symbol }} = 1 {{ data.stake.symbol }}</p>
-    <button class="hidden" type="button" name="button" id="depositButton">Stake</button>
-    <div class="hbox-between stretch">
-      <button class="hidden" type="button" name="button" id="approveButton">Approve</button>
-      <button class="hidden" type="button" name="button" id="approveButtonMax">Approve Unlimited</button>  
+    <hr>
+    <button class="hidden fixed-width" type="button" name="button" id="depositButton">Stake</button>
+    <div id="approveButtons" class="vbox-center stretch hidden">
+      <button class="fixed-width" type="button" name="button" id="approveButton">Approve</button>
+      <p>or</p>
+      <button class="alt fixed-width" type="button" name="button" id="approveButtonMax">Approve Unlimited</button>  
     </div>
   </div>
 </div>

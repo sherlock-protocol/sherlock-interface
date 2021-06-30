@@ -1494,6 +1494,10 @@ button {
   outline: none;
   text-decoration: none;
 }
+.button.fixed-width,
+button.fixed-width {
+  width: 220px;
+}
 .button.disabled, .button:disabled,
 button.disabled,
 button:disabled {
@@ -1532,8 +1536,9 @@ button.warning:hover {
 }
 .button.alt,
 button.alt {
-  background-color: #e8e9e9;
   color: #000;
+  font-weight: normal;
+  background: none;
 }
 .button.alt:hover,
 button.alt:hover {
@@ -1560,7 +1565,7 @@ form {
   padding: 10px 20px;
   background: none;
   border-radius: 0;
-  border: 4px solid #8e44ad;
+  border: 1px solid #8e44ad;
   font-size: 18px;
   box-sizing: border-box;
   width: 100%;
@@ -1590,25 +1595,25 @@ form {
   background: none;
   color: #8e44ad;
   right: 0;
-  top: 10px;
+  top: 7px;
 }
 .input.amount img {
-  height: 38px;
-  width: 38px;
+  height: 36px;
+  width: 36px;
   position: absolute;
-  top: 5px;
+  top: 3px;
   left: 10px;
 }
 .input.amount input {
   padding: 10px 20px;
   background: none;
   border-radius: 0;
-  border: 4px solid #8e44ad;
+  border: 1px solid #8e44ad;
   font-size: 18px;
   box-sizing: border-box;
   width: 100%;
   padding-right: 70px;
-  padding-left: 50px;
+  padding-left: 60px;
   outline: none !important;
   color: #8e44ad;
   font-weight: bold;

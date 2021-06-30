@@ -10,6 +10,10 @@ button {
   outline: none;
   text-decoration: none;
 
+  &.fixed-width {
+    width: 220px;
+  }
+
   &.disabled,
   &:disabled {
     opacity: 0.6;
@@ -47,8 +51,9 @@ button {
   }
 
   &.alt {
-    background-color: $light-grey;
     color: $black;
+    font-weight: normal;
+    background: none;
 
     &:hover {
       background-color: shade($light-grey, 2%);

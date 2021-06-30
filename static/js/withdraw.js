@@ -7,16 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let enableApprove = () => {
     document.querySelector('#withdraw #type').innerHTML = "Approve";
-    document.querySelector('#withdraw #approveButton').classList.remove('hidden');
-    document.querySelector('#withdraw #approveButtonMax').classList.remove('hidden');
+    document.querySelector('#withdraw #approveButtons').classList.remove('hidden');
     document.querySelector('#withdraw #withdrawButton').classList.add('hidden');
   };
 
   let enableWithdraw = () => {
     document.querySelector('#withdraw #type').innerHTML = "Stake";
     document.querySelector('#withdraw #withdrawButton').classList.remove('hidden');
-    document.querySelector('#withdraw #approveButton').classList.add('hidden');
-    document.querySelector('#withdraw #approveButtonMax').classList.add('hidden');
+    document.querySelector('#withdraw #approveButtons').classList.add('hidden');
   };
 
   let approveClick = () => {

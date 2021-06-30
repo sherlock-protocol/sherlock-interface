@@ -7,16 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let enableApprove = () => {
     document.querySelector('#deposit #type').innerHTML = "Approve";
-    document.querySelector('#deposit #approveButton').classList.remove('hidden');
-    document.querySelector('#deposit #approveButtonMax').classList.remove('hidden');
+    document.querySelector('#deposit #approveButtons').classList.remove('hidden');
     document.querySelector('#deposit #depositButton').classList.add('hidden');
   };
 
   let enableDeposit = () => {
     document.querySelector('#deposit #type').innerHTML = "Stake";
     document.querySelector('#deposit #depositButton').classList.remove('hidden');
-    document.querySelector('#deposit #approveButton').classList.add('hidden');
-    document.querySelector('#deposit #approveButtonMax').classList.add('hidden');
+    document.querySelector('#deposit #approveButtons').classList.add('hidden');
   };
 
   let approveClick = () => {

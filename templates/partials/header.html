@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="/static/css/dashboard.css?v={{ env.git_hash }}">{% endif %}
   {% if currentPage == "breakdown" %}
   <link rel="stylesheet" href="/static/css/breakdown.css?v={{ env.git_hash }}">{% endif %}
-  {% if currentPage == "withdraw" %}
-  <link rel="stylesheet" href="/static/css/withdraw.css?v={{ env.git_hash }}">{% endif %}
+  {% if currentPage == "withdraw" or currentPage == "deposit" %}
+  <link rel="stylesheet" href="/static/css/transfer.css?v={{ env.git_hash }}">{% endif %}
 </head>
 
 <body>

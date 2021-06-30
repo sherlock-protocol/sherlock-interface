@@ -10,11 +10,11 @@ form {
     padding: 10px 20px;
     background: none;
     border-radius: 0;
-    border: 4px solid $primary;
+    border: 1px solid $primary;
     font-size: 18px;
     box-sizing: border-box;
     width: 100%;
-    outline: none!important;
+    outline: none !important;
     color: $primary;
     font-weight: bold;
     width: 100%;
@@ -43,14 +43,14 @@ form {
       background: none;
       color: $primary;
       right: 0;
-      top: 10px;
+      top: 7px;
     }
 
     img {
-      height: 38px;
-      width: 38px;
+      height: 36px;
+      width: 36px;
       position: absolute;
-      top: 5px;
+      top: 3px;
       left: 10px;
     }
 
@@ -58,12 +58,12 @@ form {
       padding: 10px 20px;
       background: none;
       border-radius: 0;
-      border: 4px solid $primary;
+      border: 1px solid $primary;
       font-size: 18px;
       box-sizing: border-box;
       width: 100%;
       padding-right: 70px;
-      padding-left: 50px;
+      padding-left: 60px;
       outline: none!important;
       color: $primary;
       font-weight: bold;
