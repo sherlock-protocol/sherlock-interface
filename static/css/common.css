@@ -1536,13 +1536,13 @@ button.warning:hover {
 }
 .button.alt,
 button.alt {
-  color: #000;
+  color: #525252;
   font-weight: normal;
   background: none;
 }
 .button.alt:hover,
 button.alt:hover {
-  background-color: #e3e4e4;
+  color: #000;
 }
 
 article {

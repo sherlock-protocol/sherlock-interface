@@ -51,12 +51,12 @@ button {
   }
 
   &.alt {
-    color: $black;
+    color: $dark-grey;
     font-weight: normal;
     background: none;
 
     &:hover {
-      background-color: shade($light-grey, 2%);
+      color: $black;
     }
   }
 }

@@ -22,8 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let numb;
 
     if (amount) {
-      numb = _ethers.utils.parseUnits(amount.toString(), data.token.decimals);
-
+      numb = _ethers.utils.parseUnits(amount.toString(), data.stake.decimals);
     } else {
       return;
     }
