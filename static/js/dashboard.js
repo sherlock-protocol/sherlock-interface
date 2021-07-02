@@ -87,13 +87,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-
+      console.log(size, index);
       for (var ii = index; ii < size; ii++) {
         let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         fetchWithdrawal(withdrawal, item, curBlock, ii);
       }
 
-      let expiredStart = (index <= 3 ? 0 : index-3)
+      let expiredStart = (index <= 3 ? 0 : index - 3)
       for (var ii = expiredStart; ii < index; ii++) {
         let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         fetchWithdrawal(withdrawal, item, curBlock, ii);
@@ -127,9 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   let withdrawalAction = (el, options) => {
-
     let rowEl = el.parentNode.parentNode;
-
     if (el.getAttribute('action') === "claim") {
       window.app.addLoader(document.querySelector('#withdrawals'), "", 'small');
       window.app.sherlock.unstake(options.index, app.getCookie('wallet'), options.pool.token.address)
@@ -187,7 +185,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         availableFrom: {
           ms: options.timeToAvailable >= 0 ? options.timeToAvailable : null,
-          doneText: "Unstake Available",
+          doneText: "Available",
           func: (row) => {
             setTimeout(() => {
               row.querySelector('td.action button').innerHTML = "Unstake";
@@ -200,9 +198,9 @@ window.addEventListener('DOMContentLoaded', () => {
           doneText: "Expired",
           func: (row) => {
             setTimeout(() => {
-              row.classList.add('disabled');
-              row.querySelector('td.availableFrom').innerHTML = 'Expired';
-              row.querySelector('td.action button').disabled = true;
+              console.log(row.querySelector('td.availableFrom'));
+              row.querySelector('td.action button').innerHTML = 'Cancel';
+              row.querySelector('td.action button').setAttribute('action', 'cancel'); 
             }, 10);
           }
         }
