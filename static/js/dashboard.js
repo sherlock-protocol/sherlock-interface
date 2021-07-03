@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
       size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-      console.log(size, index);
+
       for (var ii = index; ii < size; ii++) {
         let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
         fetchWithdrawal(withdrawal, item, curBlock, ii);
@@ -141,7 +141,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     } else if (el.getAttribute('action') === "cancel") {
       window.app.addLoader(document.querySelector('#withdrawals'), "", 'small');
-      window.app.sherlock.cancelCooldown(options.index, options.pool.token.address)
+      window.app.sherlock.unstakeWindowExpiry(app.getCookie('wallet'), options.index, options.pool.token.address)
         .then(resp => {
           rowEl.classList.add('disabled');
           app.removeLoader(document.querySelector('#withdrawals'));
@@ -198,9 +198,8 @@ window.addEventListener('DOMContentLoaded', () => {
           doneText: "Expired",
           func: (row) => {
             setTimeout(() => {
-              console.log(row.querySelector('td.availableFrom'));
               row.querySelector('td.action button').innerHTML = 'Cancel';
-              row.querySelector('td.action button').setAttribute('action', 'cancel'); 
+              row.querySelector('td.action button').setAttribute('action', 'cancel');
             }, 10);
           }
         }
