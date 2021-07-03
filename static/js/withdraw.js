@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   let enableWithdraw = () => {
-    document.querySelector('#withdraw #type').innerHTML = "Stake";
+    document.querySelector('#withdraw #type').innerHTML = "Cooldown";
     document.querySelector('#withdraw #withdrawButton').classList.remove('hidden');
     document.querySelector('#withdraw #approveButtons').classList.add('hidden');
   };
@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
         app.catchAll(resp);
       });
   }
-  
+
   let checkAllowance = () => {
     let token = new Erc20(data.stake.address, erc => {
       tokenErc = erc;
@@ -147,7 +147,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if (amount.split(/[,.]/)[1])
               decimals = amount.split(/[,.]/)[1].length;
 
-            value = _ethers.utils.parseUnits(amount.toString(), data.token.decimals);
+            value = _ethers.utils.parseUnits(amount.toString(), data.stake.decimals);
           }
 
           if (resp.gt(_ethers.constants.MaxUint256.div(_ethers.BigNumber.from("2")))) {
@@ -155,7 +155,7 @@ window.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#approved').innerHTML = "Unlimited";
             return;
           }
-          let approvedAmount = _ethers.utils.formatUnits(resp, data.token.decimals);
+          let approvedAmount = _ethers.utils.formatUnits(resp, data.stake.decimals);
           document.querySelector('#approved').innerHTML = parseFloat(approvedAmount);
 
           if (resp._hex == '0x00' || value.gt(resp)) {
@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       tokenErc.balanceOf(app.getCookie('wallet'))
         .then(balance => {
-          let value = _ethers.utils.formatUnits(balance, data.token.decimals);
+          let value = _ethers.utils.formatUnits(balance, data.stake.decimals);
           document.querySelector('#max-available').innerText = parseFloat(value);
         });
     });

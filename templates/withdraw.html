@@ -5,17 +5,17 @@
     <img class="loader-mini" src="/static/img/mini-loader.svg?v={{ env.git_hash }}" alt="">
   </div>
   <div id="withdraw" class="modal-container smoking-kills">
-    <h1><span id="type">Cooldown</span> {{ data.token.name }}</h1>
+    <h1><span id="type">Cooldown</span> {{ data.stake.name }}</h1>
     <p>Enter the amount of {{ data.stake.symbol }} to begin the cooldown.</p>
     <p>Note: Activating the cooldown will transfer your {{ data.stake.symbol }} to the Sherlock contract.</p>
     <br>
     <div class="hbox stretch">
-      Available: 
+      Available:
       <div class="flex"></div>
       <b id="max-available">0</b>
     </div>
     <div class="hbox stretch">
-      Approved: 
+      Approved:
       <div class="flex"></div>
       <b id="approved">0</b>
     </div>
@@ -30,11 +30,11 @@
       <p>1 {{ data.stake.symbol }} = {{ data.xrate_str }} {{ data.token.symbol }}</p>
     </div>
     <button class="hidden fixed-width" type="button" name="button" id="withdrawButton">Activate Cooldown</button>
-    
+
     <div id="approveButtons" class="vbox-center stretch hidden">
       <button class="fixed-width" type="button" name="button" id="approveButton">Approve</button>
       <p>or</p>
-      <button class="fixed-width alt" type="button" name="button" id="approveButtonMax">Approve Unlimited</button>  
+      <button class="fixed-width alt" type="button" name="button" id="approveButtonMax">Approve Unlimited</button>
     </div>
   </div>
 </div>
