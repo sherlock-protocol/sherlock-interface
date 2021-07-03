@@ -3,7 +3,7 @@ import os
 import json
 import requests
 
-from settings import INDEXER_TIMEOUT, WORKER_ROOT, NETWORK, SHERLOCK, ETHERSCAN
+from settings import INDEXER_TIMEOUT, WORKER_ROOT, NETWORK, SHERLOCK, ETHERSCAN, TG_BOT, TG_RECEIVER
 from data import pool, tokens, price, protocols, sherlock, sherx, state
 
 INDENT = None
@@ -94,11 +94,31 @@ def verify_run():
         print(e)
     return True
 
+def tg_msg(msg):
+    url = "https://api.telegram.org/bot%s/sendMessage" % TG_BOT
+    data = {
+        "chat_id": TG_RECEIVER,
+        "text": msg
+    }
+    requests.post(url, json=data)
+
+
 def loop():
     while True:
         if verify_run():
             run()
         time.sleep(INDEXER_TIMEOUT)
 
+
+def loop_catcher():
+    while True:
+        try:
+            loop()
+        except Exception as e:
+            print(e)
+            tg_msg(str(e))
+        time.sleep(300)
+
+
 if __name__ == "__main__":
-    loop()
+    loop_catcher()

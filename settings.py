@@ -80,3 +80,6 @@ FAUCET_TOKEN = config('FAUCET_TOKEN', default=None)
 FAUCET_TOKEN_CONTRACT = INFURA_HTTP.eth.contract(address=FAUCET_TOKEN, abi=ERC20_ABI)
 FAUCET_GAS_PRICE = config('FAUCET_GAS_PRICE', default=Web3.toWei('750', 'gwei'))
 FAUCET_AMOUNT = config('FAUCET_AMOUNT', default=Web3.toWei('100000', 'mwei'))
+
+TG_BOT = config('TG_BOT')
+TG_RECEIVER = config('TG_RECEIVER')
