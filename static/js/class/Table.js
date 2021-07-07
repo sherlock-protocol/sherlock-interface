@@ -37,12 +37,10 @@ export default class Table {
     if (options.highlighted) {
       template.classList.add('highlighted');
     }
-
     if (!position) {
       position = this.tbody.children.length;
     }
-    template.setAttribute('data-id', this.tbody.children.length + position);
-
+    
     this.headers.forEach(header => {
       let found = false;
       Object.entries(options.row).forEach(entry => {
@@ -63,8 +61,7 @@ export default class Table {
         template.innerHTML += `<td></td>`;
       }
     });
-
-    this.tbody.insertBefore(template, this.tbody.children[this.tbody.children.length + position]);
+    this.tbody.insertBefore(template, this.tbody.children[position]);
 
     if (options.collapse) {
       let collapser = this.renderCollapse(options.collapse, template);

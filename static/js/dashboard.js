@@ -1,5 +1,6 @@
 import Erc20 from "./ether/Erc20.js"
 import Table from "./class/Table.js"
+import WithdrawalController from "./class/Withdrawals.js"
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -80,35 +81,22 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   let fetchWithdrawals = async (sherlock) => {
-    let curBlock = window.settings.state.block
-    data.pool.tokens.forEach(async (item, i) => {
-      let index = await window.app.sherlock.getInitialUnstakeEntry(app.getCookie('wallet'), item.token.address);
-      let size = await window.app.sherlock.getUnstakeEntrySize(app.getCookie('wallet'), item.token.address);
+    let callback = data => {
+      data.forEach((item, i) => {
+        fetchWithdrawal(item.result, item.pool, item.index, i);
+      });
+    }
+    let controller = new WithdrawalController(sherlock, callback);
 
-      index = parseInt(_ethers.utils.formatUnits(index, 'wei'));
-      size = parseInt(_ethers.utils.formatUnits(size, 'wei'));
-
-      for (var ii = index; ii < size; ii++) {
-        let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
-        fetchWithdrawal(withdrawal, item, curBlock, ii);
-      }
-
-      let expiredStart = (index <= 3 ? 0 : index - 3)
-      for (var ii = expiredStart; ii < index; ii++) {
-        let withdrawal = await window.app.sherlock.getUnstakeEntry(app.getCookie('wallet'), ii, item.token.address);
-        fetchWithdrawal(withdrawal, item, curBlock, ii);
-      }
-    });
   }
 
-  let fetchWithdrawal = (withdrawal, pool, curBlock, ii) => {
-
+  let fetchWithdrawal = (withdrawal, pool, ii, position) => {
     let stake = _ethers.utils.formatUnits(withdrawal.lock, pool.stake.decimals);
     let block = parseInt(_ethers.utils.formatUnits(withdrawal.blockInitiated, 'wei'));
     let availableFrom = block + data.cooldown_period;
     let availableTill = block + data.cooldown_period + data.unstake_window;
-    let timeToAvailable = (availableFrom - curBlock) * blockTimeMS;
-    let timeToExpire = (availableTill - curBlock) * blockTimeMS;
+    let timeToAvailable = (availableFrom - window.settings.state.block) * blockTimeMS;
+    let timeToExpire = (availableTill - window.settings.state.block) * blockTimeMS;
     let claimable = false;
     if (timeToAvailable <= 0 && timeToExpire > 0) {
       claimable = true
@@ -121,8 +109,9 @@ window.addEventListener('DOMContentLoaded', () => {
       stake: stake,
       timeToAvailable: timeToAvailable,
       index: ii,
+      position: position,
     }
-
+    
     renderWithdrawalRow(options);
   }
 
@@ -168,6 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#withdrawals').classList.remove('hidden');
     withdrawalsTable.addRow({
+      position: options.position,
       row: {
         icon: {
           name: options.pool.token.name,
@@ -198,7 +188,8 @@ window.addEventListener('DOMContentLoaded', () => {
           doneText: "Expired",
           func: (row) => {
             setTimeout(() => {
-              row.querySelector('td.action button').innerHTML = 'Cancel';
+              row.querySelector('td.action button').innerHTML = 'Unclaim';
+              row.querySelector('td.availableFrom').innerHTML = 'Expired';
               row.querySelector('td.action button').setAttribute('action', 'cancel');
             }, 10);
           }
