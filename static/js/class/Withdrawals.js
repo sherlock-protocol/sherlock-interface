@@ -76,21 +76,33 @@ export default class WithdrawalController {
   }
 
   sort() {
+    let expiredBlock = window.settings.state.block - window.data.cooldown_period - window.data.unstake_window;
+
     this.withdrawals = this.withdrawals.filter(item => {
       if (item.hidden === true) return false;
       return true;
     });
+
     this.withdrawals = this.withdrawals.sort((a, b) => {
       let aa = parseInt(_ethers.utils.formatUnits(a.result.blockInitiated, 'wei'));
       let bb = parseInt(_ethers.utils.formatUnits(b.result.blockInitiated, 'wei'));
 
       if (aa > bb) {
-        return -1
+        return -1;
       } else {
         return 1;
       }
     });
+    
+    this.withdrawals = this.withdrawals.sort((a, b) => {
+      let aa = parseInt(_ethers.utils.formatUnits(a.result.blockInitiated, 'wei'));
+      if (aa < expiredBlock) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
 
-    this.callback(this.withdrawals);    
+    this.callback(this.withdrawals);
   }
 }

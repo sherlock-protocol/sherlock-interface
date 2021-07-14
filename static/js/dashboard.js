@@ -95,8 +95,15 @@ window.addEventListener('DOMContentLoaded', () => {
     let block = parseInt(_ethers.utils.formatUnits(withdrawal.blockInitiated, 'wei'));
     let availableFrom = block + data.cooldown_period;
     let availableTill = block + data.cooldown_period + data.unstake_window;
-    let timeToAvailable = (availableFrom - window.settings.state.block) * blockTimeMS;
-    let timeToExpire = (availableTill - window.settings.state.block) * blockTimeMS;
+    
+    // TODO: @evert could you verify if this is implemented correctly this way?
+    let curBlockTimestamp = (window.settings.state.timestamp + window.settings.time_error) * 1000;
+    let currentTimeStamp = Date.now();
+    let difference = currentTimeStamp - curBlockTimestamp;
+    
+    
+    let timeToAvailable = ((availableFrom - window.settings.state.block) * blockTimeMS) - difference;
+    let timeToExpire = ((availableTill - window.settings.state.block) * blockTimeMS) -  difference;
     let claimable = false;
     if (timeToAvailable <= 0 && timeToExpire > 0) {
       claimable = true
