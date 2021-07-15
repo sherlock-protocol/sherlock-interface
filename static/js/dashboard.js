@@ -4,8 +4,6 @@ import WithdrawalController from "./class/Withdrawals.js"
 
 
 window.addEventListener('DOMContentLoaded', () => {
-  const blockTimeMS = 13325;
-
   const withdrawalsTable = new Table({
     el: document.querySelector('#withdrawalsTable'),
     imagePrefix: "/static/svg/crypto/color/"
@@ -95,15 +93,9 @@ window.addEventListener('DOMContentLoaded', () => {
     let block = parseInt(_ethers.utils.formatUnits(withdrawal.blockInitiated, 'wei'));
     let availableFrom = block + data.cooldown_period;
     let availableTill = block + data.cooldown_period + data.unstake_window;
-    
-    // TODO: @evert could you verify if this is implemented correctly this way?
-    let curBlockTimestamp = (window.settings.state.timestamp + window.settings.time_error) * 1000;
-    let currentTimeStamp = Date.now();
-    let difference = currentTimeStamp - curBlockTimestamp;
-    
-    
-    let timeToAvailable = ((availableFrom - window.settings.state.block) * blockTimeMS) - difference;
-    let timeToExpire = ((availableTill - window.settings.state.block) * blockTimeMS) -  difference;
+
+    let timeToAvailable = window.app.expectedBlockTime(availableFrom)
+    let timeToExpire = window.app.expectedBlockTime(availableTill)
     let claimable = false;
     if (timeToAvailable <= 0 && timeToExpire > 0) {
       claimable = true
@@ -118,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
       index: ii,
       position: position,
     }
-    
+
     renderWithdrawalRow(options);
   }
 

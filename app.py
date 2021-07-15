@@ -7,7 +7,6 @@ from flask import Flask, render_template, request, redirect, send_from_directory
 
 import settings
 from data.cache import pool, tokens, price, protocols, sherlock, sherx, state
-from data.pool import TIMESTAMP_ERROR
 
 app = Flask(__name__, template_folder="templates")
 
@@ -46,9 +45,9 @@ def env():
         "git_hash": settings.GIT_HASH,
         "docsBaseUrl": settings.DOCS_BASEURL,
         "wallet": request.cookies.get('wallet', 'None'),
-        "time_error": TIMESTAMP_ERROR,
         "endpoint": settings.ENDPOINT,
         "state": state.get_state(),
+        "blocktime": 13325
     }
 
 

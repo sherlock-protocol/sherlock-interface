@@ -259,7 +259,7 @@ window.app.userExtraAsync = async function(sherlock, token, userSize, userYield)
 
   // calculate diff in blocktime with useryield
 
-  let curBlockTimestamp = (window.settings.state.timestamp + window.settings.time_error) * 1000;
+  let curBlockTimestamp = window.settings.state.timestamp * 1000;
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
@@ -295,3 +295,17 @@ window.app.removeLoader = (el) => {
   el.style.position = el.oldPos;
   if (template) template.remove(template);
 };
+
+window.app.expectedBlockTime = function(blockNumber) {
+  let curBlockTimestamp = window.settings.state.timestamp * 1000;
+  let currTimeStamp = Date.now();
+  // If positive, the block was mined `difference` amount of miliseconds ago
+  // Could be negative, meaning a block was mined in the future (wrong data input)
+  let milisMinedAgo = (currTimeStamp - curBlockTimestamp);
+  if (milisMinedAgo < 0) {
+    console.log("Error in timestamp difference calculation, negative value:", milisMinedAgo)
+  }
+
+  let amountBlockDiff = blockNumber - window.settings.state.block
+  return amountBlockDiff * window.settings.state.blocktime - milisMinedAgo
+}

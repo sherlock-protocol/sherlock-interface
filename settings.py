@@ -83,3 +83,7 @@ FAUCET_AMOUNT = config('FAUCET_AMOUNT', default=Web3.toWei('100000', 'mwei'))
 
 TG_BOT = config('TG_BOT')
 TG_RECEIVER = config('TG_RECEIVER')
+
+TIMESTAMP_ERROR = 0
+if os.environ.get("FLASK_ENV") == 'development':
+    TIMESTAMP_ERROR = -67

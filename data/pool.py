@@ -2,13 +2,8 @@ import os
 
 from web3 import Web3
 
-from settings import DATA, INFURA_HTTP, ERC20_ABI, SHERLOCK_HTTP, SHERLOCK, BLOCKS_PER_YEAR, TOKENS
+from settings import DATA, INFURA_HTTP, ERC20_ABI, SHERLOCK_HTTP, SHERLOCK, BLOCKS_PER_YEAR, TOKENS, TIMESTAMP_ERROR
 from data import price, helper
-
-TIMESTAMP_ERROR = 0
-if os.environ.get("FLASK_ENV") == 'development':
-    TIMESTAMP_ERROR = -67
-
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     try:
