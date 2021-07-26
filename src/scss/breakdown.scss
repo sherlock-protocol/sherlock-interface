@@ -2,17 +2,19 @@
 
 .breakdown {
   table {
+    background: $black;
     thead {
       th {
-        &[data-docs="glossary#coverage"]{
+        &[data-docs="glossary#coverage"] {
           .docs {
             margin-right: auto;
             position: relative;
             display: inline-flex;
             margin-left: 20px;
-            top:0;
+            top: 0;
           }
         }
+
         img {
           height: 60px;
           display: block;
@@ -37,7 +39,7 @@
   .protocol {
     margin-bottom: 20px;
     padding: 20px;
-    color: $accent;
+    background: $black;
 
     &:first-of-type {
       margin-top: 20px;
@@ -50,9 +52,8 @@
         margin-left: 20px;
       }
     }
-    
+
     .scrollx {
-      
       margin: 0 -20px;
     }
 

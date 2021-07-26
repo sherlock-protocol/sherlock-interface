@@ -1,3 +1,6 @@
+.breakdown table {
+  background: #000;
+}
 .breakdown table thead th[data-docs="glossary#coverage"] .docs {
   margin-right: auto;
   position: relative;
@@ -23,7 +26,7 @@
 .breakdown .protocol {
   margin-bottom: 20px;
   padding: 20px;
-  color: #01FEB4;
+  background: #000;
 }
 .breakdown .protocol:first-of-type {
   margin-top: 20px;
