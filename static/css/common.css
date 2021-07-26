@@ -1088,7 +1088,7 @@ p {
   left: 0;
 }
 
-header {
+header.main {
   background: #000;
   color: #FFF;
   box-sizing: border-box;
@@ -1097,7 +1097,7 @@ header {
   align-items: flex-end;
   position: relative;
 }
-header div.side {
+header.main div.side {
   margin-left: auto;
   display: flex;
   justify-content: space-between;
@@ -1105,18 +1105,12 @@ header div.side {
   flex-direction: row-reverse;
   align-items: center;
 }
-header div.side .meta span {
-  text-align: right;
-  display: block;
-  color: #01FEB4;
-  font-weight: bold;
-  margin-right: 20px;
-}
-header div.side nav {
+header.main div.side nav {
   display: flex;
   justify-content: flex-end;
+  margin-right: -20px;
 }
-header div.side nav a {
+header.main div.side nav a {
   color: #FFF;
   text-decoration: none;
   font-size: 18px;
@@ -1129,11 +1123,11 @@ header div.side nav a {
   text-transform: uppercase;
   font-weight: 600;
 }
-header div.side nav a:hover:after {
+header.main div.side nav a:hover:after {
   left: 0;
   right: 0;
 }
-header div.side nav a:after {
+header.main div.side nav a:after {
   content: " ";
   background: #8717E8;
   position: absolute;
@@ -1143,13 +1137,13 @@ header div.side nav a:after {
   right: 50%;
   transition: left 200ms ease-in, right 200ms ease-in;
 }
-header div.side nav a.active {
+header.main div.side nav a.active {
   color: #01FEB4;
 }
-header div.side nav a:not([style*="display:none"]):last-child {
+header.main div.side nav a:not([style*="display:none"]):last-child {
   margin-right: 0;
 }
-header .logo {
+header.main .logo {
   font-size: 32px;
   display: flex;
   align-items: center;
@@ -1157,11 +1151,21 @@ header .logo {
   margin-top: 20px;
   text-decoration: none;
 }
-header .logo img {
+header.main .logo img {
   height: 50px;
 }
-header .logo span {
+header.main .logo span {
   color: #FFF;
+}
+
+header.sub {
+  background: #000;
+}
+header.sub .meta span {
+  text-align: right;
+  display: block;
+  color: #01FEB4;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 2000px) {

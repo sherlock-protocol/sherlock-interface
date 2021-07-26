@@ -1,4 +1,4 @@
-header {
+header.main {
   background: $black;
   color: $white;
   // padding: 20px 500px 0;
@@ -16,19 +16,10 @@ header {
     flex-direction: row-reverse;
     align-items: center;
 
-    .meta {
-      span {
-        text-align: right;
-        display: block;
-        color: $accent;
-        font-weight: bold;
-        margin-right: 20px;
-      }
-    }
-
     nav {
       display: flex;
       justify-content: flex-end;
+      margin-right: -20px;
 
       a {
         color: $white;
@@ -90,6 +81,19 @@ header {
     }
   }
 }
+header.sub {
+  background: $black;
+
+  .meta {
+    span {
+      text-align: right;
+      display: block;
+      color: $accent;
+      font-weight: bold;
+    }
+  }
+}
+
 @media only screen and (max-width: 2000px) {
   header {
     padding-left: 500px;

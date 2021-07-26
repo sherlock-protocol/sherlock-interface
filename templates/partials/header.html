@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="main">
     <a class="logo" href="/">
       <img src="/static/img/logo-white.svg?v={{ env.git_hash }}" alt="">
     </a>
@@ -34,9 +34,13 @@
           <a href="#" class="cta" id="walletConnect">Connect Wallet</a>
         {% endif %}
       </nav>
-      <div class="meta">
-        <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
-      </div>
     </div>
   </header>
+  
+  <header class="sub">    
+    <div class="meta">
+      <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
+    </div>
+  </header>
+  
   <div class="app">
