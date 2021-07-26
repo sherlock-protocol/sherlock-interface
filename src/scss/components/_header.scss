@@ -1,7 +1,7 @@
 header {
-  background: $primary;
+  background: $black;
   color: $white;
-  padding: 20px 500px 0;
+  // padding: 20px 500px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -11,14 +11,18 @@ header {
   div.side {
     margin-left: auto;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+    flex-direction: row-reverse;
+    align-items: center;
 
     .meta {
       span {
         text-align: right;
-        margin-bottom: 10px;
         display: block;
+        color: $accent;
+        font-weight: bold;
+        margin-right: 20px;
       }
     }
 
@@ -31,7 +35,7 @@ header {
         text-decoration: none;
         font-size: 18px;
         padding: 5px 20px;
-        background: tint($primary, 10%);
+        // background: tint($primary, 10%);
         box-sizing: border-box;
         display: inline-block;
         margin-left: 10px;
@@ -49,7 +53,7 @@ header {
 
         &:after {
           content: ' ';
-          background: $white;
+          background: $menu;
           position: absolute;
           bottom: 100%;
           top: -3px;
@@ -59,12 +63,7 @@ header {
         }
 
         &.active {
-          background: tint($grey, 90%);
-          color: $primary;
-
-          &:after {
-            background: tint($primary, 50%);
-          }
+          color: $accent;
         }
 
         &:not([style*="display:none"]):last-child {
@@ -79,6 +78,7 @@ header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 20px;
     text-decoration: none;
 
     img {
@@ -87,7 +87,6 @@ header {
 
     span {
       color: $white;
-      // margin-left: 20px;
     }
   }
 }

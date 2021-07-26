@@ -13,10 +13,10 @@ table {
     th {
       padding: 10px 20px;
       font-size: 16px;
-      color: $black;
       text-align: left;
       font-family: 'montserrat';
       text-transform: uppercase;
+      color: $white;
 
       &.align-right {
         text-align: right;
@@ -30,6 +30,8 @@ table {
   }
 
   tbody {
+    color: $white;
+    
     tr {
       &.disabled {
         opacity: 0.5;
@@ -37,16 +39,13 @@ table {
       }
 
       &.highlighted:not(.expander) {
-        background: tint($primary, 70%) !important;
+        background: rgba($primary, 20%) !important;
 
         * {
-          color: $black;
           font-size: 102%;
           font-weight: bold;
         }
       }
-
-      &.expander.highlighted {}
 
       td {
         padding: 10px 20px;
@@ -81,25 +80,17 @@ table {
           background: $primary;
           color: $white;
           border: none;
-          padding: 4px 5px;
-          font-weight: bold;
+          padding: 5px 10px;
+          font-family: "Courier" !important;
           border: none;
           cursor: pointer;
           width: 100%;
         }
       }
 
-      &:nth-child(odd) {
-        background: tint($primary, 90%);
-      }
-
-      &:nth-child(even) {
-        background: tint($primary, 94%);
-      }
-
       &:not(.expander) {
         &:hover {
-          background: tint($primary, 80%);
+          background: rgba($accent, 20%) !important;
         }
       }
     }

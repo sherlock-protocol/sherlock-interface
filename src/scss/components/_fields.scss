@@ -10,7 +10,7 @@ form {
     padding: 10px 20px;
     background: none;
     border-radius: 0;
-    border: 1px solid $primary;
+    border: 1px solid $white;
     font-size: 18px;
     box-sizing: border-box;
     width: 100%;
@@ -55,10 +55,10 @@ form {
     }
 
     input {
+      @extend .smoking-kills;
       padding: 10px 20px;
       background: none;
       border-radius: 0;
-      border: 1px solid $primary;
       font-size: 18px;
       box-sizing: border-box;
       width: 100%;

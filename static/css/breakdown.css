@@ -14,7 +14,6 @@
 .breakdown .welcome {
   margin-bottom: 20px;
   margin-top: 20px;
-  background: #FFF;
   padding: 20px;
   align-items: center;
 }
@@ -23,8 +22,8 @@
 }
 .breakdown .protocol {
   margin-bottom: 20px;
-  background: #FFF;
   padding: 20px;
+  color: #01FEB4;
 }
 .breakdown .protocol:first-of-type {
   margin-top: 20px;
@@ -49,7 +48,7 @@
 .breakdown .protocol table td b {
   text-align: center;
   display: block;
-  color: #8e44ad;
+  color: #FE6E99;
   font-size: 120%;
 }
 .breakdown .protocol table td:last-child {
@@ -58,7 +57,7 @@
   white-space: nowrap;
 }
 .breakdown .protocol h3 {
-  color: #8e44ad;
+  color: #FE6E99;
   font-size: 22px;
   margin-bottom: 0;
 }

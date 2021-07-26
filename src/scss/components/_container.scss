@@ -1,25 +1,23 @@
 .container {
-  background: $white;
   padding: 10px 20px;
   margin-bottom: 20px;
+  color: $white;
+  background: $black;
+  
+  &.purp {
+    // background: rgba($background, 20%);
+    h2 {
+      font-weight: bold;
+    }
+  }
   
   &.centered {
     text-align: center;
   }
 
-  &.purp {
-    background: tint($primary, 90%);
-    // color: $white;
-    // 
-    h2 {
-      font-weight: bolder;
-    }
-  }
-
-  &.yell {
-    background: tint($yellow, 40%);
-    // color: $white;
-    // 
+  &.warning {
+    // background: rgba($background, 20%);
+    
     h2 {
       font-weight: bolder;
     }

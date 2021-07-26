@@ -26,7 +26,6 @@
   .welcome {
     margin-bottom: 20px;
     margin-top: 20px;
-    background: $white;
     padding: 20px;
     align-items: center;
 
@@ -37,8 +36,8 @@
 
   .protocol {
     margin-bottom: 20px;
-    background: $white;
     padding: 20px;
+    color: $accent;
 
     &:first-of-type {
       margin-top: 20px;

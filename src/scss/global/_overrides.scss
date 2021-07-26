@@ -7,6 +7,10 @@ body {
   height: 100vh;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .hidden {
   display: none !important;
 }
@@ -26,12 +30,20 @@ body {
 
 h1,
 h2 {
-  color: $black;
   font-family: 'montserrat';
 
   sup {
     font-size: 14px;
   }
+}
+
+h1,
+h2 {
+  color: $white;
+}
+
+p {
+  color: $white;
 }
 
 .justify-box {
@@ -41,20 +53,4 @@ h2 {
 
 .scrollx {
   overflow-x: auto;
-  // @media only screen and (max-width: 1350px) {
-  //   table {
-  //     position: relative;
-  // 
-  //     &:after {
-  //       content: "«»";
-  //       background: $primary;
-  //       color: $white;
-  //       border-radius: 50%;
-  //       width: 100px;
-  //       height: 30px;
-  //       padding: 5px 10px;
-  //       position: static;
-  //     }
-  //   }
-  // }
 }

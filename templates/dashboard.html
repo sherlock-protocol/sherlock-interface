@@ -1,6 +1,6 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
-  <div class="hbox container yell smoking-kills">
+  <div class="hbox container warning smoking-kills">
     <b>Note: Please manually set gas prices for all transactions to 1000 gwei.</b>
   </div>
   <div class="hbox stats">
@@ -26,14 +26,14 @@
             <th data-column="poolsize" data-column-type="numba">Pool Size</th>
             <th data-column="apy" data-column-class="fat">APY</th>
             {% if env.wallet != "None" %}
-            <th data-column="balance" data-column-class="fat">Balance</th>
+              <th data-column="balance" data-column-class="fat">Balance</th>
             {% endif %}
             <th></th>
           </tr>
         </thead>
         <tbody>
           {% for protocol in data.pool.tokens %}
-            <tr id="token-{{protocol.token.symbol}}" class="token {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}">
+            <tr id="token-{{protocol.token.symbol}}" class="token {% if env.wallet != "None" %} clickable {% endif %} {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}">
               <td class="icon">
                 <img src="/static/svg/crypto/color/{{ protocol.token.symbol }}.svg?v={{ env.git_hash }}" title="{{ protocol.token.symbol }}">
               </td>
@@ -41,14 +41,14 @@
               <td>${{ protocol.pool.usd_size_str_format }}</td>
               <td>{{ protocol.pool.apy }}%</td>
               {% if env.wallet != "None" %}
-              <td class="balance">
-                <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
-              </td>
+                <td class="balance fat">
+                  <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
+                </td>
               {% endif %}
               <td {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}></td>
             </tr>
             {% if env.wallet != "None" %}
-              <tr id="expander-{{ protocol.token.symbol }}" class="expander hidden">
+              <tr id="expander-{{ protocol.token.symbol }}" class="expander smoking-kills hidden">
                 <td colspan="5">
                   <h2 {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}>
                     {{ protocol.token.name }}
@@ -134,11 +134,11 @@
       <table id="withdrawalsTable">
         <thead>
           <th data-column="icon" data-column-type="image" data-column-class="icon" width="40">Pool</th>
-          <th data-column="protocol" data-column-class="fat"></th>
-          <th data-column="estimate" data-column-class="fat">Balance</th>
+          <th data-column="protocol"></th>
           <th data-column="stake">lockTokens</th>
           <th data-column="availableFrom" data-column-type="countdown" data-column-class="availableFrom">Earliest Unstake</th>
           <th data-column="availableTill" data-column-type="countdown">Latest Unstake</th>
+          <th data-column="estimate" data-column-class="fat">Balance</th>
           <th data-column="action" data-column-type="button" data-column-class="action"></th>
         </thead>
         <tbody></tbody>

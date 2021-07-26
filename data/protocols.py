@@ -22,6 +22,8 @@ PROTOCOL_META = {
         "twitter": "https://twitter.com/alchemixfi",
         "logo": "alchmix",
         "desc": "Alchemix is a DeFi protocol that allows for the creation of synthetic tokens that represent the future yield of a deposit. It enables users to retrieve near instant tokenized value against temporary* deposits of stablecoins. A magic money potion if you will, however one that is crafted in Defi with perhaps a sprinkling of ancient wisdom(!). The protocol presents a powerful new DeFi primitive offering myriad applications for users and an exciting new tool for other developers.",
+        "deductable": "123,00",
+        "lead_watson": "Evert0x",
     },
     BADGER_PROTOCOL: {
         "name": "Badger",
@@ -29,6 +31,12 @@ PROTOCOL_META = {
         "twitter": "https://twitter.com/BadgerDAO",
         "logo": "badger",
         "desc": "Badger is a decentralized autonomous organization (DAO) with a single purpose: build the products and infrastructure necessary to accelerate Bitcoin as collateral across other blockchains.",
+        "deductable": "123,00",
+        "lead_watson": {
+            "name": "flessendop",
+            "twitter": "flessendop",
+            "risk_analysus": "badger_risk_analysis.pdf",
+        },
     },
     SET_PROTOCOL: {
         "name": "SET Protocol",
@@ -36,6 +44,13 @@ PROTOCOL_META = {
         "twitter": "https://twitter.com/SetProtocol",
         "logo": "setprotocol",
         "desc": "Set Protocol is a non-custodial protocol built on Ethereum that allows for the creation, management, and trading of Sets, ERC20 tokens that represent a portfolio or basket of underlying assets. Each Set operates and periodically rebalances its portfolio according to a strategy coded into its smart contract.",
+        "deductable": "123,00",
+        "coverage_document": "", 
+        "lead_watson": {
+            "name": "JackSanford",
+            "twitter": "jack",
+            "risk_analysus": "set-protocol_risk_analysis.pdf",
+        },
     },
 }
 
