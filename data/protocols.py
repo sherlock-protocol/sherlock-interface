@@ -1,4 +1,5 @@
 import copy
+from random import randrange
 
 from settings import TOKENS, SHERLOCK_HTTP, BLOCKS_PER_DAY
 
@@ -106,6 +107,8 @@ def get_protocols_covered():
 
             c["covered"] = p
             c["covered_str"] = human_format(p / 100000)
+            # TODO: @Evert could you calculate the percentage of the total here?
+            c["percentage"] = randrange(100)
 
         total_covered_usd += usd
         protocols_covered[k]["usd"] = usd

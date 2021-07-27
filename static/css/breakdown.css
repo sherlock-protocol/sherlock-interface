@@ -1,3 +1,33 @@
+.coverage-breakdown__row {
+  height: 200px;
+}
+.coverage-breakdown__row:hover {
+  background: transparent !important;
+}
+.coverage-breakdown__holder {
+  position: relative;
+  padding: 0;
+}
+.coverage-breakdown__holder-bar {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  background: #01FEB4;
+  color: transparent;
+  font-weight: bold;
+  align-self: start;
+  font-size: 20px;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.coverage-breakdown__holder-bar:hover {
+  color: #FE6E99;
+  background: #01e5a2;
+}
+
 .breakdown table {
   background: #000;
 }
@@ -77,7 +107,7 @@
   height: 60px;
 }
 .breakdown .protocol .meta .button {
-  font-size: 22px;
+  font-size: 18px;
 }
 .breakdown .protocol .meta > * {
   margin-right: 10px;

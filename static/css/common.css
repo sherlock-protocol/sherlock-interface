@@ -4,6 +4,7 @@ body {
   font-family: "courier";
   display: flex;
   flex-direction: column;
+  font-family: "montserrat";
   height: 100vh;
 }
 
@@ -1119,7 +1120,6 @@ header.main div.side nav a {
   display: inline-block;
   margin-left: 10px;
   position: relative;
-  font-family: "montserrat";
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -1160,6 +1160,8 @@ header.main .logo span {
 
 header.sub {
   background: #000;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 header.sub .meta span {
   text-align: right;
@@ -1650,7 +1652,6 @@ table thead th {
   padding: 10px 20px;
   font-size: 16px;
   text-align: left;
-  font-family: "montserrat";
   text-transform: uppercase;
   color: #FFF;
 }
@@ -1681,6 +1682,9 @@ table tbody tr td {
 table tbody tr td.align-right {
   text-align: right;
 }
+table tbody tr td.align-center {
+  text-align: center;
+}
 table tbody tr td.fat {
   font-weight: bold;
   color: #FE6E99;
@@ -1700,13 +1704,12 @@ table tbody tr td button {
   color: #FFF;
   border: none;
   padding: 5px 10px;
-  font-family: "Courier" !important;
   border: none;
   cursor: pointer;
   width: 100%;
 }
 table tbody tr:not(.expander):hover {
-  background: rgba(1, 254, 180, 0.2) !important;
+  background: rgba(1, 254, 180, 0.2);
 }
 
 .container {

@@ -34,6 +34,7 @@
         <div class="flex vbox">
           <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
           <div class="hbox meta">
+            <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}" target="_blank">Agreement</a>
             <a class="button website" href="{{ data.protocol_meta[protocol].website }}" target="_blank">Website</a>
             <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}" target="_blank">Twitter</a>
           </div>
@@ -59,9 +60,19 @@
             <tbody>
               <tr>
                 {% for token in data.protocols_covered[protocol].sorted %}
-                  <td>${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
+                  <td class="align-center">${{ data.protocols_covered[protocol].tokens[token].covered_str }}</td>
                 {% endfor %}
                 <td class="align-right fat">${{ data.protocols_covered[protocol].usd_str }}</td>
+              </tr>
+              <tr class="coverage-breakdown__row">
+                {% for token in data.protocols_covered[protocol].sorted %}
+                  <td class="coverage-breakdown__holder">
+                    <div class="coverage-breakdown__holder-bar" style="height:{{ data.protocols_covered[protocol].tokens[token].percentage }}%;">
+                      {{ data.protocols_covered[protocol].tokens[token].percentage }}%
+                    </div>
+                  </td>
+                {% endfor %}
+
               </tr>
             </tbody>
           </table>

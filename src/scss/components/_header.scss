@@ -31,7 +31,6 @@ header.main {
         display: inline-block;
         margin-left: 10px;
         position: relative;
-        font-family: "montserrat";
         text-transform: uppercase;
         font-weight: 600;
 
@@ -83,6 +82,8 @@ header.main {
 }
 header.sub {
   background: $black;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   .meta {
     span {

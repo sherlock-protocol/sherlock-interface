@@ -14,7 +14,6 @@ table {
       padding: 10px 20px;
       font-size: 16px;
       text-align: left;
-      font-family: 'montserrat';
       text-transform: uppercase;
       color: $white;
 
@@ -54,6 +53,10 @@ table {
           text-align: right;
         }
 
+        &.align-center {
+          text-align: center;
+        }
+
         &.fat {
           font-weight: bold;
           color: $primary;
@@ -81,7 +84,6 @@ table {
           color: $white;
           border: none;
           padding: 5px 10px;
-          font-family: "Courier" !important;
           border: none;
           cursor: pointer;
           width: 100%;
@@ -90,7 +92,7 @@ table {
 
       &:not(.expander) {
         &:hover {
-          background: rgba($accent, 20%) !important;
+          background: rgba($accent, 20%);
         }
       }
     }

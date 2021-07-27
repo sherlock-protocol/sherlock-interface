@@ -1,8 +1,46 @@
 @import "global/variables";
+@import "global/mixins";
+
+.coverage-breakdown {
+  &__row {
+    height: 200px;
+
+    &:hover {
+      background: transparent !important;
+    }
+  }
+
+  &__holder {
+    position: relative;
+    padding: 0;
+
+    &-bar {
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      background: $accent;
+      color: transparent;
+      font-weight: bold;
+      align-self: start;
+      font-size: 20px;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: $primary;
+        background: shade($accent, 10%);
+      }
+    }
+  }
+}
 
 .breakdown {
   table {
     background: $black;
+
     thead {
       th {
         &[data-docs="glossary#coverage"] {
@@ -107,7 +145,7 @@
       }
 
       .button {
-        font-size: 22px;
+        font-size: 18px;
       }
 
       & > * {
