@@ -44,16 +44,6 @@
     .balance {
       width: 200px;
     }
-    
-    td .docs {
-      height: 30px;
-      width: 30px;
-      font-size: 22px !important;
-      color: $white !important;
-      align-self: center;
-      margin-top: 7px;
-      margin-right: 10px;
-    }
 
     .expander {
       h2 {
@@ -64,16 +54,12 @@
       }
 
       .actions {
-        div[data-docs] {
-          display: flex;
+        width: 240px;
 
-          a.docs {
-            position: relative;
-            top: -8px;
-            height: 28px;
-            width: 28px;
-            margin-left: 20px;
-          }
+        a.docs {
+          height: 29px;
+          width: 29px;
+          margin-top: -10px;
         }
 
         a.button {

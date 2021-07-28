@@ -114,6 +114,17 @@ export default class Table {
       if (cellData.disabled) {
         a.classList.add('disabled');
       }
+    } else if (header.type === "docs") {
+      let a = document.createElement("a");
+      a.innerHTML = '?';
+      a.setAttribute('href', settings.docsBaseUrl + cellData);
+      a.classList.add('docs');
+      a.setAttribute('target', '_blank');
+      cell.setAttribute('data-docs', cellData);
+      cell.appendChild(a);
+      if (cellData.disabled) {
+        a.classList.add('disabled');
+      }
     } else if (header.type === "numba") {
       let amount = cellData.numba;
       cell.innerHTML = app.numberToUSD(amount);

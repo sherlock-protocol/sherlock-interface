@@ -1699,6 +1699,15 @@ table tbody tr td.icons img {
 table tbody tr td .button {
   font-size: 16px;
 }
+table tbody tr td[data-docs] a.docs {
+  height: 28px;
+  width: 28px;
+  font-size: 22px !important;
+  color: #FFF !important;
+  align-self: center;
+  margin-top: 8px;
+  margin-right: 10px;
+}
 table tbody tr td button {
   background: #FE6E99;
   color: #FFF;

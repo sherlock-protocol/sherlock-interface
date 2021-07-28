@@ -37,16 +37,6 @@
 .staking-pools table .balance {
   width: 200px;
 }
-.cooldown-block table td .docs,
-.staking-pools table td .docs {
-  height: 30px;
-  width: 30px;
-  font-size: 22px !important;
-  color: #FFF !important;
-  align-self: center;
-  margin-top: 7px;
-  margin-right: 10px;
-}
 .cooldown-block table .expander h2,
 .staking-pools table .expander h2 {
   margin-top: 0;
@@ -54,17 +44,15 @@
   margin-left: 0;
   font-size: 24px;
 }
-.cooldown-block table .expander .actions div[data-docs],
-.staking-pools table .expander .actions div[data-docs] {
-  display: flex;
+.cooldown-block table .expander .actions,
+.staking-pools table .expander .actions {
+  width: 240px;
 }
-.cooldown-block table .expander .actions div[data-docs] a.docs,
-.staking-pools table .expander .actions div[data-docs] a.docs {
-  position: relative;
-  top: -8px;
-  height: 28px;
-  width: 28px;
-  margin-left: 20px;
+.cooldown-block table .expander .actions a.docs,
+.staking-pools table .expander .actions a.docs {
+  height: 29px;
+  width: 29px;
+  margin-top: -10px;
 }
 .cooldown-block table .expander .actions a.button,
 .staking-pools table .expander .actions a.button {

@@ -165,6 +165,7 @@ window.addEventListener('DOMContentLoaded', () => {
         protocol: options.pool.token.name,
         estimate: app.bigNumberToUSD(estimate.mul(window.data.pool.usd_values[options.pool.token.address]), options.pool.token.decimals),
         stake: options.stake,
+        docs: "stakers/unstaking",
         action: {
           label: claimable ? "Unstake" : "Cancel",
           action: claimable ? "claim" : "cancel",
@@ -187,7 +188,7 @@ window.addEventListener('DOMContentLoaded', () => {
           doneText: "Expired",
           func: (row) => {
             setTimeout(() => {
-              row.querySelector('td.action button').innerHTML = 'Unclaim';
+              row.querySelector('td.action button').innerHTML = 'Recover';
               row.querySelector('td.availableFrom').innerHTML = 'Expired';
               row.querySelector('td.action button').setAttribute('action', 'cancel');
             }, 10);
