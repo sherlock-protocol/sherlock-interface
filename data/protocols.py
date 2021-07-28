@@ -46,7 +46,7 @@ PROTOCOL_META = {
         "logo": "setprotocol",
         "desc": "Set Protocol is a non-custodial protocol built on Ethereum that allows for the creation, management, and trading of Sets, ERC20 tokens that represent a portfolio or basket of underlying assets. Each Set operates and periodically rebalances its portfolio according to a strategy coded into its smart contract.",
         "deductable": "123,00",
-        "coverage_document": "", 
+        "coverage_document": "",
         "lead_watson": {
             "name": "JackSanford",
             "twitter": "jack",
@@ -102,13 +102,14 @@ def get_protocols_covered():
     for k, v in protocols_covered.items():
         usd = 0
         for token, c in v["tokens"].items():
-            p = get_price(token) * c["covered"]
-            usd += p
+            usd += get_price(token) * c["covered"]
 
+        for token, c in v["tokens"].items():
+            p = get_price(token) * c["covered"]
+            
+            c["percentage"] = round((p / usd) * 100, 2)
             c["covered"] = p
             c["covered_str"] = human_format(p / 100000)
-            # TODO: @Evert could you calculate the percentage of the total here?
-            c["percentage"] = randrange(100)
 
         total_covered_usd += usd
         protocols_covered[k]["usd"] = usd
