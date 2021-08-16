@@ -45,7 +45,7 @@
                   <img class="loader-mini" src="/static/img/mini-loader.svg" alt="">
                 </td>
               {% endif %}
-              <td {% if protocol.token.symbol == "sherx" %} data-docs="glossary#sherx" {% endif %}></td>
+              <td {% if protocol.token.symbol == "sherx" %} data-docs="tokens/sherx" {% endif %}></td>
             </tr>
             {% if env.wallet != "None" %}
               <tr id="expander-{{ protocol.token.symbol }}" class="expander smoking-kills hidden">
