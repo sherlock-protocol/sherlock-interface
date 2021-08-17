@@ -169,7 +169,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Approve actions
   document.querySelector('#deposit #approveButton').addEventListener('click', approveClick);
-  document.querySelector('#deposit #approveButtonMax').addEventListener('click', approveClickMax);
 
   //Deposit actions
   document.querySelector('#deposit #maxButton').addEventListener('click', maxDeposit);
