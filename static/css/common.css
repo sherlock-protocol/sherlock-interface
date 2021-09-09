@@ -1138,13 +1138,12 @@ header.main div.side nav a:after {
   transition: left 200ms ease-in, right 200ms ease-in;
 }
 header.main div.side nav a.active {
-  color: #01FEB4;
+  color: #FE6E99;
 }
 header.main div.side nav a:not([style*="display:none"]):last-child {
   margin-right: 0;
 }
 header.main .logo {
-  font-size: 32px;
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -1152,7 +1151,7 @@ header.main .logo {
   text-decoration: none;
 }
 header.main .logo img {
-  height: 50px;
+  height: 80px;
 }
 header.main .logo span {
   color: #FFF;
@@ -1247,11 +1246,12 @@ footer a {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.9);
 }
 .loader-mini {
   height: 30px;
@@ -1261,99 +1261,51 @@ footer a {
   -o-animation: rotate 3s linear infinite;
   animation: rotate 3s linear infinite;
 }
-.loader .doge {
-  height: 100px;
-  position: absolute;
-  transform: translate3d(0, -160px, 0);
-  transform-origin: 70px 70px;
-  -webkit-animation: rotating-moon 4s linear infinite;
-  -moz-animation: rotating-moon 4s linear infinite;
-  -ms-animation: rotating-moon 4s linear infinite;
-  -o-animation: rotating-moon 4s linear infinite;
-  animation: rotating-moon 4s linear infinite;
+.loader svg {
+  background: #8717E8;
+  height: 120px;
+  width: 120px;
+  padding: 40px;
 }
-.loader .moon {
-  position: absolute;
-  height: 200px;
+.loader svg rect {
+  transition: y 50ms ease-in-out;
+  opacity: 1;
+}
+.loader svg rect:nth-child(2) {
+  y: 42;
+}
+.loader svg rect:nth-child(3) {
+  y: 16;
+}
+.loader svg rect:nth-child(4) {
+  y: -10;
+}
+.loader svg rect.out {
+  opacity: 0;
+}
+.loader svg rect.out:nth-child(2) {
+  y: 52;
+}
+.loader svg rect.out:nth-child(3) {
+  y: 26;
+}
+.loader svg rect.out:nth-child(4) {
+  y: 0;
 }
 .loader p {
-  margin-top: 300px;
   font-weight: bold;
   color: #FE6E99;
   font-size: 22px;
   z-index: 1;
 }
-.loader-small .doge {
-  height: 50px;
-  transform: scale(0.5);
-  transform-origin: 35px -35px;
-  margin-top: 120px;
-}
-.loader-small .moon {
-  height: 100px;
-}
 .loader-small p {
-  margin-top: 170px;
+  font-size: 18px;
+  margin-top: -40px;
+}
+.loader-small svg {
+  transform: scale(0.5);
 }
 
-/* Safari and Chrome */
-@-webkit-keyframes rotating-moon {
-  from {
-    -webkit-transform: rotate(0deg), translate3d(0, -160px, 0);
-    -o-transform: rotate(0deg), translate3d(0, -160px, 0);
-    transform: rotate(0deg), translate3d(0, -160px, 0);
-  }
-  to {
-    -webkit-transform: rotate(360deg), translate3d(0, -160px, 0);
-    -o-transform: rotate(360deg) translate3d(0, -160px, 0);
-    transform: rotate(360deg) translate3d(0, -160px, 0);
-  }
-}
-@keyframes rotating-moon {
-  from {
-    -ms-transform: rotate(0deg) translate3d(0, -160px, 0);
-    -moz-transform: rotate(0deg) translate3d(0, -160px, 0);
-    -webkit-transform: rotate(0deg) translate3d(0, -160px, 0);
-    -o-transform: rotate(0deg) translate3d(0, -160px, 0);
-    transform: rotate(0deg) translate3d(0, -160px, 0);
-  }
-  to {
-    -ms-transform: rotate(360deg) translate3d(0, -160px, 0);
-    -moz-transform: rotate(360deg) translate3d(0, -160px, 0);
-    -webkit-transform: rotate(360deg) translate3d(0, -160px, 0);
-    -o-transform: rotate(360deg) translate3d(0, -160px, 0);
-    transform: rotate(360deg) translate3d(0, -160px, 0);
-  }
-}
-/* Safari and Chrome */
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotate-moon {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
 .modal {
   width: 100%;
   height: 100%;

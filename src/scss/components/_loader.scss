@@ -3,15 +3,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: rgba(255,255,255,.5);
-  
+  background: rgba(0,0,0,.9);
+
   &-mini {
     height: 30px;
-    
     -webkit-animation: rotate 3s linear infinite;
     -moz-animation: rotate 3s linear infinite;
     -ms-animation: rotate 3s linear infinite;
@@ -19,25 +19,47 @@
     animation: rotate 3s linear infinite;
   }
 
-  .doge {
-    height: 100px;
-    position: absolute;
-    transform: translate3d(0, -160px, 0);
-    transform-origin: 70px 70px;
-    -webkit-animation: rotating-moon 4s linear infinite;
-    -moz-animation: rotating-moon 4s linear infinite;
-    -ms-animation: rotating-moon 4s linear infinite;
-    -o-animation: rotating-moon 4s linear infinite;
-    animation: rotating-moon 4s linear infinite;
-  }
+  svg {
+    background: $background;
+    height: 120px;
+    width: 120px;
+    padding: 40px;
 
-  .moon {
-    position: absolute;
-    height: 200px;
+    rect {
+      transition: y 50ms ease-in-out;
+      opacity: 1;
+
+      &:nth-child(2) {
+        y: 42;
+      }
+
+      &:nth-child(3) {
+        y: 16;
+      }
+
+      &:nth-child(4) {
+        y: -10;
+      }
+
+      &.out {
+        opacity: 0;
+
+        &:nth-child(2) {
+          y: 52;
+        }
+
+        &:nth-child(3) {
+          y: 26;
+        }
+
+        &:nth-child(4) {
+          y: 0;
+        }
+      }
+    }
   }
 
   p {
-    margin-top: 300px;
     font-weight: bold;
     color: $primary;
     font-size: 22px;
@@ -45,81 +67,13 @@
   }
 
   &-small {
-    .doge {
-      height: 50px;
-      transform: scale(.5);
-      transform-origin: 35px -35px;
-      margin-top: 120px;
-    }
-
-    .moon {
-      height: 100px;
-    }
-
     p {
-      margin-top: 170px;
+      font-size: 18px;
+      margin-top: -40px;
     }
-  }
-}
-/* Safari and Chrome */
-@-webkit-keyframes rotating-moon {
-  from {
-    -webkit-transform: rotate(0deg),translate3d(0, -160px, 0);
-    -o-transform: rotate(0deg),translate3d(0, -160px, 0);
-    transform: rotate(0deg),translate3d(0, -160px, 0);
-  }
 
-  to {
-    -webkit-transform: rotate(360deg),translate3d(0, -160px, 0);
-    -o-transform: rotate(360deg)translate3d(0, -160px, 0);
-    transform: rotate(360deg)translate3d(0, -160px, 0);
-  }
-}
-@keyframes rotating-moon {
-  from {
-    -ms-transform: rotate(0deg)translate3d(0, -160px, 0);
-    -moz-transform: rotate(0deg)translate3d(0, -160px, 0);
-    -webkit-transform: rotate(0deg)translate3d(0, -160px, 0);
-    -o-transform: rotate(0deg)translate3d(0, -160px, 0);
-    transform: rotate(0deg)translate3d(0, -160px, 0);
-  }
-
-  to {
-    -ms-transform: rotate(360deg)translate3d(0, -160px, 0);
-    -moz-transform: rotate(360deg)translate3d(0, -160px, 0);
-    -webkit-transform: rotate(360deg)translate3d(0, -160px, 0);
-    -o-transform: rotate(360deg)translate3d(0, -160px, 0);
-    transform: rotate(360deg)translate3d(0, -160px, 0);
-  }
-}
-/* Safari and Chrome */
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotate-moon {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
+    svg {
+      transform: scale(.5);
+    }
   }
 }

@@ -3,7 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="/favicon.png?v={{ env.git_hash }}" sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicons/favicon-16x16.png">
+  <link rel="mask-icon" href="/static/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/static/img/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/static/img/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="shortcut icon" href="/static/img/favicons/favicon.ico">
 
   <title>Sherlock - {{ title }}</title>
   <link rel="stylesheet" href="/static/css/common.css?v={{ env.git_hash }}">
@@ -20,7 +28,7 @@
 <body>
   <header class="main">
     <a class="logo" href="/">
-      <img src="/static/img/logo-white.svg?v={{ env.git_hash }}" alt="">
+      <img src="/static/img/logo1.svg?v={{ env.git_hash }}" alt="">
     </a>
     <div class="side">
       <nav>
@@ -36,11 +44,11 @@
       </nav>
     </div>
   </header>
-  
-  <header class="sub">    
+
+  <header class="sub">
     <div class="meta">
       <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
     </div>
   </header>
-  
+
   <div class="app">

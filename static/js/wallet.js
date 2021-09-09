@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   let connectWallet = e => {
     e.preventDefault();
-    app.addLoader(document.body, "Waiting for wallet");
+    app.addLoader(document.body, "Waiting for Wallet");
     let wallet = ethereum.request({
       method: 'eth_requestAccounts'
     }).then(accounts => {
