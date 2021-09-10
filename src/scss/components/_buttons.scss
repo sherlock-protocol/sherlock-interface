@@ -59,4 +59,15 @@ button {
       color: $black;
     }
   }
+
+  &.purp {
+    background-color: $background;
+    color: $white;
+    font-weight: normal;
+
+    &:hover {
+      background-color: tint($background, 5%);
+
+    }
+  }
 }

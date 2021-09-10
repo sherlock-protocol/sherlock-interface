@@ -1387,19 +1387,18 @@ footer a {
 
 .notification {
   border-radius: 5px;
-  box-shadow: 2px 2px 5px #8e918f;
   padding: 20px;
   display: flex;
   transition: opacity 300ms ease-in, margin-top 300ms ease-in;
   overflow: hidden;
-  background: #FFF;
+  background: #0d0d0d;
   margin-bottom: 10px;
   position: relative;
   opacity: 0;
   margin-top: -100px;
   z-index: 10;
 }
-.notification button {
+.notification .button {
   align-self: flex-end;
 }
 .notification__meta {
@@ -1515,6 +1514,16 @@ button.alt {
 .button.alt:hover,
 button.alt:hover {
   color: #000;
+}
+.button.purp,
+button.purp {
+  background-color: #8717E8;
+  color: #FFF;
+  font-weight: normal;
+}
+.button.purp:hover,
+button.purp:hover {
+  background-color: #8d23e9;
 }
 
 article {

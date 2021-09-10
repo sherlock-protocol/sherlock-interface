@@ -16,10 +16,8 @@ class NotificationCenter {
           <h4>${title}</h4>
           <p>${msg}</p>
         </div>
-        <button class="button alt">Close</button>
-        <div class="notification__timer">
-  
-        </div>
+        <button class="button purp">Close</button>
+        <div class="notification__timer"></div>
       `;
 
     this.el.appendChild(template);
