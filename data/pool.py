@@ -76,7 +76,10 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         else:
             pool["apy"] = "0"
     else:
-        pool["apy"] = "%.2f" % round(float(premium_per_year) / pool["size"], 2)
+        apy = round(float(premium_per_year) / pool["size"], 2)
+        ## if aave
+        pool["aave_apy"] = "%.2f" % 1.69
+        pool["apy"] = "%.2f" % (apy + 1.69)
 
     # First money out
     pool["first_money_out"] = SHERLOCK_HTTP.functions.getFirstMoneyOut(
