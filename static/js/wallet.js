@@ -34,7 +34,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       enableWallet(accounts)
     }).catch(err => {
       app.removeLoader(document.body);
-      console.log(err);
       app.notify("Error", err.message);
     });
   }

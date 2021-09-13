@@ -52,6 +52,19 @@
         margin-left: 0;
         font-size: 24px;
       }
+      table {
+        th {
+          white-space: nowrap;
+          
+        }
+      }
+      .hbox > .flex {
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
 
       .actions {
         width: 240px;

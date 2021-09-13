@@ -44,6 +44,18 @@
   margin-left: 0;
   font-size: 24px;
 }
+.cooldown-block table .expander table th,
+.staking-pools table .expander table th {
+  white-space: nowrap;
+}
+.cooldown-block table .expander .hbox > .flex,
+.staking-pools table .expander .hbox > .flex {
+  margin-right: 10px;
+}
+.cooldown-block table .expander .hbox > .flex:last-child,
+.staking-pools table .expander .hbox > .flex:last-child {
+  margin-right: 0;
+}
 .cooldown-block table .expander .actions,
 .staking-pools table .expander .actions {
   width: 240px;

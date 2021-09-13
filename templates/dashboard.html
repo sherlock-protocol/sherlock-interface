@@ -68,6 +68,30 @@
                         </div>
                       </div>
                     </div>
+                    <div class="apy-breakdown flex">
+                      <table class="smoking-kills">
+                        <thead>
+                          <tr>
+                            <th>APY Breakdown</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>APY by premium</td>
+                            <td class="userstake">{{ protocol.pool.premium_apy }}%</td>
+                          </tr>
+                          <tr>
+                            <td>APY by AAVE</td>
+                            <td class="profit">{{ protocol.pool.aave_apy }}%</td>
+                          </tr>
+                          <tr>
+                            <td class="fat">Total</td>
+                            <td class="total">{{ protocol.pool.total_apy }}%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <div class="balance-breakdown flex">
                       <table class="smoking-kills">
                         <thead>
