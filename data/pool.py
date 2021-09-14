@@ -69,7 +69,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         pool["usd_numba_str"] = "0"
 
     aave_apy = 1.69
-    pool["aave_apy"] = "%.2f" % 1.69
+    pool["aave_apy"] = aave_apy
     if data["decimals"] == 6:
         pool["aave_apy"] = None
 
@@ -77,18 +77,20 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     premium_per_year = premium_per_block * BLOCKS_PER_YEAR
     if pool["size"] == 0:
         if sherx_per_block > 0.0:
-            pool["apy"] = str(99999999.99)
+            pool["premium_apy"] = 99999999.99
         else:
-            if pool["aave_apy"]:
-                pool["apy"] = pool["aave_apy"]
-            else:
-                pool["apy"] = "0"
+            pool["premium_apy"] = 0
     else:
-        apy = round(float(premium_per_year) / pool["size"], 2)
-        if pool["aave_apy"]:
-            pool["apy"] = "%.2f" % (apy + aave_apy)
-        else:
-            pool["apy"] = "%.2f" % (apy)
+        pool["premium_apy"] = round(float(premium_per_year) / pool["size"], 2)
+
+    if pool["aave_apy"]:
+        pool["total_apy"] = "%.2f" % (pool["premium_apy"] + pool["aave_apy"])
+        pool["aave_apy"] = "%.2f" % pool["aave_apy"]
+    else:
+        pool["total_apy"] = "%.2f" % pool["premium_apy"]
+    pool["premium_apy"] = "%.2f" % pool["premium_apy"]
+
+
 
     # First money out
     pool["first_money_out"] = SHERLOCK_HTTP.functions.getFirstMoneyOut(
