@@ -79,15 +79,19 @@
                         <tbody>
                           <tr>
                             <td>APY by premium</td>
-                            <td class="userstake">{{ protocol.pool.premium_apy }}%</td>
+                            <td>{{ protocol.pool.premium_apy }}%</td>
                           </tr>
                           <tr>
                             <td>APY by AAVE</td>
-                            <td class="profit">{{ protocol.pool.aave_apy }}%</td>
+                            {% if protocol.pool.aave_apy %}
+                              <td>{{ protocol.pool.aave_apy }}%</td>
+                            {% else %}
+                              <td>-</td>
+                            {% endif %}
                           </tr>
                           <tr>
                             <td class="fat">Total</td>
-                            <td class="total">{{ protocol.pool.total_apy }}%</td>
+                            <td>{{ protocol.pool.total_apy }}%</td>
                           </tr>
                         </tbody>
                       </table>
