@@ -64,7 +64,8 @@ def dashboard():
             "sherx": sherx.get_underlying(),
             "pool": pool.get_staking_pool_data(),
             "cooldown_period": sherlock.get_cooldown_period(),
-            "unstake_window":  sherlock.get_unstake_window()
+            "unstake_window":  sherlock.get_unstake_window(),
+            "network": settings.NETWORK
         }
     )
 

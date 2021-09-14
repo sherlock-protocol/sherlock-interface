@@ -1,8 +1,10 @@
 {% include 'partials/header.html' %}
 <div class="dashboard">
-  <div class="hbox container warning smoking-kills">
-    <b>Note: Please manually set gas prices for all transactions to 1000 gwei.</b>
-  </div>
+  {% if network == 'GOERLI' %}
+    <div class="hbox container warning smoking-kills">
+      <b>Note: Please manually set gas prices for all transactions to 1000 gwei.</b>
+    </div>
+  {% endif %}
   <div class="hbox stats">
     <div id="poolsize" class="container purp smoking-kills flex centered">
       <h4>Total funds:</h4>
