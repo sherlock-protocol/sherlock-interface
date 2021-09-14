@@ -27,22 +27,36 @@ with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contract
 with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "token", "ERC20", "ERC20.sol", "ERC20.json")) as json_data:
     ERC20_ABI = json.load(json_data)["abi"]
 
+with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "aaveV2", "ILendingPool.sol", "ILendingPool.json")) as json_data:
+    LP_ABI = json.load(json_data)["abi"]
+
 if NETWORK == 'GOERLI':
     INFURA_HTTP = Web3(HTTPProvider("https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN))
     INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
     ENDPOINT = "https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN
+    AAVE_LP = None
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     ENDPOINT = "http://127.0.0.1:8545"
+    AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
+elif NETWORK == 'MAINNET':
+    INFURA_HTTP = Web3(HTTPProvider("https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN))
+    ENDPOINT = "https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN
+    AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
 else:
     raise ValueError("Unknown network in .env")
 
 if NETWORK == 'GOERLI':
     SHERLOCK = "0xE6f4e3af0d5d9BBC77d2e4b69c5F589d0Fc7b182"
 elif NETWORK == 'LOCALHOST':
-    SHERLOCK = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e"
+    SHERLOCK = "0x04C89607413713Ec9775E14b954286519d836FEf"
+elif NETWORK == 'MAINNET':
+    SHERLOCK = "0x0000000000000000000000000000000000000000"
 
 SHERLOCK_HTTP = INFURA_HTTP.eth.contract(address=SHERLOCK, abi=POOL_ABI)
+
+if AAVE_LP:
+    AAVE_LP_HTTP = INFURA_HTTP.eth.contract(address=AAVE_LP, abi=LP_ABI)
 
 COINGECKO_IDS = {
     "ALCX": "alchemix",

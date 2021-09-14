@@ -3,7 +3,7 @@ import os
 from web3 import Web3
 
 from settings import DATA, INFURA_HTTP, ERC20_ABI, SHERLOCK_HTTP, SHERLOCK, BLOCKS_PER_YEAR, TOKENS, TIMESTAMP_ERROR
-from data import price, helper
+from data import price, helper, aave
 
 def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     try:
@@ -68,10 +68,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         pool["usd_numba"] = 0
         pool["usd_numba_str"] = "0"
 
-    aave_apy = 1.69
-    pool["aave_apy"] = aave_apy
-    if data["decimals"] == 6:
-        pool["aave_apy"] = None
+    pool["aave_apy"] = aave.get_apy(data["address"])
 
     # Apy
     premium_per_year = premium_per_block * BLOCKS_PER_YEAR

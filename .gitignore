@@ -8,6 +8,5 @@ venv/
 static/json/abi/Sherlock.json
 indexer/*.json
 
-.env.goerli
-.env.local
+.env.*
 .hash
