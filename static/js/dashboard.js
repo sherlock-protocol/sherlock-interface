@@ -38,19 +38,30 @@ window.addEventListener('DOMContentLoaded', () => {
         if (userSize._hex === "0x00" || poolSize._hex === "0x00") {
           updateUserBalance(null, pool);
         } else {
+
+          let premiumYield = _ethers.BigNumber.from(pool.pool.numba_sherx);
+          let stakeYield = _ethers.BigNumber.from(pool.pool.numba_stake);
+          let totalYield = _ethers.BigNumber.from(pool.pool.numba);
+
           let tokenPrice = _ethers.BigNumber.from(window.data.pool.usd_values[pool.token.address], );
-          let balance = userSize.mul(tokenPrice);
-          let poolYield = _ethers.BigNumber.from(pool.pool.numba_str);
-          let userYield = userSize.mul(poolYield).mul(tokenPrice).div(poolSize);
           let originalUserSize = userSize.mul(tokenPrice);
-          await window.app.userExtraAsync(window.app.sherlock, pool.token, originalUserSize, userYield);
+
+          let premiumUserYield = userSize.mul(premiumYield).mul(tokenPrice).div(poolSize);
+          let stakeUserYield = userSize.mul(stakeYield).mul(tokenPrice).div(poolSize);
+          let totalUserYield = userSize.mul(totalYield).mul(tokenPrice).div(poolSize);
+
+          await window.app.userExtraAsync(window.app.sherlock, "premium", pool.token, premiumUserYield);
+          await window.app.userExtraAsync(window.app.sherlock, "stake", pool.token, stakeUserYield);
+          await window.app.userExtraAsync(window.app.sherlock, "total", pool.token, totalUserYield);
 
           setInterval(() => {
-            let userProfit = window.app.userExtra(pool.token);
+            let premiumProfit = window.app.userExtra("premium", pool.token);
+            let stakeProfit = window.app.userExtra("stake", pool.token);
+            let totalProfit = window.app.userExtra("total", pool.token);
             updateUserBalance({
-              stake: app.bigNumberToUSD(balance, pool.token.decimals),
-              profit: app.bigNumberToUSD(userProfit, pool.token.decimals),
-              total: app.bigNumberToUSD(originalUserSize.add(userProfit), pool.token.decimals)
+              stake: app.bigNumberToUSD(originalUserSize.add(stakeProfit), pool.token.decimals),
+              profit: app.bigNumberToUSD(premiumProfit, pool.token.decimals),
+              total: app.bigNumberToUSD(originalUserSize.add(totalProfit), pool.token.decimals)
             }, pool);
           }, 50);
         }

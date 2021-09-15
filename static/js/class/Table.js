@@ -40,7 +40,7 @@ export default class Table {
     if (!position) {
       position = this.tbody.children.length;
     }
-    
+
     this.headers.forEach(header => {
       let found = false;
       Object.entries(options.row).forEach(entry => {

@@ -54,21 +54,23 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     premium_per_block = price.get_price(SHERLOCK) * sherx_per_block * \
         data["divider"] / price.get_price(data["address"]) / 10**18
 
+    pool["aave_apy"] = aave.get_apy(data["address"])
+    if pool["aave_apy"]:
+        expect_apy = pool["size"] * pool["aave_apy"] / 100
+        pool["numba_stake"] = int(expect_apy/31556926/20)
+    else:
+        pool["numba_stake"] = 0
+
+    pool["numba_stake_str"] = str(pool["numba_stake"])
+
     # TODO int to float? to keep precision
     # 1 block = 13 seconds. So 260 of these increments per block
-    if data["address"] == SHERLOCK:
-        pool["numba"] = int(premium_per_block / 260)
-        pool["numba_str"] = str(pool["numba"])
-        pool["usd_numba"] = pool["numba"] * \
-            price.get_price(data["address"]) / data["divider"]
-        pool["usd_numba_str"] = str(pool["usd_numba"])
-    else:
-        pool["numba"] = int(premium_per_block / 260)
-        pool["numba_str"] = str(pool["numba"])
-        pool["usd_numba"] = 0
-        pool["usd_numba_str"] = "0"
+    pool["numba_sherx"] = int(premium_per_block / 260)
+    pool["numba_sherx_str"] = str(pool["numba_sherx"])
 
-    pool["aave_apy"] = aave.get_apy(data["address"])
+    pool["numba"] = int(pool["numba_stake"] + pool["numba_sherx"])
+    pool["numba_str"] = str(pool["numba"])
+
 
     # Apy
     premium_per_year = premium_per_block * BLOCKS_PER_YEAR
@@ -109,6 +111,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
 
 def get_total_numba():
+    # TODO add aave funds here
     sherx_total = SHERLOCK_HTTP.functions.getSherXPerBlock().call()
     # 1 block = 13 seconds. So 260 of these increments per block
     sherx_total_50ms = int(sherx_total / 260)
