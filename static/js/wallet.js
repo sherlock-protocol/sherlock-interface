@@ -65,7 +65,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
   }, 1000);
 
-
   provider.listAccounts().then(accounts => {
     if (accounts && accounts.length) {
       enableWallet(accounts)

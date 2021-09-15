@@ -30,6 +30,7 @@
 
 .breakdown table {
   background: #000;
+  overflow: hidden;
 }
 .breakdown table thead th[data-docs="glossary#coverage"] .docs {
   margin-right: auto;

@@ -34,22 +34,24 @@ header.main {
         text-transform: uppercase;
         font-weight: 600;
 
-        &:hover {
-          &:after {
-            left: 0;
-            right: 0;
-          }
-        }
-
         &:after {
-          content: ' ';
+          content: '';
           background: $menu;
           position: absolute;
           bottom: 100%;
           top: -3px;
           left: 50%;
           right: 50%;
-          transition: left 200ms ease-in, right 200ms ease-in;
+          opacity: 0;
+          transition: left 200ms ease-in, right 200ms ease-in, opacity 200ms ease-in;
+        }
+
+        &:hover {
+          &:after {
+            left: 20px;
+            right: 20px;
+            opacity: 1;
+          }
         }
 
         &.active {
@@ -79,6 +81,7 @@ header.main {
     }
   }
 }
+
 header.sub {
   background: $black;
   padding-top: 10px;
@@ -93,7 +96,6 @@ header.sub {
     }
   }
 }
-
 @media only screen and (max-width: 2000px) {
   header {
     padding-left: 500px;

@@ -46,13 +46,10 @@
             </tr>
             {% if env.wallet != "None" %}
               <tr id="expander-{{ protocol.token.symbol }}" class="expander smoking-kills hidden">
-                <td colspan="5">
-                  <h2 {% if protocol.token.symbol == "sherx" %} highlighted {% endif %}>
-                    {{ protocol.token.name }}
-                  </h2>
-                  <div class="hbox">
+                <td colspan="6">
+                  <div class="vbox">
                     <div class="flex">
-                      <h4>Actions</h4>
+                      <h4>{{ protocol.token.name }} Actions</h4>
                       <div class="actions">
                         <div data-docs="glossary#staking">
                           <a class="button stake" href="/stake/{{ protocol.token.address }}">Stake</a>
@@ -65,59 +62,62 @@
                         </div>
                       </div>
                     </div>
-                    <div class="apy-breakdown flex">
-                      <table class="smoking-kills">
-                        <thead>
-                          <tr>
-                            <th>APY Breakdown</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>APY by premium</td>
-                            <td>{{ protocol.pool.premium_apy }}%</td>
-                          </tr>
-                          <tr>
-                            <td>APY by AAVE</td>
-                            {% if protocol.pool.aave_apy %}
-                              <td>{{ protocol.pool.aave_apy }}%</td>
-                            {% else %}
-                              <td>-</td>
-                            {% endif %}
-                          </tr>
-                          <tr>
-                            <td class="fat">Total</td>
-                            <td>{{ protocol.pool.total_apy }}%</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <h4>{{ protocol.token.name }} Breakdown</h4>
+                    <div class="hbox">
+                      <div class="apy-breakdown flex">
+                        <table class="smoking-kills">
+                          <thead>
+                            <tr>
+                              <th>APY</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>APY by premium</td>
+                              <td>{{ protocol.pool.premium_apy }}%</td>
+                            </tr>
+                            <tr>
+                              <td>APY by AAVE</td>
+                              {% if protocol.pool.aave_apy %}
+                                <td>{{ protocol.pool.aave_apy }}%</td>
+                              {% else %}
+                                <td>-</td>
+                              {% endif %}
+                            </tr>
+                            <tr>
+                              <td class="fat">Total</td>
+                              <td>{{ protocol.pool.total_apy }}%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="balance-breakdown flex">
+                        <table class="smoking-kills">
+                          <thead>
+                            <tr>
+                              <th>Balance</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Stake</td>
+                              <td class="userstake">$0.00</td>
+                            </tr>
+                            <tr>
+                              <td>SHERX Profit</td>
+                              <td class="profit">$0.00</td>
+                            </tr>
+                            <tr>
+                              <td class="fat">Total</td>
+                              <td class="total">$0.00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                    <div class="balance-breakdown flex">
-                      <table class="smoking-kills">
-                        <thead>
-                          <tr>
-                            <th>Balance Breakdown</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Stake</td>
-                            <td class="userstake">$0.00</td>
-                          </tr>
-                          <tr>
-                            <td>SHERX Profit</td>
-                            <td class="profit">$0.00</td>
-                          </tr>
-                          <tr>
-                            <td class="fat">Total</td>
-                            <td class="total">$0.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
-                  </div>
                   {% if protocol.token.symbol == "sherx" %}
                     <table>
                       <thead>

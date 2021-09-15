@@ -40,7 +40,7 @@
 .breakdown {
   table {
     background: $black;
-
+    overflow: hidden;
     thead {
       th {
         &[data-docs="glossary#coverage"] {

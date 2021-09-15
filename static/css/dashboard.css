@@ -37,6 +37,15 @@
 .staking-pools table .balance {
   width: 200px;
 }
+.cooldown-block table .expander,
+.staking-pools table .expander {
+  background: #222;
+}
+.cooldown-block table .expander td,
+.staking-pools table .expander td {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
 .cooldown-block table .expander h2,
 .staking-pools table .expander h2 {
   margin-top: 0;
@@ -50,7 +59,7 @@
 }
 .cooldown-block table .expander .hbox > .flex,
 .staking-pools table .expander .hbox > .flex {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .cooldown-block table .expander .hbox > .flex:last-child,
 .staking-pools table .expander .hbox > .flex:last-child {
@@ -58,13 +67,19 @@
 }
 .cooldown-block table .expander .actions,
 .staking-pools table .expander .actions {
-  width: 240px;
+  display: flex;
+  justify-content: space-between;
+}
+.cooldown-block table .expander .actions > div:last-child,
+.staking-pools table .expander .actions > div:last-child {
+  margin-right: 40px;
 }
 .cooldown-block table .expander .actions a.docs,
 .staking-pools table .expander .actions a.docs {
   height: 29px;
   width: 29px;
   margin-top: -10px;
+  left: 200px;
 }
 .cooldown-block table .expander .actions a.button,
 .staking-pools table .expander .actions a.button {

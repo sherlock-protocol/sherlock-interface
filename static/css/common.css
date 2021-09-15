@@ -1123,19 +1123,21 @@ header.main div.side nav a {
   text-transform: uppercase;
   font-weight: 600;
 }
-header.main div.side nav a:hover:after {
-  left: 0;
-  right: 0;
-}
 header.main div.side nav a:after {
-  content: " ";
+  content: "";
   background: #8717E8;
   position: absolute;
   bottom: 100%;
   top: -3px;
   left: 50%;
   right: 50%;
-  transition: left 200ms ease-in, right 200ms ease-in;
+  opacity: 0;
+  transition: left 200ms ease-in, right 200ms ease-in, opacity 200ms ease-in;
+}
+header.main div.side nav a:hover:after {
+  left: 20px;
+  right: 20px;
+  opacity: 1;
 }
 header.main div.side nav a.active {
   color: #FE6E99;

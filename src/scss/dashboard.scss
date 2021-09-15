@@ -46,20 +46,28 @@
     }
 
     .expander {
+      background: #222;
+
+      td {
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+      }
+
       h2 {
         margin-top: 0;
         margin-bottom: 0;
         margin-left: 0;
         font-size: 24px;
       }
+
       table {
         th {
           white-space: nowrap;
-          
         }
       }
+
       .hbox > .flex {
-        margin-right: 10px;
+        margin-right: 20px;
 
         &:last-child {
           margin-right: 0;
@@ -67,12 +75,20 @@
       }
 
       .actions {
-        width: 240px;
+        display: flex;
+        justify-content: space-between;
+
+        & > div {
+          &:last-child {
+            margin-right: 40px;
+          }
+        }
 
         a.docs {
           height: 29px;
           width: 29px;
           margin-top: -10px;
+          left: 200px;
         }
 
         a.button {
