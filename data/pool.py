@@ -56,10 +56,13 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
     pool["aave_apy"] = aave.get_apy(data["address"])
     if pool["aave_apy"]:
-        expect_apy = pool["size"] * pool["aave_apy"] / 100
+        expect_apy = pool["size"] * pool["aave_apy"] / 100 * \
+            data["divider"] / price.get_price(data["address"])
         pool["numba_stake"] = int(expect_apy/31556926/20)
+        usd_yield = pool["numba_stake"]
     else:
         pool["numba_stake"] = 0
+        usd_yield = 0
 
     pool["numba_stake_str"] = str(pool["numba_stake"])
 
@@ -107,7 +110,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
     total += pool["usd_size"]
     total_fmo += pool["first_money_out_usd"]
 
-    return total, total_fmo, token
+    return total, total_fmo, token, usd_yield
 
 
 def get_total_numba():
@@ -121,17 +124,20 @@ def get_total_numba():
 def get_staking_pool_data():
     total = 0
     total_fmo = 0
+    total_usd_yield = 0
     tokens = []
 
     for symbol, data in TOKENS.items():
         if not SHERLOCK_HTTP.functions.isStake(data["address"]).call():
             continue
 
-        total, total_fmo, token = _get_staking_pool_token_data(
+        total, total_fmo, token, usd_yield = _get_staking_pool_token_data(
             total, total_fmo, symbol, data)
+        total_usd_yield += usd_yield
         tokens.append(token)
 
     total_numba = get_total_numba()
+    total_numba += total_usd_yield / 10
     last_block_data = INFURA_HTTP.eth.get_block("latest")
 
     return {

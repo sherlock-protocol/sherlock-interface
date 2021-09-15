@@ -9,7 +9,9 @@ def get_apy(token):
 
     totalBalance = settings.SHERLOCK_HTTP.functions.getStakersPoolBalance(token).call()
     stratBalance = STATEGY_HTTP.functions.balanceOf().call()
-    percentage = float(stratBalance) / totalBalance
+    strategy_percentage = float(stratBalance) / totalBalance
 
     aave = settings.AAVE_LP_HTTP.functions.getReserveData(token).call()
-    return aave[3] / 10.0**25 * percentage
+    total_yield_percetage = aave[3] / 10.0**25
+
+    return strategy_percentage * total_yield_percetage
