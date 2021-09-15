@@ -30,6 +30,9 @@ with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "to
 with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "aaveV2", "ILendingPool.sol", "ILendingPool.json")) as json_data:
     LP_ABI = json.load(json_data)["abi"]
 
+with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "IStrategy.sol", "IStrategy.json")) as json_data:
+    STATEGY_ABI = json.load(json_data)["abi"]
+
 if NETWORK == 'KOVAN':
     INFURA_HTTP = Web3(HTTPProvider("https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN))
     INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
