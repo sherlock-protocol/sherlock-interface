@@ -30,24 +30,24 @@ with open(os.path.join(CONTRACTS, "artifacts", "@openzeppelin", "contracts", "to
 with open(os.path.join(CONTRACTS, "artifacts", "@sherlock", "v1-core", "contracts", "interfaces", "aaveV2", "ILendingPool.sol", "ILendingPool.json")) as json_data:
     LP_ABI = json.load(json_data)["abi"]
 
-if NETWORK == 'GOERLI':
-    INFURA_HTTP = Web3(HTTPProvider("https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN))
+if NETWORK == 'KOVAN':
+    INFURA_HTTP = Web3(HTTPProvider("https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN))
     INFURA_HTTP.middleware_onion.inject(geth_poa_middleware, layer=0)
-    ENDPOINT = "https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN
-    AAVE_LP = None
+    ENDPOINT = "https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN
+    AAVE_LP = "0xE0fBa4Fc209b4948668006B2bE61711b7f465bAe"
 elif NETWORK == 'LOCALHOST':
     INFURA_HTTP = Web3(HTTPProvider("http://127.0.0.1:8545"))
     ENDPOINT = "http://127.0.0.1:8545"
     AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
 elif NETWORK == 'MAINNET':
-    INFURA_HTTP = Web3(HTTPProvider("https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN))
-    ENDPOINT = "https://eth-goerli.alchemyapi.io/v2/%s" % INFURA_TOKEN
+    INFURA_HTTP = Web3(HTTPProvider("https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN))
+    ENDPOINT = "https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN
     AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
 else:
     raise ValueError("Unknown network in .env")
 
-if NETWORK == 'GOERLI':
-    SHERLOCK = "0xE6f4e3af0d5d9BBC77d2e4b69c5F589d0Fc7b182"
+if NETWORK == 'KOVAN':
+    SHERLOCK = "0xAc8075751E250dBC5F09e639E75FeCa7656eeD3c"
 elif NETWORK == 'LOCALHOST':
     SHERLOCK = "0x04C89607413713Ec9775E14b954286519d836FEf"
 elif NETWORK == 'MAINNET':
@@ -87,13 +87,6 @@ INDEXER_TIMEOUT = config('INDEXER_TIMEOUT', cast=int, default=60)
 
 
 ETHERSCAN = config('ETHERSCAN', default="YourApiKeyToken")
-
-FAUCET_KEY = config('FAUCET_KEY', default=None)
-FAUCET_ADDRESS = config('FAUCET_ADDRESS', default=None)
-FAUCET_TOKEN = config('FAUCET_TOKEN', default=None)
-FAUCET_TOKEN_CONTRACT = INFURA_HTTP.eth.contract(address=FAUCET_TOKEN, abi=ERC20_ABI)
-FAUCET_GAS_PRICE = config('FAUCET_GAS_PRICE', default=Web3.toWei('750', 'gwei'))
-FAUCET_AMOUNT = config('FAUCET_AMOUNT', default=Web3.toWei('100000', 'mwei'))
 
 TG_BOT = config('TG_BOT')
 TG_RECEIVER = config('TG_RECEIVER')

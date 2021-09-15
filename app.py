@@ -69,41 +69,6 @@ def dashboard():
         }
     )
 
-@app.route('/faucet', methods=['GET', 'POST'])
-def faucet():
-    if settings.NETWORK != "GOERLI":
-        abort(404)
-
-    tx = "None"
-    if request.method == 'POST':
-        try:
-            receiver = Web3.toChecksumAddress(request.form["address"])
-            data = {
-                'chainId': 5,
-                'gas': Web3.toHex(400000),
-                'gasPrice': settings.FAUCET_GAS_PRICE,
-                'nonce': settings.INFURA_HTTP.eth.getTransactionCount(settings.FAUCET_ADDRESS, "pending"),
-            }
-            tx = settings.FAUCET_TOKEN_CONTRACT.functions.\
-                transfer(receiver, settings.FAUCET_AMOUNT).buildTransaction(data)
-
-            signed_tx = settings.INFURA_HTTP.eth.account.\
-                signTransaction(tx, private_key=settings.FAUCET_KEY)
-
-            settings.INFURA_HTTP.eth.sendRawTransaction(signed_tx.rawTransaction)
-            tx = Web3.toHex(signed_tx["hash"])
-        except ValueError:
-            pass
-
-    return render_template('faucet.html',
-        title='Faucet',
-        desc='faucet',
-        tags=["faucet"],
-        currentPage="faucet",
-        env=env(),
-        data={"tx": tx}
-    )
-
 @app.route('/stake/<address>')
 def deposit(address):
     e = env()

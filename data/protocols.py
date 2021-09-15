@@ -6,46 +6,50 @@ from settings import TOKENS, SHERLOCK_HTTP, BLOCKS_PER_DAY
 from data.helper import human_format
 from data.price import get_price
 
-BADGER_PROTOCOL = "0x9ceb4e7d9163b5097134e3510672288d95e50a96ed52a3208ad623d63a3018d7"
-ALCHEMIX_PROTOCOL = "0xdd413d9b3b2f5f77677c67d4b2382c0590df319a049f5ab28ed78137a4312537"
-SET_PROTOCOL = "0x7ac86e2883eb827a4d72f9dd7e597d09f426ebe1152c1c63092f81a9a6f73803"
+PRIMITIVE_PROTOCOL = "0x8730a838a5ce28d25f52f8eaafa94b6c96321fcb490e394d6aa46b4b84ed9c85"
+TELLER_PROTOCOL = "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc"
+EULER_PROTOCOL = "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5"
 
 PROTOCOL_PREMIUMS = {
-    BADGER_PROTOCOL: {},
-    ALCHEMIX_PROTOCOL: {},
-    SET_PROTOCOL: {},
+    PRIMITIVE_PROTOCOL: {},
+    TELLER_PROTOCOL: {},
+    EULER_PROTOCOL: {},
 }
 
 PROTOCOL_META = {
-    ALCHEMIX_PROTOCOL: {
-        "name": "AlchemIX",
-        "website": "https://alchemix.fi/",
-        "twitter": "https://twitter.com/alchemixfi",
-        "logo": "alchmix",
-        "desc": "Alchemix is a DeFi protocol that allows for the creation of synthetic tokens that represent the future yield of a deposit. It enables users to retrieve near instant tokenized value against temporary* deposits of stablecoins. A magic money potion if you will, however one that is crafted in Defi with perhaps a sprinkling of ancient wisdom(!). The protocol presents a powerful new DeFi primitive offering myriad applications for users and an exciting new tool for other developers.",
-        "deductable": "123,00",
-        "lead_watson": "Evert0x",
-    },
-    BADGER_PROTOCOL: {
-        "name": "Badger",
-        "website": "https://badger.finance/",
-        "twitter": "https://twitter.com/BadgerDAO",
-        "logo": "badger",
-        "desc": "Badger is a decentralized autonomous organization (DAO) with a single purpose: build the products and infrastructure necessary to accelerate Bitcoin as collateral across other blockchains.",
-        "deductable": "123,00",
+    PRIMITIVE_PROTOCOL: {
+        "name": "Primitive",
+        "website": "https://primitive.finance/",
+        "twitter": "https://twitter.com/primitivefi",
+        "logo": "primitive",
+        "desc": "-",
+        "deductable": "0",
         "lead_watson": {
             "name": "flessendop",
             "twitter": "flessendop",
             "risk_analysus": "badger_risk_analysis.pdf",
         },
     },
-    SET_PROTOCOL: {
+    TELLER_PROTOCOL: {
+        "name": "Teller",
+        "website": "https://www.teller.finance/",
+        "twitter": "https://twitter.com/useteller",
+        "logo": "teller",
+        "desc": "-",
+        "deductable": "0",
+        "lead_watson": {
+            "name": "flessendop",
+            "twitter": "flessendop",
+            "risk_analysus": "badger_risk_analysis.pdf",
+        },
+    },
+    EULER_PROTOCOL: {
         "name": "SET Protocol",
-        "website": "https://www.tokensets.com/",
-        "twitter": "https://twitter.com/SetProtocol",
-        "logo": "setprotocol",
-        "desc": "Set Protocol is a non-custodial protocol built on Ethereum that allows for the creation, management, and trading of Sets, ERC20 tokens that represent a portfolio or basket of underlying assets. Each Set operates and periodically rebalances its portfolio according to a strategy coded into its smart contract.",
-        "deductable": "123,00",
+        "website": "https://www.euler.finance/",
+        "twitter": "https://twitter.com/eulerfinance",
+        "logo": "euler",
+        "desc": "-",
+        "deductable": "0",
         "coverage_document": "",
         "lead_watson": {
             "name": "JackSanford",
@@ -56,40 +60,25 @@ PROTOCOL_META = {
 }
 
 PROTOCOL_COVERED = {
-    ALCHEMIX_PROTOCOL: {
+    PRIMITIVE_PROTOCOL: {
         "tokens": {
-            TOKENS["DAI"]["address"]: {
-                "covered": 500000.0,
-            }
-        }
-    },
-    BADGER_PROTOCOL: {
-        "tokens": {
-            TOKENS["WBTC"]["address"]: {
-                "covered": 2500.0,
-            },
-        }
-    },
-    SET_PROTOCOL: {
-        "tokens": {
-            TOKENS["DAI"]["address"]: {
-                "covered": 100000.0,
-            },
             TOKENS["USDC"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["WETH"]["address"]: {
+        }
+    },
+    TELLER_PROTOCOL: {
+        "tokens": {
+            TOKENS["USDC"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["WBTC"]["address"]: {
-                "covered": 2500.0,
-            },
-            TOKENS["AAVE"]["address"]: {
+        }
+    },
+    EULER_PROTOCOL: {
+        "tokens": {
+            TOKENS["USDC"]["address"]: {
                 "covered": 100000.0,
             },
-            TOKENS["SUSHI"]["address"]: {
-                "covered": 100000.0,
-            }
         }
     }
 }
@@ -106,7 +95,7 @@ def get_protocols_covered():
 
         for token, c in v["tokens"].items():
             p = get_price(token) * c["covered"]
-            
+
             c["percentage"] = round((p / usd) * 100, 2)
             c["covered"] = p
             c["covered_str"] = human_format(p / 100000)

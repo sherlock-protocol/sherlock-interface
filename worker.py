@@ -68,8 +68,8 @@ def verify_run():
 
     if NETWORK == "LOCALHOST":
         return True
-    if NETWORK == "GOERLI":
-        url = "https://api-goerli.etherscan.io/api"
+    if NETWORK == "KOVAN":
+        url = "https://api-kovan.etherscan.io/api"
 
     payload = {
         "module": "account",

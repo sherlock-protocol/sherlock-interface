@@ -10,8 +10,8 @@ if (typeof web3 != 'undefined') {
 }
 
 
-if (window.settings.network == "GOERLI") {
-  window.app.provider = new _ethers.providers.AlchemyProvider("goerli", window.settings.infura);
+if (window.settings.network == "KOVAN") {
+  window.app.provider = new _ethers.providers.AlchemyProvider("kovan", window.settings.infura);
 } else {
   window.app.provider = _ethers.getDefaultProvider(window.settings.endpoint);
 }
