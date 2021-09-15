@@ -34,7 +34,11 @@
       <nav>
         <a href="/" class="{% if currentPage == "dashboard" %}active{% endif %}">Dashboard</a>
         <a href="/breakdown" class="{% if currentPage == "breakdown" %}active{% endif %}">Breakdown</a>
-        {% if env.wallet == "None" %}
+        {% if env.wallet != "None" %}
+          {% if env.network == "KOVAN" %}
+            <a href="https://testnet.aave.com/faucet" target="_blank">Faucet</a>
+          {% endif %}
+        {% else %}
           <a href="#" class="cta" id="walletConnect">Connect Wallet</a>
         {% endif %}
       </nav>
