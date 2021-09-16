@@ -79,23 +79,26 @@
         justify-content: space-between;
 
         & > div {
+          flex: 1;
+          margin-right: 20px;
+
           &:last-child {
-            margin-right: 40px;
+            margin-right: 0px;
           }
-        }
 
-        a.docs {
-          height: 29px;
-          width: 29px;
-          margin-top: -10px;
-          left: 200px;
-        }
+          a.docs {
+            height: 29px;
+            width: 29px;
+            margin-top: -10px;
+            right: 0;
+          }
 
-        a.button {
-          display: block;
-          width: 150px;
-          text-align: center;
-          margin-bottom: 10px;
+          a.button {
+            display: block;
+            // width: 150px;
+            text-align: center;
+            margin-bottom: 10px;
+          }
         }
       }
     }

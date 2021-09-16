@@ -70,21 +70,25 @@
   display: flex;
   justify-content: space-between;
 }
+.cooldown-block table .expander .actions > div,
+.staking-pools table .expander .actions > div {
+  flex: 1;
+  margin-right: 20px;
+}
 .cooldown-block table .expander .actions > div:last-child,
 .staking-pools table .expander .actions > div:last-child {
-  margin-right: 40px;
+  margin-right: 0px;
 }
-.cooldown-block table .expander .actions a.docs,
-.staking-pools table .expander .actions a.docs {
+.cooldown-block table .expander .actions > div a.docs,
+.staking-pools table .expander .actions > div a.docs {
   height: 29px;
   width: 29px;
   margin-top: -10px;
-  left: 200px;
+  right: 0;
 }
-.cooldown-block table .expander .actions a.button,
-.staking-pools table .expander .actions a.button {
+.cooldown-block table .expander .actions > div a.button,
+.staking-pools table .expander .actions > div a.button {
   display: block;
-  width: 150px;
   text-align: center;
   margin-bottom: 10px;
 }
