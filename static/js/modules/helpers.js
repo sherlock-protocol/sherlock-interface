@@ -248,7 +248,12 @@ window.app.userExtraAsync = async function(sherlock, key, token, userYield) {
     return cache;
   }
 
-  const unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
+  let unallocSherxPremium = _ethers.BigNumber.from("0")
+  try{
+    let unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
+  }catch(error) {
+  }
+
   // calculate unharvested SHERX
   const decimals = _ethers.BigNumber.from("10").pow(_ethers.BigNumber.from(token.decimals.toString()))
   const sherX = window.settings.pool_address
