@@ -83,7 +83,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
         else:
             pool["premium_apy"] = 0
     else:
-        pool["premium_apy"] = round(float(premium_per_year) / pool["size"], 2)
+        pool["premium_apy"] = round(float(premium_per_year) / pool["size"], 2) * 100
 
     if pool["aave_apy"]:
         pool["total_apy"] = "%.2f" % (pool["premium_apy"] + pool["aave_apy"])
