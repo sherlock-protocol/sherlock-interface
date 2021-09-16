@@ -35,7 +35,7 @@
 }
 .cooldown-block table .balance,
 .staking-pools table .balance {
-  width: 200px;
+  width: 220px;
 }
 .cooldown-block table .expander,
 .staking-pools table .expander {
@@ -56,6 +56,10 @@
 .cooldown-block table .expander table th,
 .staking-pools table .expander table th {
   white-space: nowrap;
+}
+.cooldown-block table .expander table td,
+.staking-pools table .expander table td {
+  width: 50%;
 }
 .cooldown-block table .expander .hbox > .flex,
 .staking-pools table .expander .hbox > .flex {

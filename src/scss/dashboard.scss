@@ -42,7 +42,7 @@
 
   table {
     .balance {
-      width: 200px;
+      width: 220px;
     }
 
     .expander {
@@ -63,6 +63,9 @@
       table {
         th {
           white-space: nowrap;
+        }
+        td {
+          width: 50%;
         }
       }
 

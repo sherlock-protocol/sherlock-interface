@@ -1122,6 +1122,7 @@ header.main div.side nav a {
   position: relative;
   text-transform: uppercase;
   font-weight: 600;
+  width: 160px;
 }
 header.main div.side nav a:after {
   content: "";
