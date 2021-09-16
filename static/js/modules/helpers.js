@@ -250,7 +250,7 @@ window.app.userExtraAsync = async function(sherlock, key, token, userYield) {
 
   let unallocSherxPremium = _ethers.BigNumber.from("0")
   try{
-    let unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
+    unallocSherxPremium = await sherlock.getUnallocatedSherXFor(app.getCookie('wallet'), token.address)
   }catch(error) {
   }
 
