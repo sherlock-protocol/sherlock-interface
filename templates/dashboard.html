@@ -74,16 +74,16 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>APY by premium</td>
-                              <td>{{ protocol.pool.premium_apy }}%</td>
-                            </tr>
-                            <tr>
                               <td>APY by AAVE</td>
                               {% if protocol.pool.aave_apy %}
                                 <td>{{ protocol.pool.aave_apy }}%</td>
                               {% else %}
                                 <td>-</td>
                               {% endif %}
+                            </tr>
+                            <tr>
+                              <td>APY by premium</td>
+                              <td>{{ protocol.pool.premium_apy }}%</td>
                             </tr>
                             <tr>
                               <td class="fat">Total</td>
