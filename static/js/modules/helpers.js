@@ -331,5 +331,5 @@ window.app.expectedBlockTime = function(blockNumber) {
   }
 
   let amountBlockDiff = blockNumber - window.settings.state.block
-  return amountBlockDiff * window.settings.state.blocktime - milisMinedAgo
+  return amountBlockDiff * window.settings.blocktime - milisMinedAgo
 }
