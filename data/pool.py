@@ -56,7 +56,7 @@ def _get_staking_pool_token_data(total, total_fmo, symbol, data):
 
     pool["aave_apy"] = aave.get_apy(data["address"])
     if pool["aave_apy"]:
-        expect_apy = pool["size"] * pool["aave_apy"]
+        expect_apy = pool["size"] * pool["aave_apy"] / 100
         pool["numba_stake"] = int(expect_apy/31556926/20)
 
         usd_yield = aave.get_numba(data["address"])

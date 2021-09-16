@@ -14,7 +14,7 @@ def get_apy(token):
     aave = settings.AAVE_LP_HTTP.functions.getReserveData(token).call()
     total_yield_percetage = aave[3] / 10.0**25
 
-    return strategy_percentage * total_yield_percetage / 100
+    return strategy_percentage * total_yield_percetage
 
 def get_numba(token):
     strat = settings.SHERLOCK_HTTP.functions.getStrategy(token).call()
