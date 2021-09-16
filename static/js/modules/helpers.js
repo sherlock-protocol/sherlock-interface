@@ -237,7 +237,6 @@ window.app.userExtra = function(key, token) {
   if (userExtraCache[key+token.symbol]) {
     const entry = userExtraCache[key+token.symbol];
     const diff = _ethers.BigNumber.from(((Date.now() - entry.time) * 1000 / 50).toString())
-
     return entry.value.add(diff.mul(entry.userYield).div(1000));
   }
   return false
@@ -263,7 +262,12 @@ window.app.userExtraAsync = async function(sherlock, key, token, userYield) {
   let currentTimeStamp = Date.now();
   let multiplier = Math.round((currentTimeStamp - curBlockTimestamp) / 50)
   let increment = _ethers.BigNumber.from(multiplier.toString()).mul(userYield);
-  let value = increment.add(unallocSherXUSDTokenFormat);
+
+  let value = increment;
+  if(key == "premium" || key == "total") {
+    value = increment.add(unallocSherXUSDTokenFormat);
+  }
+
   userExtraCache[key+token.symbol] = {
     value,
     time: Date.now(),
