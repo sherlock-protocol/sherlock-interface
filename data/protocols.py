@@ -23,12 +23,7 @@ PROTOCOL_META = {
         "twitter": "https://twitter.com/primitivefi",
         "logo": "primitive",
         "desc": "-",
-        "deductable": "0",
-        "lead_watson": {
-            "name": "flessendop",
-            "twitter": "flessendop",
-            "risk_analysus": "badger_risk_analysis.pdf",
-        },
+        "deductable": "0"
     },
     TELLER_PROTOCOL: {
         "name": "Teller",
@@ -36,26 +31,16 @@ PROTOCOL_META = {
         "twitter": "https://twitter.com/useteller",
         "logo": "teller",
         "desc": "-",
-        "deductable": "0",
-        "lead_watson": {
-            "name": "flessendop",
-            "twitter": "flessendop",
-            "risk_analysus": "badger_risk_analysis.pdf",
-        },
+        "deductable": "0"
     },
     EULER_PROTOCOL: {
-        "name": "SET Protocol",
+        "name": "Euler",
         "website": "https://www.euler.finance/",
         "twitter": "https://twitter.com/eulerfinance",
         "logo": "euler",
         "desc": "-",
         "deductable": "0",
-        "coverage_document": "",
-        "lead_watson": {
-            "name": "JackSanford",
-            "twitter": "jack",
-            "risk_analysus": "set-protocol_risk_analysis.pdf",
-        },
+        "coverage_document": ""
     },
 }
 
