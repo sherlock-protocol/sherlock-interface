@@ -21,6 +21,7 @@ PROTOCOL_META = {
         "name": "Protocol #3",
         "website": "",
         "twitter": "",
+        "agreement": "",
         "logo": "",
         "desc": "Announcement coming soon…",
         "deductable": "0"
@@ -29,6 +30,7 @@ PROTOCOL_META = {
         "name": "Protocol #2",
         "website": "",
         "twitter": "",
+        "agreement": "",
         "logo": "",
         "desc": "Announcement coming soon…",
         "deductable": "0"
@@ -37,6 +39,7 @@ PROTOCOL_META = {
         "name": "Protocol #1",
         "website": "",
         "twitter": "",
+        "agreement": "",
         "logo": "",
         "desc": "Announcement coming soon…",
         "deductable": "0",

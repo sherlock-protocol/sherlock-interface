@@ -33,10 +33,13 @@
       <div class="hbox">
         <div class="flex vbox">
           <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
+          <script type="text/javascript">
+            console.log({{ data.protocol_meta[protocol] | tojson }});
+          </script>
           <div class="hbox meta">
-            <a class="button website" href="/static/pdf/agreement.pdf" target="_blank">Agreement</a>
-            <a class="button website" href="{{ data.protocol_meta[protocol].website }}" target="_blank">Website</a>
-            <a class="button website" href="{{ data.protocol_meta[protocol].twitter }}" target="_blank">Twitter</a>
+            {% if data.protocol_meta[protocol].agreement %}<a class="button website" href="/static/pdf/{{ data.protocol_meta[protocol].agreement }}" target="_blank">Agreement</a>{% endif %}
+            {% if data.protocol_meta[protocol].website %}<a class="button website" href="{{ data.protocol_meta[protocol].website }}" target="_blank">Website</a>{% endif %}
+            {% if data.protocol_meta[protocol].twitter %}<a class="button website" href="{{ data.protocol_meta[protocol].twitter }}" target="_blank">Twitter</a>{% endif %}
           </div>
         </div>
         <!-- <div class="pie"></div> -->
