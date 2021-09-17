@@ -53,12 +53,12 @@
   margin-left: 0;
   font-size: 24px;
 }
-.cooldown-block table .expander table th,
-.staking-pools table .expander table th {
+.cooldown-block table .expander table.smoking-kills th,
+.staking-pools table .expander table.smoking-kills th {
   white-space: nowrap;
 }
-.cooldown-block table .expander table td,
-.staking-pools table .expander table td {
+.cooldown-block table .expander table.smoking-kills td,
+.staking-pools table .expander table.smoking-kills td {
   width: 50%;
 }
 .cooldown-block table .expander .hbox > .flex,
@@ -81,7 +81,7 @@
 }
 .cooldown-block table .expander .actions > div:last-child,
 .staking-pools table .expander .actions > div:last-child {
-  margin-right: 0px;
+  margin-right: 0;
 }
 .cooldown-block table .expander .actions > div a.docs,
 .staking-pools table .expander .actions > div a.docs {
