@@ -18,27 +18,27 @@ PROTOCOL_PREMIUMS = {
 
 PROTOCOL_META = {
     PRIMITIVE_PROTOCOL: {
-        "name": "Primitive",
-        "website": "https://primitive.finance/",
-        "twitter": "https://twitter.com/primitivefi",
-        "logo": "primitive",
-        "desc": "-",
+        "name": "Protocol #3",
+        "website": "",
+        "twitter": "",
+        "logo": "",
+        "desc": "Announcement coming soon…",
         "deductable": "0"
     },
     TELLER_PROTOCOL: {
-        "name": "Teller",
-        "website": "https://www.teller.finance/",
-        "twitter": "https://twitter.com/useteller",
-        "logo": "teller",
-        "desc": "-",
+        "name": "Protocol #2",
+        "website": "",
+        "twitter": "",
+        "logo": "",
+        "desc": "Announcement coming soon…",
         "deductable": "0"
     },
     EULER_PROTOCOL: {
-        "name": "Euler",
-        "website": "https://www.euler.finance/",
-        "twitter": "https://twitter.com/eulerfinance",
-        "logo": "euler",
-        "desc": "-",
+        "name": "Protocol #1",
+        "website": "",
+        "twitter": "",
+        "logo": "",
+        "desc": "Announcement coming soon…",
         "deductable": "0",
         "coverage_document": ""
     },
