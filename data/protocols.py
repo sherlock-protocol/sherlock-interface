@@ -6,6 +6,8 @@ from settings import TOKENS, SHERLOCK_HTTP, BLOCKS_PER_DAY
 from data.helper import human_format
 from data.price import get_price
 
+from collections import OrderedDict
+
 PRIMITIVE_PROTOCOL = "0x8730a838a5ce28d25f52f8eaafa94b6c96321fcb490e394d6aa46b4b84ed9c85"
 TELLER_PROTOCOL = "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc"
 EULER_PROTOCOL = "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5"
@@ -16,8 +18,8 @@ PROTOCOL_PREMIUMS = {
     EULER_PROTOCOL: {},
 }
 
-PROTOCOL_META = {
-    PRIMITIVE_PROTOCOL: {
+PROTOCOL_META = OrderedDict([
+    (PRIMITIVE_PROTOCOL, {
         "name": "Protocol #3",
         "website": "",
         "twitter": "",
@@ -25,8 +27,8 @@ PROTOCOL_META = {
         "logo": "",
         "desc": "Announcement coming soon…",
         "deductable": "0"
-    },
-    TELLER_PROTOCOL: {
+    }),
+    (TELLER_PROTOCOL, {
         "name": "Protocol #2",
         "website": "",
         "twitter": "",
@@ -34,8 +36,8 @@ PROTOCOL_META = {
         "logo": "",
         "desc": "Announcement coming soon…",
         "deductable": "0"
-    },
-    EULER_PROTOCOL: {
+    }),
+    (EULER_PROTOCOL, {
         "name": "Protocol #1",
         "website": "",
         "twitter": "",
@@ -44,8 +46,8 @@ PROTOCOL_META = {
         "desc": "Announcement coming soon…",
         "deductable": "0",
         "coverage_document": ""
-    },
-}
+    })
+])
 
 PROTOCOL_COVERED = {
     PRIMITIVE_PROTOCOL: {

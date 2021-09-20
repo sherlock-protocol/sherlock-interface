@@ -34,7 +34,6 @@
         <div class="flex vbox">
           <p class="flex">{{ data.protocol_meta[protocol].desc }}</p>
           <script type="text/javascript">
-            console.log({{ data.protocol_meta[protocol] | tojson }});
           </script>
           <div class="hbox meta">
             {% if data.protocol_meta[protocol].agreement %}<a class="button website" href="/static/pdf/{{ data.protocol_meta[protocol].agreement }}" target="_blank">Agreement</a>{% endif %}
