@@ -20,7 +20,7 @@ PROTOCOL_PREMIUMS = {
 
 PROTOCOL_META = OrderedDict([
     (PRIMITIVE_PROTOCOL, {
-        "name": "Protocol #3",
+        "name": "Protocol #1",
         "website": "",
         "twitter": "",
         "agreement": "",
@@ -38,7 +38,7 @@ PROTOCOL_META = OrderedDict([
         "deductable": "0"
     }),
     (EULER_PROTOCOL, {
-        "name": "Protocol #1",
+        "name": "Protocol #3",
         "website": "",
         "twitter": "",
         "agreement": "",
