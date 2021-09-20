@@ -43,8 +43,8 @@ elif NETWORK == 'LOCALHOST':
     ENDPOINT = "http://127.0.0.1:8545"
     AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
 elif NETWORK == 'MAINNET':
-    INFURA_HTTP = Web3(HTTPProvider("https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN))
-    ENDPOINT = "https://eth-kovan.alchemyapi.io/v2/%s" % INFURA_TOKEN
+    INFURA_HTTP = Web3(HTTPProvider("https://eth-mainnet.alchemyapi.io/v2/%s" % INFURA_TOKEN))
+    ENDPOINT = "https://eth-mainnet.alchemyapi.io/v2/%s" % INFURA_TOKEN
     AAVE_LP = "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
 else:
     raise ValueError("Unknown network in .env")
@@ -54,7 +54,7 @@ if NETWORK == 'KOVAN':
 elif NETWORK == 'LOCALHOST':
     SHERLOCK = "0x04C89607413713Ec9775E14b954286519d836FEf"
 elif NETWORK == 'MAINNET':
-    SHERLOCK = "0x0000000000000000000000000000000000000000"
+    SHERLOCK = "0xacbBe1d537BDa855797776F969612df7bBb98215"
 
 SHERLOCK_HTTP = INFURA_HTTP.eth.contract(address=SHERLOCK, abi=POOL_ABI)
 

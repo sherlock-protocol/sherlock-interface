@@ -70,6 +70,8 @@ def verify_run():
         return True
     if NETWORK == "KOVAN":
         url = "https://api-kovan.etherscan.io/api"
+    if NETWORK == "MAINNET":
+        url = "https://api.etherscan.io/api"
 
     payload = {
         "module": "account",
