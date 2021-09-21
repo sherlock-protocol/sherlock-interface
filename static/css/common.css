@@ -1068,11 +1068,31 @@ header.sub {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+header.sub .meta {
+  display: flex;
+  justify-content: flex-end;
+}
+header.sub .meta a,
 header.sub .meta span {
+  text-transform: uppercase;
+  text-decoration: none;
   text-align: right;
   display: block;
   color: #01FEB4;
   font-weight: bold;
+}
+header.sub .meta a:first-child,
+header.sub .meta span:first-child {
+  margin-right: 20px;
+}
+header.sub .meta a {
+  color: #FFF;
+}
+header.sub .meta a.active {
+  color: #525252;
+}
+header.sub .meta a:last-of-type {
+  margin-right: auto;
 }
 
 @media only screen and (max-width: 2000px) {

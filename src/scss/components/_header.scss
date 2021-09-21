@@ -89,11 +89,32 @@ header.sub {
   padding-bottom: 10px;
 
   .meta {
+    display: flex;
+    justify-content: flex-end;
+
+    a,
     span {
+      text-transform: uppercase;
+      text-decoration: none;
       text-align: right;
       display: block;
       color: $accent;
       font-weight: bold;
+
+      &:first-child {
+        margin-right: 20px;
+      }
+    }
+
+    a {
+      color: $white;
+      &.active {
+        color: $dark-grey;
+      }
+
+      &:last-of-type {
+        margin-right: auto;
+      }
     }
   }
 }

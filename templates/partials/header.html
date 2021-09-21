@@ -47,6 +47,8 @@
 
   <header class="sub">
     <div class="meta">
+      <a href="#" {% if env.network == "MAINNET" %} class="active" {% endif %}>Mainnet</a>
+      <a href="#" {% if env.network == "KOVAN" %} class="active" {% endif %}>Kovan</a>
       <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
     </div>
   </header>
