@@ -3,6 +3,8 @@ import os
 import json
 import requests
 
+from datetime import datetime
+
 from settings import INDEXER_TIMEOUT, WORKER_ROOT, NETWORK, SHERLOCK, ETHERSCAN, TG_BOT, TG_RECEIVER
 from data import pool, tokens, price, protocols, sherlock, sherx, state
 
@@ -62,9 +64,11 @@ def run():
 
 
 _prev_number = 0
+_prev_time = datetime.min
 
 def verify_run():
     global _prev_number
+    global _prev_time
 
     if NETWORK == "LOCALHOST":
         return True
@@ -88,8 +92,9 @@ def verify_run():
     try:
         r = requests.get(url, params=payload, headers=headers)
         b = int(r.json()["result"][0]["blockNumber"])
-        if b > _prev_number:
+        if b > _prev_number or (datetime.now()-_prev_time).seconds > 900:
             _prev_number = b
+            _prev_time = datetime.now()
             return True
         return False
     except Exception as e:
