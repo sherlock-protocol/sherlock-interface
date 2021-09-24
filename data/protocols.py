@@ -20,13 +20,13 @@ PROTOCOL_PREMIUMS = {
 
 PROTOCOL_META = OrderedDict([
     (PRIMITIVE_PROTOCOL, {
-        "name": "Protocol #1",
-        "website": "",
-        "twitter": "",
-        "agreement": "",
-        "logo": "",
-        "desc": "Announcement coming soon…",
-        "deductable": "0"
+        "name": "Nifty Options by Teller",
+        "website": "https://niftyoptions.org/",
+        "twitter": "https://twitter.com/NiftyOptionsOrg",
+        "agreement": "Nifty_Options_Statement_of_Coverage.pdf",
+        "logo": "nifty.png",
+        "desc": "Nifty Options is the first on-chain NFT options trading protocol whose contract allows the right to sell a specific NFT at an agreed upon price and expiration date in the future.  Hedge NFTs. Borrow against NFTs. Sell NFT options.",
+        "deductable": "5k USDC"
     }),
     (TELLER_PROTOCOL, {
         "name": "Protocol #2",
@@ -53,21 +53,21 @@ PROTOCOL_COVERED = {
     PRIMITIVE_PROTOCOL: {
         "tokens": {
             TOKENS["USDC"]["address"]: {
-                "covered": 100000.0,
+                "covered": 10000000.0,
             },
         }
     },
     TELLER_PROTOCOL: {
         "tokens": {
             TOKENS["USDC"]["address"]: {
-                "covered": 100000.0,
+                "covered": 10000000.0,
             },
         }
     },
     EULER_PROTOCOL: {
         "tokens": {
             TOKENS["USDC"]["address"]: {
-                "covered": 100000.0,
+                "covered": 10000000.0,
             },
         }
     }
