@@ -3,21 +3,23 @@
   margin-bottom: 20px;
   color: $white;
   background: $black;
-  
+
   &.purp {
     // background: rgba($background, 20%);
     h2 {
       font-weight: bold;
     }
   }
-  
+
   &.centered {
     text-align: center;
   }
 
   &.warning {
     // background: rgba($background, 20%);
-    
+    b {
+      display: inline;
+    }
     h2 {
       font-weight: bolder;
     }

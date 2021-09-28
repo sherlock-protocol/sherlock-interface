@@ -1,7 +1,7 @@
 @import "global/variables";
 @import "global/mixins";
 
-.coverage-breakdown {  
+.coverage-breakdown {
   &__row {
     height: 200px;
 
@@ -41,6 +41,7 @@
   table {
     background: $black;
     overflow: hidden;
+
     thead {
       th {
         &[data-docs="glossary#coverage"] {
@@ -78,6 +79,18 @@
     margin-bottom: 20px;
     padding: 20px;
     background: $black;
+
+    .image {
+      background: $white;
+      height: 180px;
+      width: 100%;
+
+      img {
+        display: block;
+        margin: 0 auto;
+        height: 100%;
+      }
+    }
 
     &:first-of-type {
       margin-top: 20px;

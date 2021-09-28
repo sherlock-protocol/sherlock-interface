@@ -49,6 +49,15 @@
     <div class="meta">
       <!-- <a href="https://app.sherlock.xyz" {% if env.network == "MAINNET" %} class="active" {% endif %}>Mainnet</a>
       <a href="https://kovan.sherlock.xyz" {% if env.network == "KOVAN" %} class="active" {% endif %}>Kovan</a> -->
+      Active:
+      <select class="network-toggle" name="">
+        <option value="mainnet" {% if env.network == "MAINNET" %} selected{% endif %}>Mainnet</option>
+        <option value="kovan" {% if env.network == "KOVAN" %} selected {% endif %}>Kovan</option>
+        {% if env.network == "LOCALHOST" %}
+          <option value="localhost" selected >Localhost</option>
+        {% endif %}
+      </select>
+      <div class="flex"></div>
       <span id="walletName" {{ env.wallet|pprint }} {% if env.wallet == "None" %} class="hidden" {% endif %}> {{ env.wallet[:4] }}...{{ env.wallet[-4:]}}</span>
     </div>
   </header>

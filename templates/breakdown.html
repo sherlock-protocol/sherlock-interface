@@ -29,6 +29,11 @@
   </div>
     {% for protocol in data.protocols %}
     <div class="vbox protocol smoking-kills" id="a{{protocol}}">
+    {% if data.protocol_meta[protocol].logo %}
+      <div class="image">
+        <img src="/static/img/protocols/{{ data.protocol_meta[protocol].logo }}" alt="">
+      </div>
+    {% endif %}
       <h2>{{ data.protocol_meta[protocol].name }}</h2>
       <div class="hbox">
         <div class="flex vbox">

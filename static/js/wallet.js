@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   }
 
 
+  let networkToggleEl = document.querySelector('.network-toggle');
   let walletButtonEl = document.querySelector('a#walletConnect');
   let walletNameEl = document.querySelector('#walletName');
 
@@ -55,6 +56,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
     if (force) location.href = location.href;
   }
 
+  let toggleNetwork = () => {
+    let value = networkToggleEl.value;
+    switch (value) {
+      case "mainnet":
+        location.href = "https://app.sherlock.xyz";
+        break;
+      case "kovan":
+        location.href = "https://kovan.sherlock.xyz";
+        break;
+      case "localhost":
+        location.href = "localhost:5000";
+        break;
+      default:
+
+    }
+  }
+
   setTimeout(() => {
     ethereum.on('accountsChanged', function(accounts) {
       if (accounts && !accounts.length) {
@@ -81,6 +99,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
   window.ethereum.on('chainChanged', function(networkId) {
     location.href = "";
   });
+
+  if (networkToggleEl)
+    networkToggleEl.addEventListener('change', toggleNetwork)
 
   if (walletButtonEl)
     walletButtonEl.addEventListener('click', connectWallet)
