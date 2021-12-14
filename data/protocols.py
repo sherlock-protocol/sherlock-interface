@@ -29,12 +29,12 @@ PROTOCOL_META = OrderedDict([
         "deductable": "5k USDC"
     }),
     (TELLER_PROTOCOL, {
-        "name": "Protocol #2",
-        "website": "",
-        "twitter": "",
+        "name": "Primitive",
+        "website": "https://primitive.finance/",
+        "twitter": "https://twitter.com/primitivefi",
         "agreement": "",
         "logo": "",
-        "desc": "Announcement coming soon…",
+        "desc": "Primitive is a new kind of AMM that can be used for hedging liquidity positions on other AMMs, like Uniswap, as well as to generate returns from volatility on long-tail assets.",
         "deductable": "0"
     }),
     (EULER_PROTOCOL, {
@@ -75,39 +75,50 @@ PROTOCOL_COVERED = {
 
 
 def get_protocols_covered():
-    protocols_covered = copy.deepcopy(PROTOCOL_COVERED)
-
-    total_covered_usd = 0
-    for k, v in protocols_covered.items():
-        usd = 0
-        for token, c in v["tokens"].items():
-            usd += get_price(token) * c["covered"]
-
-        for token, c in v["tokens"].items():
-            p = get_price(token) * c["covered"]
-
-            c["percentage"] = round((p / usd) * 100, 2)
-            c["covered"] = p
-            c["covered_str"] = human_format(p / 100000)
-
-        total_covered_usd += usd
-        protocols_covered[k]["usd"] = usd
-        protocols_covered[k]["usd_str"] = '{:20,.0f}'.format(
-            usd / 100000).strip()
-
-    for k, v in protocols_covered.items():
-        protocols_covered[k]["percentage"] = protocols_covered[k]["usd"] / \
-            total_covered_usd * 100
-
-        protocols_covered[k]["percentage_str"] = "%.0f" % round(
-            float(protocols_covered[k]["percentage"]), 2)
-
-        protocols_covered[k]["sorted"] = (
-            sorted(v["tokens"], key=lambda i: v["tokens"]
-                   [i]["covered"], reverse=True)
-        )
-
-    return protocols_covered, total_covered_usd
+    return {
+        "0x8730a838a5ce28d25f52f8eaafa94b6c96321fcb490e394d6aa46b4b84ed9c85": {
+            "tokens": {
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+                "covered": 1000000000000.0,
+                "percentage": 100.0,
+                "covered_str": "10M"
+            }
+            },
+            "usd": 1000000000000.0,
+            "usd_str": "10,000,000",
+            "percentage": 33.33333333333333,
+            "percentage_str": "33",
+            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        },
+        "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc": {
+            "tokens": {
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+                "covered": 1000000000000.0,
+                "percentage": 100.0,
+                "covered_str": "10M"
+            }
+            },
+            "usd": 1000000000000.0,
+            "usd_str": "10,000,000",
+            "percentage": 33.33333333333333,
+            "percentage_str": "33",
+            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        },
+        "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5": {
+            "tokens": {
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+                "covered": 1000000000000.0,
+                "percentage": 100.0,
+                "covered_str": "10M"
+            }
+            },
+            "usd": 1000000000000.0,
+            "usd_str": "10,000,000",
+            "percentage": 33.33333333333333,
+            "percentage_str": "33",
+            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        }
+    }, 3000000000000.0
 
 
 def _get_protocol_premium(symbol, data, protocol_id):
