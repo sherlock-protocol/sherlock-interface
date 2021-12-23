@@ -32,20 +32,19 @@ PROTOCOL_META = OrderedDict([
         "name": "Primitive",
         "website": "https://primitive.finance/",
         "twitter": "https://twitter.com/primitivefi",
-        "agreement": "",
+        "agreement": "Primitive Statement of Coverage 12.14.21.pdf",
         "logo": "",
         "desc": "Primitive is a new kind of AMM that can be used for hedging liquidity positions on other AMMs, like Uniswap, as well as to generate returns from volatility on long-tail assets.",
         "deductable": "0"
     }),
     (EULER_PROTOCOL, {
-        "name": "Protocol #3",
-        "website": "",
-        "twitter": "",
-        "agreement": "",
+        "name": "Euler",
+        "website": "https://www.euler.finance/",
+        "twitter": "https://twitter.com/eulerfinance",
+        "agreement": "Euler Statement of Coverage 12.14.21.pdf",
         "logo": "",
-        "desc": "Announcement coming soon…",
+        "desc": "Euler is a non-custodial protocol on Ethereum that allows users to lend and borrow almost any crypto asset.",
         "deductable": "0",
-        "coverage_document": ""
     })
 ])
 
