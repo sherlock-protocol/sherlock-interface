@@ -11,14 +11,25 @@ from collections import OrderedDict
 PRIMITIVE_PROTOCOL = "0x8730a838a5ce28d25f52f8eaafa94b6c96321fcb490e394d6aa46b4b84ed9c85"
 TELLER_PROTOCOL = "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc"
 EULER_PROTOCOL = "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5"
+SQUEETH_PROTOCOL = "0x38efa46790306cfd13d0cc13126282eaeaa59b806fd0b2853aa8a49876f37234"
 
 PROTOCOL_PREMIUMS = {
+    SQUEETH_PROTOCOL: {},
     PRIMITIVE_PROTOCOL: {},
     TELLER_PROTOCOL: {},
     EULER_PROTOCOL: {},
 }
 
 PROTOCOL_META = OrderedDict([
+     (SQUEETH_PROTOCOL, {
+        "name": "Squeeth by Opyn",
+        "website": "https://www.opyn.co/",
+        "twitter": "https://twitter.com/opyn_",
+        "agreement": "",
+        "logo": "",
+        "desc": "Squeeth (squared ETH) is a Power Perpetual that tracks the price of ETH². This functions similar to a perpetual swap where you are targeting ETH² rather than ETH. Long Squeeth gives traders a leveraged position with unlimited ETH² upside, protected downside, and no liquidations. Squeeth buyers pay a funding rate for this position. In contrast, short Squeeth is a short ETH² position, collateralized with ETH. Traders earn a funding rate for taking on this position, paid by long Squeeth holders.",
+        "deductable": "0",
+    }),
     (PRIMITIVE_PROTOCOL, {
         "name": "Nifty Options by Teller",
         "website": "https://niftyoptions.org/",
@@ -49,6 +60,13 @@ PROTOCOL_META = OrderedDict([
 ])
 
 PROTOCOL_COVERED = {
+    SQUEETH_PROTOCOL: {
+        "tokens": {
+            TOKENS["USDC"]["address"]: {
+                "covered": 10000000.0,
+            },
+        }
+    },
     PRIMITIVE_PROTOCOL: {
         "tokens": {
             TOKENS["USDC"]["address"]: {
@@ -75,6 +93,20 @@ PROTOCOL_COVERED = {
 
 def get_protocols_covered():
     return {
+        "0x38efa46790306cfd13d0cc13126282eaeaa59b806fd0b2853aa8a49876f37234": {
+            "tokens": {
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+                "covered": 1000000000000.0,
+                "percentage": 100.0,
+                "covered_str": "10M"
+            }
+            },
+            "usd": 1000000000000.0,
+            "usd_str": "10,000,000",
+            "percentage": 25.00,
+            "percentage_str": "25",
+            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        },
         "0x8730a838a5ce28d25f52f8eaafa94b6c96321fcb490e394d6aa46b4b84ed9c85": {
             "tokens": {
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
@@ -85,8 +117,8 @@ def get_protocols_covered():
             },
             "usd": 1000000000000.0,
             "usd_str": "10,000,000",
-            "percentage": 33.33333333333333,
-            "percentage_str": "33",
+            "percentage": 25.00,
+            "percentage_str": "25",
             "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
         },
         "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc": {
@@ -99,8 +131,8 @@ def get_protocols_covered():
             },
             "usd": 1000000000000.0,
             "usd_str": "10,000,000",
-            "percentage": 33.33333333333333,
-            "percentage_str": "33",
+            "percentage": 25.00,
+            "percentage_str": "25",
             "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
         },
         "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5": {
@@ -113,11 +145,11 @@ def get_protocols_covered():
             },
             "usd": 1000000000000.0,
             "usd_str": "10,000,000",
-            "percentage": 33.33333333333333,
-            "percentage_str": "33",
+            "percentage": 25.00,
+            "percentage_str": "25",
             "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
         }
-    }, 3000000000000.0
+    }, 4000000000000.0
 
 
 def _get_protocol_premium(symbol, data, protocol_id):
