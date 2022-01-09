@@ -15,13 +15,13 @@ SQUEETH_PROTOCOL = "0x38efa46790306cfd13d0cc13126282eaeaa59b806fd0b2853aa8a49876
 
 PROTOCOL_PREMIUMS = {
     SQUEETH_PROTOCOL: {},
+    EULER_PROTOCOL: {},
     PRIMITIVE_PROTOCOL: {},
     TELLER_PROTOCOL: {},
-    EULER_PROTOCOL: {},
 }
 
 PROTOCOL_META = OrderedDict([
-     (SQUEETH_PROTOCOL, {
+    (SQUEETH_PROTOCOL, {
         "name": "Squeeth by Opyn",
         "website": "https://www.opyn.co/",
         "twitter": "https://twitter.com/opyn_",
@@ -29,24 +29,6 @@ PROTOCOL_META = OrderedDict([
         "logo": "",
         "desc": "Squeeth (squared ETH) is a Power Perpetual that tracks the price of ETH². This functions similar to a perpetual swap where you are targeting ETH² rather than ETH. Long Squeeth gives traders a leveraged position with unlimited ETH² upside, protected downside, and no liquidations. Squeeth buyers pay a funding rate for this position. In contrast, short Squeeth is a short ETH² position, collateralized with ETH. Traders earn a funding rate for taking on this position, paid by long Squeeth holders.",
         "deductable": "0",
-    }),
-    (PRIMITIVE_PROTOCOL, {
-        "name": "Nifty Options by Teller",
-        "website": "https://niftyoptions.org/",
-        "twitter": "https://twitter.com/NiftyOptionsOrg",
-        "agreement": "Nifty_Options_Statement_of_Coverage.pdf",
-        "logo": "nifty.png",
-        "desc": "Nifty Options is the first on-chain NFT options trading protocol whose contract allows the right to sell a specific NFT at an agreed upon price and expiration date in the future.  Hedge NFTs. Borrow against NFTs. Sell NFT options.",
-        "deductable": "5k USDC"
-    }),
-    (TELLER_PROTOCOL, {
-        "name": "Primitive",
-        "website": "https://primitive.finance/",
-        "twitter": "https://twitter.com/primitivefi",
-        "agreement": "Primitive Statement of Coverage 12.14.21.pdf",
-        "logo": "",
-        "desc": "Primitive is a new kind of AMM that can be used for hedging liquidity positions on other AMMs, like Uniswap, as well as to generate returns from volatility on long-tail assets.",
-        "deductable": "0"
     }),
     (EULER_PROTOCOL, {
         "name": "Euler",
@@ -56,11 +38,36 @@ PROTOCOL_META = OrderedDict([
         "logo": "",
         "desc": "Euler is a non-custodial protocol on Ethereum that allows users to lend and borrow almost any crypto asset.",
         "deductable": "0",
-    })
+    }),
+    (PRIMITIVE_PROTOCOL, {
+        "name": "Primitive",
+        "website": "https://primitive.finance/",
+        "twitter": "https://twitter.com/primitivefi",
+        "agreement": "Primitive Statement of Coverage 12.14.21.pdf",
+        "logo": "",
+        "desc": "Primitive is a new kind of AMM that can be used for hedging liquidity positions on other AMMs, like Uniswap, as well as to generate returns from volatility on long-tail assets.",
+        "deductable": "0"
+    }),
+    (TELLER_PROTOCOL, {
+        "name": "Nifty Options by Teller",
+        "website": "https://niftyoptions.org/",
+        "twitter": "https://twitter.com/NiftyOptionsOrg",
+        "agreement": "Nifty_Options_Statement_of_Coverage.pdf",
+        "logo": "nifty.png",
+        "desc": "Nifty Options is the first on-chain NFT options trading protocol whose contract allows the right to sell a specific NFT at an agreed upon price and expiration date in the future.  Hedge NFTs. Borrow against NFTs. Sell NFT options.",
+        "deductable": "5k USDC"
+    }),
 ])
 
 PROTOCOL_COVERED = {
     SQUEETH_PROTOCOL: {
+        "tokens": {
+            TOKENS["USDC"]["address"]: {
+                "covered": 10000000.0,
+            },
+        }
+    },
+    EULER_PROTOCOL: {
         "tokens": {
             TOKENS["USDC"]["address"]: {
                 "covered": 10000000.0,
@@ -80,13 +87,6 @@ PROTOCOL_COVERED = {
                 "covered": 10000000.0,
             },
         }
-    },
-    EULER_PROTOCOL: {
-        "tokens": {
-            TOKENS["USDC"]["address"]: {
-                "covered": 10000000.0,
-            },
-        }
     }
 }
 
@@ -94,6 +94,20 @@ PROTOCOL_COVERED = {
 def get_protocols_covered():
     return {
         "0x38efa46790306cfd13d0cc13126282eaeaa59b806fd0b2853aa8a49876f37234": {
+            "tokens": {
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+                "covered": 1000000000000.0,
+                "percentage": 100.0,
+                "covered_str": "10M"
+            }
+            },
+            "usd": 1000000000000.0,
+            "usd_str": "10,000,000",
+            "percentage": 25.00,
+            "percentage_str": "25",
+            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+        },
+        "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5": {
             "tokens": {
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
                 "covered": 1000000000000.0,
@@ -122,20 +136,6 @@ def get_protocols_covered():
             "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
         },
         "0x7e964a6811a4c68a414897db01fbdc86548992442bf2c39d7cfe5aa4669a70cc": {
-            "tokens": {
-            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
-                "covered": 1000000000000.0,
-                "percentage": 100.0,
-                "covered_str": "10M"
-            }
-            },
-            "usd": 1000000000000.0,
-            "usd_str": "10,000,000",
-            "percentage": 25.00,
-            "percentage_str": "25",
-            "sorted": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
-        },
-        "0x58715d22f4870f6849ddc17375d2cfe0145dc6287ec5da28856ebb0be75a24e5": {
             "tokens": {
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
                 "covered": 1000000000000.0,
