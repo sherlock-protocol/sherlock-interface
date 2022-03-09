@@ -46,9 +46,9 @@ def run():
     with open(PREMIUM, "w") as f:
         json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
 
-    data = protocols.get_protocols_covered()
-    with open(COVERED, "w") as f:
-        json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
+    # data = protocols.get_protocols_covered()
+    # with open(COVERED, "w") as f:
+    #     json.dump(data, f, indent=INDENT, sort_keys=SORT_KEYS)
 
     data = price.get_prices()
     with open(PRICES, "w") as f:

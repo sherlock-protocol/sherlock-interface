@@ -15,7 +15,7 @@
             <td>
               {{ data.protocol_meta[protocol].name }}
             </td>
-            <td>$10,000,000</td>
+            <td>${{ data.protocols_covered[protocol].usd_str }}</td>
             <td>{{ data.protocols_covered[protocol].percentage_str }}%</td>
           </tr>
         {% endfor %}
